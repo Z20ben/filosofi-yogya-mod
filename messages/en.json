@@ -518,6 +518,21 @@
       "button": "Contact Us"
     }
   },
+  "umkmCard": {
+    "products": "Featured Products",
+    "getDirections": "Get Directions",
+    "contact": "Contact",
+    "viewDetails": "View Details",
+    "modal": {
+      "description": "Description",
+      "products": "Products",
+      "category": "Category",
+      "location": "Location",
+      "priceRange": "Price Range",
+      "contact": "Contact",
+      "socialMedia": "Social Media"
+    }
+  },
   "katalogUmkm": {
     "badge": "MSME CATALOG",
     "title": "Philosophical Axis MSME Catalog",

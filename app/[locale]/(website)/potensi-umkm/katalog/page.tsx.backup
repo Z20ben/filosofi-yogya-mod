@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { FadeInSection } from '@/components/shared/FadeInSection';
 import { UMKMCard, UMKMData } from '@/components/shared/UMKMCard';
-import { Store, MapPin, Filter, X, MessageCircle, Instagram, Facebook } from 'lucide-react';
+import { Store, MapPin, Filter } from 'lucide-react';
 
 // ISR Configuration - uncomment when migrating to database
 // export const revalidate = 300; // Cache 5 minutes
@@ -21,7 +21,6 @@ export default function KatalogUMKMPage() {
   // Filter states
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
-  const [selectedUmkm, setSelectedUmkm] = useState<UMKMData | null>(null);
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
@@ -109,10 +108,10 @@ export default function KatalogUMKMPage() {
       category_en: 'Arts',
       location_id: 'Kawasan Keraton',
       location_en: 'Palace Area',
-      products_id: ['Wayang Kulit', 'Wayang Golek', 'Miniatur Wayang', 'Gunungan'],
-      products_en: ['Shadow Puppets', 'Miniature Puppets', 'Puppet Accessories', 'Customized Puppets'],
-      priceRange_id: 'Rp 200.000 - Rp 5.000.000',
-      priceRange_en: 'Rp 250,000 - Rp 5,000,000',
+      logo_url: 'https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=800',
+      ],
       contact: {
         phone: '+62 274 345678',
         email: 'paktomo@wayang.com'
@@ -132,10 +131,10 @@ export default function KatalogUMKMPage() {
       category_en: 'Fashion',
       location_id: 'Kawasan Malioboro',
       location_en: 'Malioboro Area',
-      products_id: ['Kemeja Batik', 'Dress Batik', 'Rok Batik', 'Blazer Batik'],
-      products_en: ['Batik Shirts', 'Batik Dresses', 'Batik Skirts', 'Batik Blazers'],
-      priceRange_id: 'Rp 200.000 - Rp 1.500.000',
-      priceRange_en: 'Rp 200,000 - Rp 1,500,000',
+      logo_url: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800',
+      ],
       contact: {
         phone: '+62 274 456789',
         email: 'info@batikplentong.com'
@@ -155,10 +154,10 @@ export default function KatalogUMKMPage() {
       category_en: 'Handicrafts',
       location_id: 'Kawasan Kota Gede',
       location_en: 'Kota Gede Area',
-      products_id: ['Vas Bunga', 'Guci', 'Piring Keramik', 'Patung Tanah Liat'],
-      products_en: ['Decorative Vases', 'Clay Pots', 'Statues', 'Utensils'],
-      priceRange_id: 'Rp 25.000 - Rp 500.000',
-      priceRange_en: 'Rp 25,000 - Rp 500,000',
+      logo_url: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=800',
+      ],
       contact: {
         phone: '+62 274 567890',
         email: 'info@gerabahkasongan.com'
@@ -178,10 +177,10 @@ export default function KatalogUMKMPage() {
       category_en: 'Culinary',
       location_id: 'Kawasan Malioboro',
       location_en: 'Malioboro Area',
-      products_id: ['Bakpia Kacang Hijau', 'Bakpia Coklat', 'Bakpia Keju', 'Bakpia Durian'],
-      products_en: ['Mung Bean Bakpia', 'Chocolate Bakpia', 'Cheese Bakpia', 'Durian Bakpia'],
-      priceRange_id: 'Rp 35.000 - Rp 75.000',
-      priceRange_en: 'Rp 35,000 - Rp 80,000',
+      logo_url: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800',
+      ],
       contact: {
         phone: '+62 274 678901',
         email: 'info@bakpiapathok.com'
@@ -201,10 +200,10 @@ export default function KatalogUMKMPage() {
       category_en: 'Fashion',
       location_id: 'Kawasan Keraton',
       location_en: 'Palace Area',
-      products_id: ['Kain Lurik', 'Selendang', 'Sarung', 'Taplak Meja'],
-      products_en: ['Lurik Cloth', 'Shawls', 'Sarongs', 'Table Cloths'],
-      priceRange_id: 'Rp 75.000 - Rp 500.000',
-      priceRange_en: 'Rp 75,000 - Rp 500,000',
+      logo_url: 'https://images.unsplash.com/photo-1558769132-cb1aea1f1f85?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1558769132-cb1aea1f1f85?w=800',
+      ],
       contact: {
         phone: '+62 274 789123',
         email: 'info@lurikbuyanti.com'
@@ -224,10 +223,10 @@ export default function KatalogUMKMPage() {
       category_en: 'Arts',
       location_id: 'Kawasan Kota Gede',
       location_en: 'Kota Gede Area',
-      products_id: ['Keris Luk 5', 'Keris Luk 9', 'Keris Luk 13', 'Keris Pamor'],
-      products_en: ['5-Wave Keris', '9-Wave Keris', '13-Wave Keris', 'Pamor Keris'],
-      priceRange_id: 'Rp 3.000.000 - Rp 50.000.000',
-      priceRange_en: 'Rp 3,000,000 - Rp 50,000,000',
+      logo_url: 'https://images.unsplash.com/photo-1609555058183-cf4eea52c096?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1609555058183-cf4eea52c096?w=800',
+      ],
       contact: {
         phone: '+62 274 890234',
         email: 'info@kerisempujoko.com'
@@ -247,10 +246,10 @@ export default function KatalogUMKMPage() {
       category_en: 'Culinary',
       location_id: 'Kawasan Malioboro',
       location_en: 'Malioboro Area',
-      products_id: ['Nasi Kucing', 'Sate Usus', 'Gorengan', 'Wedang Jahe'],
-      products_en: ['Nasi Kucing', 'Intestine Satay', 'Fried Snacks', 'Ginger Drink'],
-      priceRange_id: 'Rp 3.000 - Rp 15.000',
-      priceRange_en: 'Rp 3,000 - Rp 15,000',
+      logo_url: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800',
+      ],
       contact: {
         phone: '+62 274 901345',
         email: 'info@angkringanmastukul.com'
@@ -411,7 +410,120 @@ export default function KatalogUMKMPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {currentUmkm.map((umkm, index) => (
                 <FadeInSection key={umkm.id} delay={index * 75} direction="up">
-                  <UMKMCard data={umkm} onViewDetails={setSelectedUmkm} />
+                  <div className="bg-card rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group h-full flex flex-col">
+                    {/* Image Gallery */}
+                    <div className="relative">
+                      <div
+                        className="overflow-x-auto overflow-y-hidden snap-x snap-mandatory flex bg-muted"
+                        style={{
+                          scrollbarWidth: 'none',
+                          msOverflowStyle: 'none',
+                          WebkitOverflowScrolling: 'touch'
+                        }}
+                      >
+                        {umkm.gallery_images && umkm.gallery_images.length > 0 ? (
+                          umkm.gallery_images.map((img: string, idx: number) => (
+                            <div key={idx} className="w-full flex-shrink-0 snap-center">
+                              <div className="aspect-video">
+                                <img
+                                  src={img}
+                                  alt={`${locale === 'id' ? umkm.name_id : umkm.name_en} ${idx + 1}`}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            </div>
+                          ))
+                        ) : umkm.logo_url ? (
+                          <div className="w-full flex-shrink-0">
+                            <div className="aspect-video">
+                              <img
+                                src={umkm.logo_url}
+                                alt={locale === 'id' ? umkm.name_id : umkm.name_en}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="w-full flex-shrink-0">
+                            <div className="aspect-video flex items-center justify-center">
+                              <Store className="w-16 h-16 text-[var(--javanese-brown-text)]/20" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Category Badge */}
+                      <div className="absolute top-4 right-4 z-10">
+                        <span className="px-3 py-1 bg-javanese-gold-90 text-[#4A2C2A] rounded-full text-sm font-medium shadow-lg">
+                          {locale === 'id' ? umkm.category_id : umkm.category_en}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-6 flex-1 flex flex-col">
+                      <h3 className="text-[var(--javanese-brown-text)] mb-2 font-serif text-xl">
+                        {locale === 'id' ? umkm.name_id : umkm.name_en}
+                      </h3>
+
+                      <p className="text-javanese-brown-70 text-sm mb-4 line-clamp-2 flex-1">
+                        {locale === 'id' ? umkm.description_id : umkm.description_en}
+                      </p>
+
+                      <div className="flex items-center gap-2 text-javanese-brown-60 text-sm mb-4">
+                        <MapPin className="w-4 h-4 flex-shrink-0" />
+                        <span>{locale === 'id' ? umkm.location_id : umkm.location_en}</span>
+                      </div>
+
+                      {/* Contact Icons */}
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {umkm.contact?.phone && (
+                          <a
+                            href={`https://wa.me/${umkm.contact.phone.replace(/[^0-9]/g, '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-javanese-gold-10 text-[var(--javanese-brown-text)] rounded-lg hover:bg-[var(--javanese-gold)] hover:text-[#4A2C2A] transition-colors text-sm"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <MessageCircle className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+
+                        {umkm.social_links?.facebook && (
+                          <a
+                            href={`https://facebook.com/${umkm.social_links.facebook}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-javanese-gold-10 text-[var(--javanese-brown-text)] rounded-lg hover:bg-[var(--javanese-gold)] hover:text-[#4A2C2A] transition-colors text-sm"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Facebook className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+
+                        {umkm.social_links?.instagram && (
+                          <a
+                            href={`https://instagram.com/${umkm.social_links.instagram.replace('@', '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-javanese-gold-10 text-[var(--javanese-brown-text)] rounded-lg hover:bg-[var(--javanese-gold)] hover:text-[#4A2C2A] transition-colors text-sm"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Instagram className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+                      </div>
+
+                      {/* View Details Button */}
+                      <button
+                        onClick={() => setSelectedUmkm(umkm)}
+                        className="w-full px-4 py-2 bg-[var(--javanese-gold)] text-[#4A2C2A] rounded-lg hover:opacity-90 transition-all inline-flex items-center justify-center gap-2 font-medium"
+                      >
+                        {t('viewDetails')}
+                        <ExternalLink className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
                 </FadeInSection>
               ))}
             </div>

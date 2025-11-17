@@ -24,6 +24,10 @@
 .DS_Store
 *.pem
 
+# project documentation (internal)
+MIGRATION_PROGRESS.md
+REFACTOR_ACTION_PLAN.md
+
 # debug
 npm-debug.log*
 yarn-debug.log*

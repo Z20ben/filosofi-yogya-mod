@@ -22,6 +22,7 @@ const sampleEvents = [
     location: 'Keraton Yogyakarta',
     category_id: 'Pertunjukan',
     category_en: 'Performance',
+    image_url: undefined,
   },
   {
     id: '2',
@@ -33,6 +34,7 @@ const sampleEvents = [
     location: 'Museum Batik Yogyakarta',
     category_id: 'Pameran',
     category_en: 'Exhibition',
+    image_url: undefined,
   },
   {
     id: '3',
@@ -44,6 +46,7 @@ const sampleEvents = [
     location: 'Alun-alun Selatan',
     category_id: 'Pasar',
     category_en: 'Market',
+    image_url: undefined,
   },
 ];
 

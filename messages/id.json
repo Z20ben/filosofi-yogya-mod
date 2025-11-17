@@ -517,6 +517,21 @@
       "button": "Hubungi Kami"
     }
   },
+  "umkmCard": {
+    "products": "Produk Unggulan",
+    "getDirections": "Petunjuk Arah",
+    "contact": "Hubungi",
+    "viewDetails": "Lihat Detail",
+    "modal": {
+      "description": "Deskripsi",
+      "products": "Produk",
+      "category": "Kategori",
+      "location": "Lokasi",
+      "priceRange": "Kisaran Harga",
+      "contact": "Kontak",
+      "socialMedia": "Media Sosial"
+    }
+  },
   "katalogUmkm": {
     "badge": "KATALOG UMKM",
     "title": "Katalog UMKM Sumbu Filosofi",
