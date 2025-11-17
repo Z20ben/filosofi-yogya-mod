@@ -86,7 +86,7 @@ export function AnimatedCounter({
   return (
     <div
       ref={counterRef}
-      className="flex flex-col items-center justify-center p-6 bg-card rounded-xl shadow-lg hover:shadow-xl transition-shadow"
+      className="flex flex-col items-center justify-center p-6 bg-card rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer"
     >
       {/* Icon */}
       <div className="w-16 h-16 rounded-full bg-gradient-to-br from-javanese-gold/20 to-javanese-gold/10 flex items-center justify-center mb-4">
