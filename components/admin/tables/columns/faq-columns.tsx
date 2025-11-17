@@ -1,6 +1,6 @@
 'use client';
 
-import { ColumnDef } from '@tantml:react-table';
+import { ColumnDef } from '@tanstack/react-table';
 import { MoreHorizontal, ArrowUpDown, Pencil, Trash2, GripVertical } from 'lucide-react';
 import { useLocale } from 'next-intl';
 import { Checkbox } from '@/components/ui/checkbox';
