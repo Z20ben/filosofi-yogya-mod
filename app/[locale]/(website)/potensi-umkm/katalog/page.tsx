@@ -1,0 +1,751 @@
+'use client';
+
+import { useState, useRef, useEffect } from 'react';
+import { useTranslations, useLocale } from 'next-intl';
+import { FadeInSection } from '@/components/shared/FadeInSection';
+import { Store, MapPin, Instagram, Facebook, Filter, ExternalLink, X, MessageCircle } from 'lucide-react';
+
+// ISR Configuration - uncomment when migrating to database
+// export const revalidate = 300; // Cache 5 minutes
+// NOTE: ISR (revalidate) akan diimplementasikan saat migrasi ke database
+// menggunakan Server Component + Client Component hybrid approach
+
+export default function KatalogUMKMPage() {
+  const t = useTranslations('katalogUmkm');
+  const locale = useLocale();
+
+  // Ref for filter section
+  const filterSectionRef = useRef<HTMLElement>(null);
+
+  // Filter states
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedLocation, setSelectedLocation] = useState('');
+  const [selectedUmkm, setSelectedUmkm] = useState<any>(null);
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [shouldScroll, setShouldScroll] = useState(false);
+  const itemsPerPage = 9;
+
+  // Sample UMKM data - database-ready structure
+  const allUmkm = [
+    {
+      id: 'umkm-1',
+      name_id: 'Batik Winotosastro',
+      name_en: 'Batik Winotosastro',
+      description_id: 'Pusat kerajinan batik tradisional dengan motif khas Yogyakarta yang sudah berdiri sejak tahun 1950. Menggunakan teknik batik tulis dan cap dengan pewarna alami.',
+      description_en: 'Traditional batik craft center with distinctive Yogyakarta motifs established since 1950. Using hand-drawn and stamped batik techniques with natural dyes.',
+      category_id: 'Kerajinan',
+      category_en: 'Handicrafts',
+      location_id: 'Kawasan Keraton',
+      location_en: 'Palace Area',
+      logo_url: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800',
+        'https://images.unsplash.com/photo-1615913140306-09a0c2e0b6f5?w=800',
+      ],
+      contact: {
+        phone: '+62 274 123456',
+        email: 'info@batikwino.com'
+      },
+      social_links: {
+        instagram: '@batikwinotosastro',
+        facebook: 'batikwinotosastro'
+      },
+    },
+    {
+      id: 'umkm-2',
+      name_id: 'Gudeg Yu Djum',
+      name_en: 'Gudeg Yu Djum',
+      description_id: 'Kuliner legendaris Yogyakarta dengan cita rasa autentik yang telah melewati 3 generasi. Menyajikan gudeg kering dan basah dengan resep turun temurun.',
+      description_en: 'Legendary Yogyakarta cuisine with authentic flavors passed down through 3 generations. Serving dry and wet gudeg with traditional recipes.',
+      category_id: 'Kuliner',
+      category_en: 'Culinary',
+      location_id: 'Kawasan Malioboro',
+      location_en: 'Malioboro Area',
+      logo_url: 'https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1606787366850-de6330128bfc?w=800',
+        'https://images.unsplash.com/photo-1562059390-a761a084768e?w=800',
+      ],
+      contact: {
+        phone: '+62 274 654321',
+        email: 'info@gudegyudjum.com'
+      },
+      social_links: {
+        instagram: '@gudegyudjum',
+        facebook: 'gudegyudjum'
+      },
+    },
+    {
+      id: 'umkm-3',
+      name_id: 'Silver Kotagede',
+      name_en: 'Kotagede Silver',
+      description_id: 'Pengrajin perak berkualitas tinggi dengan teknik tradisional Jawa yang elegan. Memproduksi perhiasan dan souvenir perak sejak tahun 1930.',
+      description_en: 'High-quality silver craftsman with elegant traditional Javanese techniques. Producing silver jewelry and souvenirs since 1930.',
+      category_id: 'Kerajinan',
+      category_en: 'Handicrafts',
+      location_id: 'Kawasan Kota Gede',
+      location_en: 'Kota Gede Area',
+      logo_url: 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800',
+        'https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=800',
+      ],
+      contact: {
+        phone: '+62 274 789012',
+        email: 'info@silverkotagede.com'
+      },
+      social_links: {
+        instagram: '@silverkotagede',
+        facebook: 'silverkotagede'
+      },
+    },
+    {
+      id: 'umkm-4',
+      name_id: 'Wayang Kulit Pak Tomo',
+      name_en: 'Pak Tomo Shadow Puppets',
+      description_id: 'Pengrajin wayang kulit dengan detail ukiran yang rumit. Setiap wayang dibuat dengan teknik sungging dan tatah yang autentik.',
+      description_en: 'Shadow puppet craftsman with intricate carving details. Each puppet is made with authentic sungging and tatah techniques.',
+      category_id: 'Seni',
+      category_en: 'Arts',
+      location_id: 'Kawasan Keraton',
+      location_en: 'Palace Area',
+      logo_url: 'https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1582555172866-f73bb12a2ab3?w=800',
+      ],
+      contact: {
+        phone: '+62 274 345678',
+        email: 'paktomo@wayang.com'
+      },
+      social_links: {
+        instagram: '@wayangpaktomo',
+        facebook: 'wayangpaktomo'
+      },
+    },
+    {
+      id: 'umkm-5',
+      name_id: 'Batik Plentong',
+      name_en: 'Batik Plentong',
+      description_id: 'Batik dengan motif kontemporer yang tetap mempertahankan nilai tradisional. Cocok untuk berbagai acara formal dan casual.',
+      description_en: 'Batik with contemporary motifs while maintaining traditional values. Suitable for various formal and casual occasions.',
+      category_id: 'Fashion',
+      category_en: 'Fashion',
+      location_id: 'Kawasan Malioboro',
+      location_en: 'Malioboro Area',
+      logo_url: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800',
+      ],
+      contact: {
+        phone: '+62 274 456789',
+        email: 'info@batikplentong.com'
+      },
+      social_links: {
+        instagram: '@batikplentong',
+        facebook: 'batikplentong'
+      },
+    },
+    {
+      id: 'umkm-6',
+      name_id: 'Gerabah Kasongan',
+      name_en: 'Kasongan Pottery',
+      description_id: 'Kerajinan gerabah dan keramik dengan berbagai bentuk unik. Dari peralatan dapur hingga dekorasi rumah yang artistik.',
+      description_en: 'Pottery and ceramic crafts with various unique shapes. From kitchenware to artistic home decorations.',
+      category_id: 'Kerajinan',
+      category_en: 'Handicrafts',
+      location_id: 'Kawasan Kota Gede',
+      location_en: 'Kota Gede Area',
+      logo_url: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=800',
+      ],
+      contact: {
+        phone: '+62 274 567890',
+        email: 'info@gerabahkasongan.com'
+      },
+      social_links: {
+        instagram: '@gerabahkasongan',
+        facebook: 'gerabahkasongan'
+      },
+    },
+    {
+      id: 'umkm-7',
+      name_id: 'Bakpia Pathok 25',
+      name_en: 'Bakpia Pathok 25',
+      description_id: 'Produsen bakpia legendaris dengan berbagai varian rasa. Oleh-oleh khas Yogyakarta yang wajib dibawa pulang.',
+      description_en: 'Legendary bakpia producer with various flavor variants. A must-buy typical Yogyakarta souvenir.',
+      category_id: 'Kuliner',
+      category_en: 'Culinary',
+      location_id: 'Kawasan Malioboro',
+      location_en: 'Malioboro Area',
+      logo_url: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800',
+      ],
+      contact: {
+        phone: '+62 274 678901',
+        email: 'info@bakpiapathok.com'
+      },
+      social_links: {
+        instagram: '@bakpiapathok25',
+        facebook: 'bakpiapathok25'
+      },
+    },
+    {
+      id: 'umkm-8',
+      name_id: 'Lurik Bu Yanti',
+      name_en: 'Bu Yanti Lurik',
+      description_id: 'Tenun lurik tradisional dengan motif garis khas Jawa. Kain tenun berkualitas untuk berbagai keperluan.',
+      description_en: 'Traditional lurik weaving with typical Javanese stripe patterns. Quality woven fabric for various purposes.',
+      category_id: 'Fashion',
+      category_en: 'Fashion',
+      location_id: 'Kawasan Keraton',
+      location_en: 'Palace Area',
+      logo_url: 'https://images.unsplash.com/photo-1558769132-cb1aea1f1f85?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1558769132-cb1aea1f1f85?w=800',
+      ],
+      contact: {
+        phone: '+62 274 789123',
+        email: 'info@lurikbuyanti.com'
+      },
+      social_links: {
+        instagram: '@lurikbuyanti',
+        facebook: 'lurikbuyanti'
+      },
+    },
+    {
+      id: 'umkm-9',
+      name_id: 'Keris Empu Joko',
+      name_en: 'Empu Joko Keris',
+      description_id: 'Pengrajin keris pusaka dengan pamor dan luk yang indah. Dibuat oleh empu berpengalaman dengan ritual tradisional.',
+      description_en: 'Heirloom keris craftsman with beautiful pamor and curves. Made by experienced empu with traditional rituals.',
+      category_id: 'Seni',
+      category_en: 'Arts',
+      location_id: 'Kawasan Kota Gede',
+      location_en: 'Kota Gede Area',
+      logo_url: 'https://images.unsplash.com/photo-1609555058183-cf4eea52c096?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1609555058183-cf4eea52c096?w=800',
+      ],
+      contact: {
+        phone: '+62 274 890234',
+        email: 'info@kerisempujoko.com'
+      },
+      social_links: {
+        instagram: '@empujoko',
+        facebook: 'empujoko'
+      },
+    },
+    {
+      id: 'umkm-10',
+      name_id: 'Angkringan Mas Tukul',
+      name_en: 'Mas Tukul Angkringan',
+      description_id: 'Kuliner malam khas Yogyakarta dengan suasana lesehan yang nyaman. Menyajikan nasi kucing dan berbagai gorengan.',
+      description_en: 'Typical Yogyakarta night culinary with comfortable sitting atmosphere. Serving nasi kucing and various fried snacks.',
+      category_id: 'Kuliner',
+      category_en: 'Culinary',
+      location_id: 'Kawasan Malioboro',
+      location_en: 'Malioboro Area',
+      logo_url: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400',
+      gallery_images: [
+        'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800',
+      ],
+      contact: {
+        phone: '+62 274 901345',
+        email: 'info@angkringanmastukul.com'
+      },
+      social_links: {
+        instagram: '@angkringanmastukul',
+        facebook: 'angkringanmastukul'
+      },
+    },
+  ];
+
+  // Get unique categories and locations for filters
+  const categories = [
+    { value: '', label_id: 'Semua Kategori', label_en: 'All Categories' },
+    { value: 'Kerajinan', label_id: 'Kerajinan', label_en: 'Handicrafts' },
+    { value: 'Kuliner', label_id: 'Kuliner', label_en: 'Culinary' },
+    { value: 'Fashion', label_id: 'Fashion', label_en: 'Fashion' },
+    { value: 'Seni', label_id: 'Seni', label_en: 'Arts' },
+  ];
+
+  const locations = [
+    { value: '', label_id: 'Semua Lokasi', label_en: 'All Locations' },
+    { value: 'Kawasan Keraton', label_id: 'Kawasan Keraton', label_en: 'Palace Area' },
+    { value: 'Kawasan Malioboro', label_id: 'Kawasan Malioboro', label_en: 'Malioboro Area' },
+    { value: 'Kawasan Kota Gede', label_id: 'Kawasan Kota Gede', label_en: 'Kota Gede Area' },
+  ];
+
+  // Filter UMKM based on selected category and location
+  const filteredUmkm = allUmkm.filter(umkm => {
+    const matchesCategory = !selectedCategory || umkm.category_id === selectedCategory;
+    const matchesLocation = !selectedLocation || umkm.location_id === selectedLocation;
+    return matchesCategory && matchesLocation;
+  });
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredUmkm.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentUmkm = filteredUmkm.slice(startIndex, endIndex);
+
+  // Scroll to filter section after page changes
+  useEffect(() => {
+    if (shouldScroll && filterSectionRef.current) {
+      const headerOffset = 80; // Offset untuk header yang fixed
+      const elementPosition = filterSectionRef.current.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+
+      setShouldScroll(false);
+    }
+  }, [currentPage, shouldScroll]);
+
+  // Handle page change with scroll
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    setShouldScroll(true);
+  };
+
+  // Reset pagination when filters change
+  const handleFilterChange = () => {
+    setCurrentPage(1);
+  };
+
+  return (
+    <div className="min-h-screen bg-background pt-20">
+      {/* Header */}
+      <section className="wayang-border bg-gradient-to-r from-[var(--javanese-brown-bg)] to-[var(--javanese-terracotta)] text-[var(--javanese-ivory)] py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-javanese-gold/20 backdrop-blur-sm rounded-full mb-6 border border-javanese-gold/30">
+            <Store className="w-5 h-5 text-[var(--javanese-gold)] dark:text-white" />
+            <span className="text-[var(--javanese-gold)] dark:text-white">
+              {t('badge')}
+            </span>
+          </div>
+
+          <h1 className="font-serif text-5xl">
+            {t('title')}
+          </h1>
+
+          <p className="text-[var(--javanese-ivory)]/90 text-xl mt-4 max-w-3xl mx-auto">
+            {t('subtitle')}
+          </p>
+        </div>
+      </section>
+
+      {/* Filters */}
+      <section ref={filterSectionRef} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <FadeInSection>
+          <div className="bg-card rounded-xl p-6 shadow-md">
+            <div className="flex items-center gap-2 mb-4 text-[var(--javanese-brown-text)]">
+              <Filter className="w-5 h-5" />
+              <span className="font-medium">{t('filter.title')}</span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-[var(--javanese-brown-text)] mb-2 text-sm font-medium">
+                  {t('filter.category')}
+                </label>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => {
+                    setSelectedCategory(e.target.value);
+                    handleFilterChange();
+                  }}
+                  className="w-full px-4 py-3 rounded-lg border border-[var(--javanese-brown-text)]/20 bg-background text-[var(--javanese-brown-text)] focus:outline-none focus:ring-2 focus:ring-[var(--javanese-gold)]"
+                >
+                  {categories.map((cat) => (
+                    <option key={cat.value} value={cat.value}>
+                      {locale === 'id' ? cat.label_id : cat.label_en}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-[var(--javanese-brown-text)] mb-2 text-sm font-medium">
+                  {t('filter.location')}
+                </label>
+                <select
+                  value={selectedLocation}
+                  onChange={(e) => {
+                    setSelectedLocation(e.target.value);
+                    handleFilterChange();
+                  }}
+                  className="w-full px-4 py-3 rounded-lg border border-[var(--javanese-brown-text)]/20 bg-background text-[var(--javanese-brown-text)] focus:outline-none focus:ring-2 focus:ring-[var(--javanese-gold)]"
+                >
+                  {locations.map((loc) => (
+                    <option key={loc.value} value={loc.value}>
+                      {locale === 'id' ? loc.label_id : loc.label_en}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Results count */}
+            <p className="text-javanese-brown-60 text-sm mt-4">
+              {t('filter.showing')} <span className="font-semibold">{filteredUmkm.length}</span> {t('filter.results')}
+            </p>
+          </div>
+        </FadeInSection>
+      </section>
+
+      {/* UMKM Grid */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        {filteredUmkm.length === 0 ? (
+          <div className="text-center py-20">
+            <Store className="w-16 h-16 text-[var(--javanese-brown-text)]/30 mx-auto mb-4" />
+            <p className="text-javanese-brown-60">{t('noResults')}</p>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {currentUmkm.map((umkm, index) => (
+                <FadeInSection key={umkm.id} delay={index * 75} direction="up">
+                  <div className="bg-card rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group h-full flex flex-col">
+                    {/* Image Gallery */}
+                    <div className="relative">
+                      <div
+                        className="overflow-x-auto overflow-y-hidden snap-x snap-mandatory flex bg-muted"
+                        style={{
+                          scrollbarWidth: 'none',
+                          msOverflowStyle: 'none',
+                          WebkitOverflowScrolling: 'touch'
+                        }}
+                      >
+                        {umkm.gallery_images && umkm.gallery_images.length > 0 ? (
+                          umkm.gallery_images.map((img: string, idx: number) => (
+                            <div key={idx} className="w-full flex-shrink-0 snap-center">
+                              <div className="aspect-video">
+                                <img
+                                  src={img}
+                                  alt={`${locale === 'id' ? umkm.name_id : umkm.name_en} ${idx + 1}`}
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
+                            </div>
+                          ))
+                        ) : umkm.logo_url ? (
+                          <div className="w-full flex-shrink-0">
+                            <div className="aspect-video">
+                              <img
+                                src={umkm.logo_url}
+                                alt={locale === 'id' ? umkm.name_id : umkm.name_en}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="w-full flex-shrink-0">
+                            <div className="aspect-video flex items-center justify-center">
+                              <Store className="w-16 h-16 text-[var(--javanese-brown-text)]/20" />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Category Badge */}
+                      <div className="absolute top-4 right-4 z-10">
+                        <span className="px-3 py-1 bg-javanese-gold-90 text-[#4A2C2A] rounded-full text-sm font-medium shadow-lg">
+                          {locale === 'id' ? umkm.category_id : umkm.category_en}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-6 flex-1 flex flex-col">
+                      <h3 className="text-[var(--javanese-brown-text)] mb-2 font-serif text-xl">
+                        {locale === 'id' ? umkm.name_id : umkm.name_en}
+                      </h3>
+
+                      <p className="text-javanese-brown-70 text-sm mb-4 line-clamp-2 flex-1">
+                        {locale === 'id' ? umkm.description_id : umkm.description_en}
+                      </p>
+
+                      <div className="flex items-center gap-2 text-javanese-brown-60 text-sm mb-4">
+                        <MapPin className="w-4 h-4 flex-shrink-0" />
+                        <span>{locale === 'id' ? umkm.location_id : umkm.location_en}</span>
+                      </div>
+
+                      {/* Contact Icons */}
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {umkm.contact?.phone && (
+                          <a
+                            href={`https://wa.me/${umkm.contact.phone.replace(/[^0-9]/g, '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-javanese-gold-10 text-[var(--javanese-brown-text)] rounded-lg hover:bg-[var(--javanese-gold)] hover:text-[#4A2C2A] transition-colors text-sm"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <MessageCircle className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+
+                        {umkm.social_links?.facebook && (
+                          <a
+                            href={`https://facebook.com/${umkm.social_links.facebook}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-javanese-gold-10 text-[var(--javanese-brown-text)] rounded-lg hover:bg-[var(--javanese-gold)] hover:text-[#4A2C2A] transition-colors text-sm"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Facebook className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+
+                        {umkm.social_links?.instagram && (
+                          <a
+                            href={`https://instagram.com/${umkm.social_links.instagram.replace('@', '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 px-3 py-1.5 bg-javanese-gold-10 text-[var(--javanese-brown-text)] rounded-lg hover:bg-[var(--javanese-gold)] hover:text-[#4A2C2A] transition-colors text-sm"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <Instagram className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+                      </div>
+
+                      {/* View Details Button */}
+                      <button
+                        onClick={() => setSelectedUmkm(umkm)}
+                        className="w-full px-4 py-2 bg-[var(--javanese-gold)] text-[#4A2C2A] rounded-lg hover:opacity-90 transition-all inline-flex items-center justify-center gap-2 font-medium"
+                      >
+                        {t('viewDetails')}
+                        <ExternalLink className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                </FadeInSection>
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="mt-12 flex justify-center gap-2">
+                <button
+                  onClick={() => {
+                    const newPage = Math.max(1, currentPage - 1);
+                    if (newPage !== currentPage) handlePageChange(newPage);
+                  }}
+                  disabled={currentPage === 1}
+                  className={`px-4 py-2 rounded-lg transition-all ${
+                    currentPage === 1
+                      ? 'opacity-50 cursor-not-allowed bg-muted'
+                      : 'bg-card hover:bg-javanese-gold-20 text-[var(--javanese-brown-text)]'
+                  }`}
+                >
+                  {t('pagination.previous')}
+                </button>
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => handlePageChange(page)}
+                    className={`w-10 h-10 rounded-lg transition-all ${
+                      currentPage === page
+                        ? 'bg-[var(--javanese-gold)] text-[#4A2C2A] shadow-lg font-semibold'
+                        : 'bg-card text-[var(--javanese-brown-text)] hover:bg-javanese-gold-20'
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+
+                <button
+                  onClick={() => {
+                    const newPage = Math.min(totalPages, currentPage + 1);
+                    if (newPage !== currentPage) handlePageChange(newPage);
+                  }}
+                  disabled={currentPage === totalPages}
+                  className={`px-4 py-2 rounded-lg transition-all ${
+                    currentPage === totalPages
+                      ? 'opacity-50 cursor-not-allowed bg-muted'
+                      : 'bg-card hover:bg-javanese-gold-20 text-[var(--javanese-brown-text)]'
+                  }`}
+                >
+                  {t('pagination.next')}
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </section>
+
+      {/* Detail Modal */}
+      {selectedUmkm && (
+        <div className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center p-4">
+          <div className="bg-card rounded-2xl max-w-3xl w-full my-8 max-h-[90vh] overflow-y-auto flex flex-col">
+            {/* Modal Header */}
+            <div
+              className="sticky top-0 z-20 rounded-t-2xl border-b border-[var(--javanese-brown-text)]/10 p-6 flex items-center justify-between shadow-md flex-shrink-0"
+              style={{
+                backgroundColor: 'var(--card)',
+                backdropFilter: 'blur(8px)'
+              }}
+            >
+              <h2 className="text-[var(--javanese-brown-text)] font-serif text-2xl">
+                {locale === 'id' ? selectedUmkm.name_id : selectedUmkm.name_en}
+              </h2>
+              <button
+                onClick={() => setSelectedUmkm(null)}
+                className="w-10 h-10 flex items-center justify-center rounded-full hover:bg-muted transition-colors"
+              >
+                <X className="w-5 h-5 text-[var(--javanese-brown-text)]" />
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-6 space-y-6 flex-1">
+              {/* Gallery */}
+              {selectedUmkm.gallery_images && selectedUmkm.gallery_images.length > 0 && (
+                <div className="relative z-0">
+                  <div
+                    className="overflow-x-scroll overflow-y-hidden flex gap-3 bg-muted p-3 rounded-xl cursor-grab active:cursor-grabbing"
+                    style={{
+                      scrollbarWidth: 'thin',
+                      scrollbarColor: 'rgba(155, 135, 110, 0.3) transparent'
+                    }}
+                    onMouseDown={(e) => {
+                      const ele = e.currentTarget;
+                      const startX = e.pageX - ele.offsetLeft;
+                      const scrollLeft = ele.scrollLeft;
+
+                      const handleMouseMove = (e: MouseEvent) => {
+                        const x = e.pageX - ele.offsetLeft;
+                        const walk = (x - startX) * 2;
+                        ele.scrollLeft = scrollLeft - walk;
+                      };
+
+                      const handleMouseUp = () => {
+                        document.removeEventListener('mousemove', handleMouseMove);
+                        document.removeEventListener('mouseup', handleMouseUp);
+                      };
+
+                      document.addEventListener('mousemove', handleMouseMove);
+                      document.addEventListener('mouseup', handleMouseUp);
+                    }}
+                  >
+                    {selectedUmkm.gallery_images.map((img: string, idx: number) => (
+                      <div
+                        key={idx}
+                        className="flex-shrink-0"
+                        style={{ width: 'calc(100% - 4rem)' }}
+                      >
+                        <div className="aspect-video rounded-lg overflow-hidden">
+                          <img
+                            src={img}
+                            alt={`${locale === 'id' ? selectedUmkm.name_id : selectedUmkm.name_en} ${idx + 1}`}
+                            className="w-full h-full object-cover pointer-events-none"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Description */}
+              <div>
+                <h3 className="text-[var(--javanese-brown-text)] mb-2 font-semibold">
+                  {t('modal.description')}
+                </h3>
+                <p className="text-javanese-brown-70 leading-relaxed">
+                  {locale === 'id' ? selectedUmkm.description_id : selectedUmkm.description_en}
+                </p>
+              </div>
+
+              {/* Category & Location */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <h3 className="text-[var(--javanese-brown-text)] mb-2 font-semibold">
+                    {t('modal.category')}
+                  </h3>
+                  <span className="inline-block px-3 py-1 bg-javanese-gold-20 text-[var(--javanese-brown-text)] rounded-full">
+                    {locale === 'id' ? selectedUmkm.category_id : selectedUmkm.category_en}
+                  </span>
+                </div>
+
+                <div>
+                  <h3 className="text-[var(--javanese-brown-text)] mb-2 font-semibold">
+                    {t('modal.location')}
+                  </h3>
+                  <p className="text-javanese-brown-70">
+                    {locale === 'id' ? selectedUmkm.location_id : selectedUmkm.location_en}
+                  </p>
+                </div>
+              </div>
+
+              {/* Contact & Social Media */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Contact */}
+                {selectedUmkm.contact && selectedUmkm.contact.phone && (
+                  <div>
+                    <h3 className="text-[var(--javanese-brown-text)] mb-3 font-semibold">
+                      {t('modal.contact')}
+                    </h3>
+                    <div className="space-y-2">
+                      <a
+                        href={`https://wa.me/${selectedUmkm.contact.phone.replace(/[^0-9]/g, '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-3 text-javanese-brown-70 hover:text-[var(--javanese-brown-text)]"
+                      >
+                        <MessageCircle className="w-5 h-5" />
+                        <span>{selectedUmkm.contact.phone}</span>
+                      </a>
+                    </div>
+                  </div>
+                )}
+
+                {/* Social Media */}
+                {selectedUmkm.social_links && (
+                  <div>
+                    <h3 className="text-[var(--javanese-brown-text)] mb-3 font-semibold">
+                      {t('modal.socialMedia')}
+                    </h3>
+                    <div className="flex items-start gap-2">
+                      {selectedUmkm.social_links.instagram && (
+                        <a
+                          href={`https://instagram.com/${selectedUmkm.social_links.instagram.replace('@', '')}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-3 py-2 bg-javanese-gold-10 text-[var(--javanese-brown-text)] rounded-lg hover:bg-[var(--javanese-gold)] hover:text-[#4A2C2A] transition-colors text-sm whitespace-nowrap"
+                        >
+                          <Instagram className="w-4 h-4" />
+                          <span>{selectedUmkm.social_links.instagram}</span>
+                        </a>
+                      )}
+                      {selectedUmkm.social_links.facebook && (
+                        <a
+                          href={`https://facebook.com/${selectedUmkm.social_links.facebook}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 px-3 py-2 bg-javanese-gold-10 text-[var(--javanese-brown-text)] rounded-lg hover:bg-[var(--javanese-gold)] hover:text-[#4A2C2A] transition-colors text-sm whitespace-nowrap"
+                        >
+                          <Facebook className="w-4 h-4" />
+                          <span>{selectedUmkm.social_links.facebook}</span>
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

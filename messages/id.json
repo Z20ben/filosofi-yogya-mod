@@ -1,0 +1,582 @@
+{
+  "nav": {
+    "home": "Beranda",
+    "kawasan": "Kawasan Sumbu Filosofi",
+    "sejarah": "Sejarah & Riset",
+    "wisata": "Potensi Wisata",
+    "umkm": "Potensi UMKM",
+    "agenda": "Agenda Seni & Budaya",
+    "katalog": "Katalog UMKM",
+    "galeri": "Galeri Foto",
+    "tentang": "Tentang",
+    "admin": "Admin",
+    "kawasanGroup": "Kawasan",
+    "umkmGroup": "UMKM",
+    "mediaGroup": "Media"
+  },
+  "home": {
+    "title": "Ensiklopedia Sumbu Filosofi Yogyakarta",
+    "subtitle": "Menjelajahi Warisan Budaya dan Filosofi Jawa",
+    "welcome": "Selamat Datang",
+    "explore": "Jelajahi Sumbu Filosofi",
+    "featured": "Sorotan Utama",
+    "featuredDescription": "Jelajahi berbagai aspek dari Sumbu Filosofi Yogyakarta",
+    "aboutTitle": "Apa itu Sumbu Filosofi?",
+    "description": "Sumbu Filosofi adalah garis imajiner yang membentang dari selatan ke utara, menghubungkan Pantai Parangtritis, Keraton Yogyakarta, dan Gunung Merapi. Garis ini bukan sekadar orientasi geografis, tetapi merupakan representasi mendalam dari filosofi Jawa tentang harmoni kosmologis.",
+    "description2": "Konsep ini mencerminkan hubungan antara manusia (mikrokosmos) dengan alam semesta (makrokosmos), serta perjalanan spiritual dari nafsu duniawi (Parangtritis) menuju kesempurnaan spiritual (Merapi) dengan Keraton sebagai pusat kekuatan dan kebijaksanaan.",
+    "description3": "Ensiklopedia ini hadir sebagai platform digital untuk mendokumentasikan, mempromosikan, dan melestarikan warisan budaya yang kaya di sepanjang koridor Sumbu Filosofi.",
+    "learnMore": "Pelajari Lebih Lanjut",
+    "statisticsTitle": "Sumbu Filosofi dalam Angka",
+    "statisticsDescription": "Jelajahi kekayaan budaya dan warisan yang terdokumentasi dalam ensiklopedia digital ini",
+    "statisticsLabel": "Statistik",
+    "features": {
+      "kawasan": {
+        "title": "Kawasan Sumbu Filosofi",
+        "description": "Jelajahi kawasan bersejarah yang menghubungkan Pantai Parangtritis hingga Gunung Merapi"
+      },
+      "sejarah": {
+        "title": "Sejarah & Riset",
+        "description": "Pelajari sejarah dan filosofi yang membentuk identitas budaya Yogyakarta"
+      },
+      "umkm": {
+        "title": "Katalog UMKM",
+        "description": "Dukung usaha lokal yang melestarikan kerajinan dan kuliner tradisional"
+      },
+      "agenda": {
+        "title": "Agenda Seni & Budaya",
+        "description": "Ikuti berbagai acara seni dan budaya yang merayakan warisan Jawa"
+      },
+      "galeri": {
+        "title": "Galeri Foto",
+        "description": "Nikmati koleksi foto yang menampilkan keindahan dan keunikan Sumbu Filosofi"
+      },
+      "cctv": {
+        "title": "Pantauan CCTV",
+        "description": "Pantau kondisi terkini kawasan Sumbu Filosofi melalui kamera CCTV secara real-time",
+        "visit": "Kunjungi Situs"
+      }
+    },
+    "stats": {
+      "tourism": "Destinasi Wisata",
+      "umkm": "Potensi UMKM",
+      "gallery": "Foto Galeri",
+      "events": "Acara Budaya"
+    },
+    "cta": {
+      "badge": "Wisata Warisan Budaya",
+      "title": "Jelajahi Warisan Budaya Jogja",
+      "description": "Rasakan pengalaman wisata warisan budaya yang autentik bersama Jogja Heritage. Reservasi tur sejarah dan budaya Anda sekarang!",
+      "bookNow": "Reservasi Sekarang",
+      "viewDestinations": "Lihat Destinasi Wisata"
+    },
+    "imageAlt": "Ilustrasi Filosofi Sangkaning Dumadi - Sumbu Filosofi Yogyakarta"
+  },
+  "common": {
+    "learnMore": "Pelajari Selengkapnya"
+  },
+  "footer": {
+    "aboutTitle": "Tentang Kami",
+    "aboutDescription": "Ensiklopedia digital yang merayakan warisan budaya dan filosofi Jawa di koridor Sumbu Filosofi Yogyakarta.",
+    "quickLinksTitle": "Tautan Cepat",
+    "contactTitle": "Kontak",
+    "copyright": "Hak Cipta Dilindungi."
+  },
+  "kawasan": {
+    "badge": "Kawasan",
+    "title": "Kawasan Sumbu Filosofi",
+    "subtitle": "Bukan sekadar garis geografis, tetapi merupakan representasi mendalam dari perjalanan hidup manusia - dari kelahiran hingga kembali kepada Sang Pencipta, dengan setiap lokasi dan vegetasi memiliki makna filosofis yang mendalam",
+    "philosophy": {
+      "title": "Filosofi Sangkan Paraning Dumadi",
+      "intro": "Sebagaimana dikutip dari laman resmi Kraton Jogja, Sumbu Filosofi membentang dari Tugu Golong Gilig, Keraton, dan Panggung Krapyak yang di dalamnya menggambarkan perjalanan siklus hidup manusia berdasarkan konsep Sangkan Paraning Dumadi.",
+      "sangkan": {
+        "title": "Sangkan - Asal Mula (Panggung Krapyak → Keraton)",
+        "description": "Konsep Sangkan atau asal yang merupakan pendewasaan manusia digambarkan perjalanan dari Panggung Krapyak menuju Keraton.",
+        "panggung": {
+          "title": "🏛️ Panggung Krapyak - Kelahiran",
+          "description": "Panggung Krapyak memiliki makna awal kelahiran atau rahim. Hal ini ditegaskan akan keberadaan kampung di sebelah barat laut bernama Mijen, yang berasal dari kata \"wiji\" atau benih."
+        },
+        "road": {
+          "title": "🌳 Jalan Menuju Keraton - Masa Muda",
+          "description": "Pohon asem (asam) dan pohon tanjung ditanam sepanjang jalan dari Panggung Krapyak menuju Keraton. Sinom (daun asam muda) melambangkan muda, dan pohon tanjung melambangkan anak muda yang selalu disanjung oleh lingkungannya."
+        },
+        "alunAlun": {
+          "title": "🌺 Alun-Alun Selatan - Kedewasaan",
+          "description": "Dari Panggung Krapyak ke utara terdapat Alun-Alun Selatan yang sekitarnya ditanami pohon pakel dan kweni, melambangkan pemuda yang sudah akil balig dan sudah wani (berani) meminang gadis pujaannya."
+        },
+        "sitiHinggil": {
+          "title": "💑 Siti Hinggil Kidul - Penyatuan",
+          "description": "Di Siti Hinggil Kidul terdapat pohon pelem cempora yang berbunga putih melambangkan benih laki-laki, dan pohon soka yang berbunga merah melambangkan benih perempuan."
+        },
+        "pamengkang": {
+          "title": "🚪 Pamengkang - Gerbang Kehidupan",
+          "description": "Di kiri dan kanan Siti Hinggil Kidul terdapat jalan bernama Pamengkang, yang berarti posisi kaki yang berjauhan. Melambangkan gerbang menuju rahim. Adapun kompleks Kamandhungan di sisi utaranya merupakan simbol sukma atau janin yang menunggu dilahirkan."
+        },
+        "conclusion": "Filosofi Sangkan berhenti ketika anak sudah tumbuh menjadi manusia dewasa."
+      },
+      "paran": {
+        "title": "Paran - Kembali kepada Pencipta (Tugu → Keraton)",
+        "description": "Konsep Paran yang merupakan perjalanan manusia menuju Sang Pencipta digambarkan dari Tugu Golong Gilig menuju Keraton.",
+        "tugu": {
+          "title": "⚪ Tugu Golong Gilig - Kesucian",
+          "description": "Tugu Golong Gilig melambangkan golonging cipta, rasa, lan karsa (menyatunya pikiran, perasaan, dan keinginan) untuk menghadap Sang Khalik. Warna putih dipilih untuk melambangkan kesucian hati."
+        },
+        "margatama": {
+          "title": "🛣️ Jalan Margatama - Menuju Keutamaan",
+          "description": "Dari Tugu Golong Gilig ke selatan ada Jalan Margatama yang berarti \"menuju keutamaan\"."
+        },
+        "margamulya": {
+          "title": "✨ Jalan Margamulya - Menuju Kemuliaan",
+          "description": "Jalan Margamulya berarti \"jalan menuju kemuliaan\". Untuk menuju ke sana, manusia harus bisa mengusir nafsu buruk."
+        },
+        "pangurakan": {
+          "title": "🧘 Jalan Pangurakan - Mengusir Nafsu",
+          "description": "Jalan berikutnya dinamai Jalan Pangurakan, melambangkan proses mengusir nafsu buruk dalam diri manusia."
+        },
+        "vegetation": {
+          "title": "🌿 Vegetasi Jalan - Simbol Ketenangan",
+          "description": "Sepanjang Jalan Margatama hingga Jalan Margamulya ditanami pohon asam melambangkan sengsem (ketertarikan) dan gayam melambangkan ayom (ketenangan). Maknanya, orang akan merasa senang atau tertarik dan tenang atau nyaman."
+        },
+        "alunAlun": {
+          "title": "🌊 Alun-Alun - Gelombang Kehidupan",
+          "description": "Alun-Alun diambil dari kata \"alun\" (ombak), menggambarkan berbagai gelombang yang dihadapi manusia sebelum kembali kepada Penciptanya."
+        }
+      }
+    },
+    "map": {
+      "title": "Peta Interaktif Sumbu Filosofi",
+      "subtitle": "Klik marker pada peta untuk menjelajahi lokasi-lokasi penting",
+      "loading": "Memuat peta...",
+      "notConfigured": "Peta Belum Dikonfigurasi",
+      "notConfiguredDesc": "Admin dapat mengatur URL peta Google My Maps di halaman pengaturan dashboard admin."
+    },
+    "landmarks": {
+      "title": "Titik-Titik Penting",
+      "subtitle": "Tiga titik utama yang membentuk Sumbu Filosofi Yogyakarta",
+      "tugu": {
+        "name": "Tugu Pal Putih",
+        "description": "Tugu Golong Gilig yang melambangkan persatuan cipta, rasa, dan karsa dalam filosofi Jawa"
+      },
+      "kraton": {
+        "name": "Kraton Ngayogyakarto Hadiningrat",
+        "description": "Pusat Sumbu Filosofi, istana Sultan yang masih berfungsi sebagai jantung kebudayaan Yogyakarta"
+      },
+      "panggung": {
+        "name": "Panggung Krapyak",
+        "description": "Titik selatan Sumbu Filosofi yang melambangkan asal dan tujuan kehidupan manusia"
+      }
+    },
+    "unesco": {
+      "badge": "Warisan Budaya Dunia UNESCO",
+      "title": "Warisan Budaya Dunia",
+      "description": "Pada tahun 2023, Sumbu Filosofi Yogyakarta secara resmi diakui oleh UNESCO sebagai Situs Warisan Budaya Dunia dengan nama \"The Cosmological Axis of Yogyakarta and its Historic Landmarks\".\n\nPengakuan ini menegaskan nilai universal luar biasa dari sebuah konsep perencanaan kota yang mengintegrasikan kosmologi Jawa, arsitektur tradisional, dan filosofi hidup. Sumbu Filosofi merepresentasikan harmoni antara alam, manusia, dan Sang Pencipta yang telah dilestarikan selama berabad-abad.\n\nKoridor ini mencakup monumen-monumen bersejarah dari Tugu Pal Putih di utara hingga Panggung Krapyak di selatan, dengan Keraton Yogyakarta sebagai pusatnya, mencerminkan perjalanan spiritual kehidupan manusia dari kelahiran hingga kembali kepada Sang Maha Kuasa.",
+      "ctaButton": "Lihat Detail di UNESCO"
+    }
+  },
+  "wisata": {
+    "badge": "Wisata",
+    "title": "Potensi Wisata",
+    "subtitle": "Jelajahi destinasi wisata menakjubkan di sepanjang koridor Sumbu Filosofi - dari pantai legendaris hingga candi megah",
+    "stats": {
+      "destinations": "Destinasi",
+      "categories": "Kategori"
+    },
+    "section": {
+      "title": "Destinasi Wisata",
+      "description": "Temukan destinasi wisata terbaik di sepanjang Sumbu Filosofi Yogyakarta"
+    },
+    "filter": {
+      "all": "Semua Kategori",
+      "nature": "Wisata Alam",
+      "cultural": "Wisata Budaya",
+      "historical": "Wisata Sejarah",
+      "shopping": "Wisata Belanja",
+      "religious": "Wisata Religi"
+    },
+    "results": {
+      "showing": "Menampilkan",
+      "of": "dari",
+      "results": "hasil"
+    },
+    "card": {
+      "rating": "Rating",
+      "facilities": "Fasilitas",
+      "getDirections": "Petunjuk Arah"
+    },
+    "map": {
+      "title": "Peta Wisata Interaktif",
+      "subtitle": "Klik marker pada peta untuk melihat detail lokasi wisata dan informasi penting",
+      "notConfigured": "Peta Belum Dikonfigurasi",
+      "notConfiguredDesc": "Admin dapat mengatur URL peta di dashboard admin."
+    },
+    "destinations": {
+      "parangtritis": {
+        "name": "Pantai Parangtritis",
+        "description": "Pantai legendaris dengan pemandangan sunset spektakuler, pasir hitam vulkanik, dan tradisi Labuhan. Tempat sempurna untuk menikmati olahraga air dan wisata budaya.",
+        "category": "nature",
+        "facilities": ["Parkir", "Toilet", "Warung Makan", "Penginapan"]
+      },
+      "alunAlunKidul": {
+        "name": "Alun-Alun Kidul",
+        "description": "Lapangan terbuka dengan pohon beringin kembar yang ikonik. Terkenal dengan tradisi \"Masangin\" - berjalan dengan mata tertutup melewati dua pohon beringin. Area kuliner malam yang ramai.",
+        "category": "cultural",
+        "facilities": ["Area Parkir", "Penerangan", "Food Court", "Toilet Umum"]
+      },
+      "kraton": {
+        "name": "Keraton Yogyakarta",
+        "description": "Istana Sultan yang masih berfungsi hingga kini. Kunjungi museum, saksikan pertunjukan tari dan gamelan, dan pelajari arsitektur Jawa tradisional yang megah.",
+        "category": "historical",
+        "facilities": ["Museum", "Guide", "Gift Shop", "Audio Tour"]
+      },
+      "malioboro": {
+        "name": "Malioboro",
+        "description": "Jantung wisata belanja Yogyakarta. Jalanan ikonik dengan batik, kerajinan tangan, kuliner khas, dan pertunjukan jalanan. Pengalaman berbelanja yang tak terlupakan.",
+        "category": "shopping",
+        "facilities": ["Toko", "ATM", "Hotel", "Restoran"]
+      },
+      "tugu": {
+        "name": "Tugu Yogyakarta",
+        "description": "Monumen ikonik yang menjadi landmark kota. Simbol perlawanan rakyat Yogyakarta. Area publik yang indah untuk foto dan bersantai.",
+        "category": "historical",
+        "facilities": ["Taman", "Spot Foto", "Penerangan", "Akses Mudah"]
+      },
+      "bentengVredeburg": {
+        "name": "Museum Benteng Vredeburg",
+        "description": "Benteng bersejarah yang kini menjadi museum. Pelajari sejarah perjuangan kemerdekaan Indonesia melalui diorama dan pameran interaktif.",
+        "category": "historical",
+        "facilities": ["Museum", "Perpustakaan", "Auditorium", "Kantin"]
+      },
+      "tamanSari": {
+        "name": "Taman Sari",
+        "description": "Kompleks taman air bekas istana Sultan. Arsitektur unik perpaduan Jawa dan Eropa. Kolam pemandian, terowongan bawah tanah, dan Sumur Gumuling yang misterius.",
+        "category": "historical",
+        "facilities": ["Guide", "Toilet", "Spot Foto", "Parkir"]
+      },
+      "prambanan": {
+        "name": "Candi Prambanan",
+        "description": "Kompleks candi Hindu terbesar di Indonesia. Warisan Dunia UNESCO dengan relief cerita Ramayana yang memukau. Pertunjukan Ramayana Ballet setiap malam.",
+        "category": "religious",
+        "facilities": ["Museum", "Guide", "Restoran", "Teater"]
+      },
+      "kaliurang": {
+        "name": "Kaliurang",
+        "description": "Kawasan wisata pegunungan yang sejuk di lereng Gunung Merapi. Udara segar, pemandangan alam, dan berbagai aktivitas outdoor seperti hiking dan camping.",
+        "category": "nature",
+        "facilities": ["Hotel", "Restoran", "Jalur Hiking", "Area Camping"]
+      }
+    },
+    "tips": {
+      "bestTime": {
+        "title": "Waktu Terbaik",
+        "description": "Kunjungi saat musim kemarau (April-Oktober) untuk cuaca optimal"
+      },
+      "photoSpots": {
+        "title": "Spot Foto",
+        "description": "Setiap destinasi memiliki spot foto Instagramable yang menawan"
+      },
+      "localCulture": {
+        "title": "Budaya Lokal",
+        "description": "Hormati adat dan tradisi setempat saat berkunjung"
+      },
+      "accessibility": {
+        "title": "Aksesibilitas",
+        "description": "Semua destinasi mudah diakses dengan transportasi umum"
+      }
+    },
+    "cta": {
+      "title": "Rencanakan Kunjungan Anda",
+      "description": "Butuh bantuan merencanakan perjalanan wisata Anda? Hubungi kami untuk informasi lebih lanjut dan rekomendasi personal.",
+      "button": "Hubungi Kami"
+    }
+  },
+  "sejarah": {
+    "badge": "Sejarah & Riset",
+    "title": "Sejarah dan Riset Sumbu Filosofi Yogyakarta",
+    "subtitle": "Pelajari sejarah dan filosofi yang membentuk identitas budaya Yogyakarta",
+    "sections": {
+      "unesco": {
+        "title": "Pengakuan UNESCO sebagai Warisan Dunia",
+        "content": "Pada September 2023, tepatnya tanggal 18, dunia internasional memberikan pengakuan istimewa terhadap kekayaan budaya Yogyakarta. Dalam pertemuan Komite Warisan Dunia yang berlangsung di Arab Saudi, organisasi PBB untuk bidang pendidikan dan kebudayaan menetapkan Sumbu Filosofi Yogyakarta dengan nama resmi \"the Cosmological Axis of Yogyakarta and Its Historic Landmarks\" sebagai bagian dari warisan budaya dunia."
+      },
+      "universal": {
+        "title": "Nilai Universal yang Terkandung",
+        "content": "Penetapan ini bukan tanpa alasan. Sumbu Filosofi Yogyakarta dinilai memenuhi kriteria ketat yang ditetapkan karena menampilkan dialog antarbudaya yang luar biasa. Kawasan ini menjadi bukti nyata bagaimana berbagai sistem kepercayaan, dari animisme, Hindu-Buddha, Islam dengan pengaruh Sufi, hingga sentuhan peradaban Barat, saling bertemu dan membentuk identitas budaya yang unik. Menurut pejabat Dinas Kebudayaan DIY, kawasan ini memiliki makna penting yang bersifat universal, bukan hanya untuk masyarakat Yogyakarta atau Indonesia, melainkan bagi seluruh umat manusia."
+      },
+      "philosophy": {
+        "title": "Filosofi Mendalam yang Wajib Dilestarikan",
+        "content": "Gubernur DIY menekankan bahwa Sumbu Filosofi ini bukan sekadar warisan fisik berupa bangunan atau tata ruang kota. Lebih dari itu, kawasan ini sarat dengan filosofi tinggi yang harus dijaga bersama seluruh atribut dan maknanya. Harapannya, pengakuan internasional ini dapat menjadi momentum pembelajaran kolektif tentang nilai-nilai luhur yang dibutuhkan untuk membangun masa depan yang lebih baik."
+      },
+      "livingHeritage": {
+        "title": "Kehidupan Budaya yang Masih Berlanjut",
+        "content": "Yang membuat Sumbu Filosofi Yogyakarta istimewa adalah eksistensinya sebagai warisan hidup. Bukan sekadar monumen masa lalu, kawasan ini masih menjadi pusat berbagai tradisi dan praktik budaya Jawa yang berlangsung hingga kini. Mulai dari upacara kenegaraan, penerapan hukum adat, pertunjukan seni dan sastra, festival budaya, hingga ritual-ritual spiritual, semuanya masih dilakukan di sekitar kawasan bersejarah ini."
+      },
+      "responsibility": {
+        "title": "Tanggung Jawab Bersama",
+        "content": "Pengakuan UNESCO ini diharapkan membangkitkan semangat seluruh pihak, baik di Yogyakarta maupun di seluruh Indonesia, untuk bersama-sama menjaga dan melestarikan warisan budaya yang dimiliki. Pelestarian ini bukan hanya tanggung jawab pemerintah, tetapi juga seluruh masyarakat sebagai pewaris kebudayaan."
+      }
+    },
+    "cta": {
+      "title": "Jelajahi Lebih Lanjut",
+      "description": "Temukan lebih banyak informasi tentang Sumbu Filosofi Yogyakarta"
+    }
+  },
+  "tentang": {
+    "badge": "Tentang",
+    "title": "Tentang",
+    "subtitle": "Ensiklopedia digital warisan budaya Sumbu Filosofi Yogyakarta",
+    "content": {
+      "paragraph1": "Ensiklopedia Sumbu Filosofi Yogyakarta adalah platform digital yang didedikasikan untuk mendokumentasikan, mempromosikan, dan melestarikan warisan budaya yang kaya di sepanjang koridor Sumbu Filosofi.",
+      "paragraph2": "Misi kami adalah menjadi sumber informasi terpercaya tentang sejarah, budaya, dan potensi ekonomi kawasan Sumbu Filosofi, sambil mendukung pelestarian warisan budaya dan pemberdayaan masyarakat lokal.",
+      "paragraph3": "Platform ini dikembangkan dengan kombinasi estetika Jawa tradisional dan antarmuka modern yang elegan, menciptakan pengalaman digital yang mendidik dan memikat."
+    },
+    "cta": {
+      "title": "Bergabunglah dengan Kami",
+      "description": "Mari bersama-sama melestarikan dan mempromosikan warisan budaya Sumbu Filosofi Yogyakarta"
+    }
+  },
+  "umkmPotential": {
+    "badge": "UMKM",
+    "title": "Potensi UMKM",
+    "subtitle": "Temukan produk berkualitas dari pelaku UMKM lokal di sepanjang koridor Sumbu Filosofi - mendukung ekonomi lokal dan pelestarian budaya",
+    "stats": {
+      "registered": "UMKM Terdaftar",
+      "categories": "Kategori",
+      "localProducts": "Produk Lokal"
+    },
+    "map": {
+      "title": "Peta Interaktif UMKM",
+      "subtitle": "Klik marker pada peta untuk melihat lokasi UMKM dan informasi kontak",
+      "notConfigured": "Peta Belum Dikonfigurasi",
+      "notConfiguredDesc": "Admin dapat mengatur URL peta Google My Maps untuk UMKM di halaman pengaturan dashboard admin."
+    },
+    "featured": {
+      "title": "UMKM Unggulan",
+      "description": "Temui pelaku UMKM pilihan yang melestarikan kerajinan dan kuliner tradisional di kawasan Sumbu Filosofi",
+      "viewCatalog": "Lihat Katalog Lengkap",
+      "catalogInfo": "Jelajahi semua UMKM dengan filter lokasi dan kategori"
+    },
+    "section": {
+      "title": "Katalog UMKM",
+      "description": "Dukung ekonomi lokal dengan membeli produk berkualitas dari UMKM Yogyakarta"
+    },
+    "filter": {
+      "label": "Filter Kategori:",
+      "all": "Semua",
+      "batikTextile": "Batik & Tekstil",
+      "handicrafts": "Kerajinan Tangan",
+      "culinary": "Kuliner",
+      "jewelryAccessories": "Perhiasan & Aksesoris",
+      "fashionAccessories": "Fashion & Aksesoris",
+      "healthBeauty": "Kesehatan & Kecantikan"
+    },
+    "results": {
+      "showing": "Menampilkan",
+      "of": "dari",
+      "results": "hasil"
+    },
+    "card": {
+      "products": "Produk Unggulan",
+      "priceRange": "Kisaran Harga",
+      "contact": "Hubungi",
+      "getDirections": "Petunjuk Arah"
+    },
+    "businesses": {
+      "batikWinotosastro": {
+        "name": "Batik Winotosastro",
+        "description": "Pengrajin batik tulis tradisional dengan motif klasik Yogyakarta. Menyediakan batik cap dan tulis berkualitas tinggi dengan pewarna alami.",
+        "category": "batikTextile",
+        "products": ["Batik Tulis", "Batik Cap", "Kain Jarik", "Kemeja Batik"],
+        "priceRange": "Rp 150.000 - Rp 2.500.000"
+      },
+      "wayangPakJoko": {
+        "name": "Kerajinan Wayang Pak Joko",
+        "description": "Pembuat wayang kulit tradisional dengan detail rumit. Setiap wayang dibuat dengan teknik ukir dan sungging yang autentik.",
+        "category": "handicrafts",
+        "products": ["Wayang Kulit", "Wayang Golek", "Miniatur Wayang", "Gunungan"],
+        "priceRange": "Rp 200.000 - Rp 5.000.000"
+      },
+      "gudegYuDjum": {
+        "name": "Gudeg Yu Djum",
+        "description": "Warung gudeg legendaris dengan resep turun temurun. Menyajikan gudeg khas Yogyakarta dengan cita rasa manis yang khas.",
+        "category": "culinary",
+        "products": ["Gudeg Kering", "Gudeg Basah", "Ayam Kampung", "Telur Pindang"],
+        "priceRange": "Rp 15.000 - Rp 35.000"
+      },
+      "silverKotagede": {
+        "name": "Silver Kotagede",
+        "description": "Pengrajin perak dengan teknik tatah dan ukir tradisional. Produk perhiasan dan souvenir perak berkualitas ekspor.",
+        "category": "jewelryAccessories",
+        "products": ["Cincin Perak", "Gelang", "Liontin", "Miniatur Perak"],
+        "priceRange": "Rp 100.000 - Rp 3.000.000"
+      },
+      "gerabahKasongan": {
+        "name": "Gerabah Kasongan",
+        "description": "Sentra kerajinan gerabah dan keramik dengan berbagai bentuk dan ukuran. Dari peralatan dapur hingga dekorasi rumah.",
+        "category": "handicrafts",
+        "products": ["Vas Bunga", "Guci", "Piring Keramik", "Patung Tanah Liat"],
+        "priceRange": "Rp 25.000 - Rp 500.000"
+      },
+      "bakpiaPathok25": {
+        "name": "Bakpia Pathok 25",
+        "description": "Produsen bakpia legendaris dengan berbagai varian rasa. Oleh-oleh khas Yogyakarta yang wajib dibawa pulang.",
+        "category": "culinary",
+        "products": ["Bakpia Kacang Hijau", "Bakpia Coklat", "Bakpia Keju", "Bakpia Kumbu"],
+        "priceRange": "Rp 35.000 - Rp 75.000"
+      },
+      "lurikBuYanti": {
+        "name": "Lurik Bu Yanti",
+        "description": "Tenun lurik tradisional dengan motif garis khas Jawa. Kain tenun berkualitas untuk berbagai keperluan.",
+        "category": "batikTextile",
+        "products": ["Kain Lurik", "Selendang", "Sarung", "Taplak Meja"],
+        "priceRange": "Rp 75.000 - Rp 500.000"
+      },
+      "kulitManding": {
+        "name": "Kulit Manding",
+        "description": "Pengrajin produk kulit asli dengan desain modern dan tradisional. Tas, dompet, dan aksesoris kulit berkualitas.",
+        "category": "fashionAccessories",
+        "products": ["Tas Kulit", "Dompet", "Ikat Pinggang", "Sepatu Kulit"],
+        "priceRange": "Rp 150.000 - Rp 1.500.000"
+      },
+      "jamuAyuManis": {
+        "name": "Jamu Ayu Manis",
+        "description": "Produsen jamu tradisional dengan resep warisan. Jamu segar dan instan untuk kesehatan dan kecantikan.",
+        "category": "healthBeauty",
+        "products": ["Jamu Kunyit Asam", "Jamu Beras Kencur", "Jamu Temulawak", "Jamu Instan"],
+        "priceRange": "Rp 5.000 - Rp 50.000"
+      },
+      "blangkonPakDarmo": {
+        "name": "Blangkon Pak Darmo",
+        "description": "Pembuat blangkon (penutup kepala tradisional Jawa) dengan kualitas terbaik. Digunakan untuk acara formal dan adat.",
+        "category": "fashionAccessories",
+        "products": ["Blangkon Solo", "Blangkon Yogya", "Blangkon Mondolan", "Blangkon Anak"],
+        "priceRange": "Rp 50.000 - Rp 250.000"
+      },
+      "keripikTempeBuHadi": {
+        "name": "Keripik Tempe Bu Hadi",
+        "description": "Produsen keripik tempe renyah dengan berbagai varian rasa. Camilan khas Yogyakarta yang lezat dan bergizi.",
+        "category": "culinary",
+        "products": ["Keripik Tempe Original", "Keripik Tempe Pedas", "Keripik Tempe Balado", "Keripik Tempe Manis"],
+        "priceRange": "Rp 15.000 - Rp 45.000"
+      },
+      "souvenirKayuJogja": {
+        "name": "Souvenir Kayu Jogja",
+        "description": "Kerajinan kayu dengan berbagai produk souvenir khas Yogyakarta. Ukiran detail dengan kualitas kayu pilihan.",
+        "category": "handicrafts",
+        "products": ["Topeng Kayu", "Gantungan Kunci", "Miniatur Becak", "Patung Kayu"],
+        "priceRange": "Rp 20.000 - Rp 750.000"
+      }
+    },
+    "benefits": {
+      "title": "Mengapa Mendukung UMKM?",
+      "localEconomy": {
+        "title": "Ekonomi Lokal",
+        "description": "Memberdayakan masyarakat lokal dan menciptakan lapangan kerja"
+      },
+      "authenticQuality": {
+        "title": "Kualitas Autentik",
+        "description": "Produk berkualitas tinggi dengan sentuhan tradisional yang autentik"
+      },
+      "sustainableGrowth": {
+        "title": "Pertumbuhan Berkelanjutan",
+        "description": "Mendukung pertumbuhan ekonomi yang berkelanjutan dan ramah lingkungan"
+      },
+      "culturalPreservation": {
+        "title": "Pelestarian Budaya",
+        "description": "Melestarikan warisan budaya dan keterampilan tradisional"
+      }
+    },
+    "cta": {
+      "title": "Bergabung Sebagai Mitra UMKM",
+      "description": "Apakah Anda pelaku UMKM di kawasan Sumbu Filosofi? Daftarkan usaha Anda untuk menjangkau lebih banyak pelanggan.",
+      "button": "Daftar Sekarang"
+    }
+  },
+  "agenda": {
+    "badge": "AGENDA",
+    "title": "Agenda Seni & Budaya",
+    "subtitle": "Ikuti berbagai acara seni dan budaya yang merayakan warisan Jawa di kawasan Sumbu Filosofi",
+    "stats": {
+      "upcomingEvents": "Acara Mendatang",
+      "categories": "Kategori"
+    },
+    "sampleNotice": "✨ Ini adalah tampilan contoh acara. Admin dapat mengelola acara melalui Dashboard Admin.",
+    "filter": {
+      "label": "Filter Kategori:",
+      "all": "Semua",
+      "showing": "Menampilkan",
+      "of": "dari",
+      "events": "acara"
+    },
+    "card": {
+      "date": "Tanggal",
+      "time": "Waktu",
+      "location": "Lokasi"
+    },
+    "cta": {
+      "title": "Ingin Mengadakan Acara?",
+      "description": "Kami menyambut kolaborasi dengan komunitas seni dan budaya untuk mempromosikan warisan Jawa di kawasan Sumbu Filosofi.",
+      "button": "Hubungi Kami"
+    }
+  },
+  "katalogUmkm": {
+    "badge": "KATALOG UMKM",
+    "title": "Katalog UMKM Sumbu Filosofi",
+    "subtitle": "Jelajahi dan dukung UMKM lokal yang melestarikan kerajinan dan kuliner tradisional di sepanjang koridor Sumbu Filosofi Yogyakarta",
+    "filter": {
+      "title": "Filter",
+      "category": "Kategori",
+      "location": "Lokasi",
+      "showing": "Menampilkan",
+      "results": "hasil"
+    },
+    "viewDetails": "Lihat Detail",
+    "noResults": "Tidak ada UMKM yang ditemukan dengan filter yang dipilih",
+    "pagination": {
+      "previous": "Sebelumnya",
+      "next": "Selanjutnya"
+    },
+    "modal": {
+      "description": "Deskripsi",
+      "category": "Kategori",
+      "location": "Lokasi",
+      "contact": "Kontak",
+      "socialMedia": "Media Sosial"
+    }
+  },
+  "gallery": {
+    "badge": "GALERI FOTO",
+    "title": "Galeri Foto Sumbu Filosofi",
+    "subtitle": "Koleksi foto yang menampilkan keindahan dan keunikan Sumbu Filosofi Yogyakarta",
+    "filter": "Filter",
+    "categories": {
+      "all": "Semua",
+      "kawasan": "Kawasan",
+      "sejarah": "Sejarah",
+      "wisata": "Wisata",
+      "umkm": "UMKM",
+      "agenda": "Agenda"
+    },
+    "loading": "Memuat foto...",
+    "noImages": "Tidak ada foto yang ditemukan",
+    "sampleNotice": "✨ Ini adalah tampilan contoh foto. Admin dapat mengelola galeri melalui Dashboard Admin.",
+    "imageCounter": "dari"
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "loginTitle": "Login Admin",
+    "loginSubtitle": "Masuk untuk mengelola konten",
+    "email": "Email",
+    "password": "Password",
+    "login": "Masuk",
+    "logout": "Keluar",
+    "loginNote": "Catatan: Admin perlu membuat akun terlebih dahulu melalui API. Silakan hubungi administrator sistem.",
+    "manageContent": "Kelola konten ensiklopedia",
+    "manageUmkm": "Kelola UMKM",
+    "manageGallery": "Kelola Galeri",
+    "manageEvents": "Kelola Acara",
+    "settings": "Pengaturan",
+    "add": "Tambah",
+    "save": "Simpan",
+    "delete": "Hapus",
+    "edit": "Edit"
+  }
+}

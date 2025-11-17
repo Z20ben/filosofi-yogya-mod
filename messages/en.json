@@ -1,0 +1,583 @@
+{
+  "nav": {
+    "home": "Home",
+    "kawasan": "Philosophical Axis Area",
+    "sejarah": "History & Research",
+    "wisata": "Tourism Potential",
+    "umkm": "MSME Potential",
+    "agenda": "Arts & Culture Agenda",
+    "katalog": "MSME Catalog",
+    "galeri": "Photo Gallery",
+    "tentang": "About",
+    "admin": "Admin",
+    "kawasanGroup": "Area",
+    "umkmGroup": "MSME",
+    "mediaGroup": "Media"
+  },
+  "home": {
+    "title": "Yogyakarta Philosophical Axis Encyclopedia",
+    "subtitle": "Exploring Javanese Cultural and Philosophical Heritage",
+    "welcome": "Welcome",
+    "explore": "Explore the Philosophical Axis",
+    "featured": "Featured Highlights",
+    "featuredDescription": "Explore various aspects of Yogyakarta's Philosophical Axis",
+    "aboutTitle": "What is the Philosophical Axis?",
+    "description": "The Philosophical Axis is an imaginary line stretching from south to north, connecting Parangtritis Beach, Yogyakarta Palace, and Mount Merapi. This line is not merely a geographical orientation, but a profound representation of Javanese philosophy about cosmological harmony.",
+    "description2": "This concept reflects the relationship between humans (microcosm) and the universe (macrocosm), as well as the spiritual journey from worldly desires (Parangtritis) towards spiritual perfection (Merapi) with the Palace as the center of power and wisdom.",
+    "description3": "This encyclopedia serves as a digital platform to document, promote, and preserve the rich cultural heritage along the Philosophical Axis corridor.",
+    "learnMore": "Learn More",
+    "statisticsTitle": "Philosophical Axis in Numbers",
+    "statisticsDescription": "Explore the cultural richness and heritage documented in this digital encyclopedia",
+    "statisticsLabel": "Statistics",
+    "features": {
+      "kawasan": {
+        "title": "Philosophical Axis Area",
+        "description": "Explore the historic area connecting Parangtritis Beach to Mount Merapi"
+      },
+      "sejarah": {
+        "title": "History & Research",
+        "description": "Learn about the history and philosophy that shapes Yogyakarta's cultural identity"
+      },
+      "umkm": {
+        "title": "MSME Catalog",
+        "description": "Support local businesses preserving traditional crafts and cuisine"
+      },
+      "agenda": {
+        "title": "Arts & Culture Events",
+        "description": "Follow various art and cultural events celebrating Javanese heritage"
+      },
+      "galeri": {
+        "title": "Photo Gallery",
+        "description": "Enjoy the collection of photos showcasing the beauty and uniqueness of the Philosophical Axis"
+      },
+      "cctv": {
+        "title": "CCTV Monitoring",
+        "description": "Monitor the current conditions of the Philosophical Axis area through real-time CCTV cameras",
+        "visit": "Visit Site"
+      }
+    },
+    "stats": {
+      "tourism": "Tourism Destinations",
+      "umkm": "MSME Potential",
+      "gallery": "Photo Gallery",
+      "events": "Cultural Events"
+    },
+    "cta": {
+      "badge": "Heritage Tourism",
+      "title": "Explore Jogja's Cultural Heritage",
+      "description": "Experience authentic cultural heritage tourism with Jogja Heritage. Reserve your history and cultural tour now!",
+      "bookNow": "Book Now",
+      "viewDestinations": "View Tourism Destinations"
+    },
+    "imageAlt": "Sangkaning Dumadi Philosophy Illustration - Yogyakarta Philosophical Axis"
+  },
+  "common": {
+    "learnMore": "Learn More"
+  },
+  "footer": {
+    "aboutTitle": "About Us",
+    "aboutDescription": "A digital encyclopedia celebrating Javanese cultural and philosophical heritage along the Yogyakarta Philosophical Axis corridor.",
+    "quickLinksTitle": "Quick Links",
+    "contactTitle": "Contact",
+    "copyright": "All Rights Reserved."
+  },
+  "kawasan": {
+    "badge": "Area",
+    "title": "Philosophical Axis Area",
+    "subtitle": "More than just a geographical line, it represents a profound journey of human life - from birth to returning to the Creator, with each location and vegetation holding deep philosophical meaning",
+    "philosophy": {
+      "title": "The Philosophy of Sangkan Paraning Dumadi",
+      "intro": "As quoted from the official Kraton Jogja website, the Philosophical Axis stretches from Tugu Golong Gilig, Keraton, and Panggung Krapyak, depicting the journey of the human life cycle based on the concept of Sangkan Paraning Dumadi.",
+      "sangkan": {
+        "title": "Sangkan - Origin (Panggung Krapyak → Keraton)",
+        "description": "The concept of Sangkan or origin, representing human maturation, is depicted through the journey from Panggung Krapyak to the Keraton.",
+        "panggung": {
+          "title": "🏛️ Panggung Krapyak - Birth",
+          "description": "Panggung Krapyak symbolizes the beginning of birth or the womb. This is emphasized by the existence of a village to the northwest called Mijen, derived from the word \"wiji\" meaning seed."
+        },
+        "road": {
+          "title": "🌳 Road to Keraton - Youth",
+          "description": "Asem (tamarind) and tanjung trees are planted along the road from Panggung Krapyak to the Keraton. Sinom (young tamarind leaves) symbolizes youth, and the tanjung tree represents young people who are always praised by their surroundings."
+        },
+        "alunAlun": {
+          "title": "🌺 South Square - Maturity",
+          "description": "North of Panggung Krapyak is the South Square surrounded by pakel and kweni trees, symbolizing young adults who have reached maturity and have the courage to propose to their beloved."
+        },
+        "sitiHinggil": {
+          "title": "💑 Siti Hinggil Kidul - Union",
+          "description": "At Siti Hinggil Kidul, there are pelem cempora trees with white flowers symbolizing male seed, and soka trees with red flowers symbolizing female seed."
+        },
+        "pamengkang": {
+          "title": "🚪 Pamengkang - Gateway of Life",
+          "description": "To the left and right of Siti Hinggil Kidul are roads named Pamengkang, meaning legs positioned apart. It symbolizes the gateway to the womb. The Kamandhungan complex to its north represents the soul or fetus waiting to be born."
+        },
+        "conclusion": "The Sangkan philosophy ends when the child has grown into an adult."
+      },
+      "paran": {
+        "title": "Paran - Return to the Creator (Tugu → Keraton)",
+        "description": "The concept of Paran, representing the human journey towards the Creator, is depicted from Tugu Golong Gilig to the Keraton.",
+        "tugu": {
+          "title": "⚪ Tugu Golong Gilig - Purity",
+          "description": "Tugu Golong Gilig symbolizes the unification of thought, feeling, and will to face the Creator. White color is chosen to symbolize purity of heart."
+        },
+        "margatama": {
+          "title": "🛣️ Jalan Margatama - Towards Excellence",
+          "description": "South of Tugu Golong Gilig is Jalan Margatama, meaning \"towards excellence\"."
+        },
+        "margamulya": {
+          "title": "✨ Jalan Margamulya - Towards Glory",
+          "description": "Jalan Margamulya means \"road to glory\". To reach it, humans must be able to expel bad desires."
+        },
+        "pangurakan": {
+          "title": "🧘 Jalan Pangurakan - Expelling Desires",
+          "description": "The next road is named Jalan Pangurakan, symbolizing the process of expelling bad desires within humans."
+        },
+        "vegetation": {
+          "title": "🌿 Road Vegetation - Symbol of Peace",
+          "description": "Along Jalan Margatama to Jalan Margamulya, asam trees symbolize attraction and gayam trees symbolize peace. The meaning is that people will feel happy or attracted and calm or comfortable."
+        },
+        "alunAlun": {
+          "title": "🌊 Alun-Alun - Waves of Life",
+          "description": "Alun-Alun is derived from the word \"alun\" (wave), depicting the various waves that humans face before returning to their Creator."
+        }
+      }
+    },
+    "map": {
+      "title": "Philosophical Axis Interactive Map",
+      "subtitle": "Click markers on the map to explore important locations",
+      "loading": "Loading map...",
+      "notConfigured": "Map Not Configured",
+      "notConfiguredDesc": "Admin can set the Google My Maps URL in the admin dashboard settings page."
+    },
+    "landmarks": {
+      "title": "Key Landmarks",
+      "subtitle": "Three main points forming the Yogyakarta Philosophical Axis",
+      "tugu": {
+        "name": "Tugu Pal Putih",
+        "description": "Tugu Golong Gilig symbolizing the unity of thought, feeling, and will in Javanese philosophy"
+      },
+      "kraton": {
+        "name": "Kraton Ngayogyakarto Hadiningrat",
+        "description": "Center of the Philosophical Axis, the Sultan's palace still functioning as the cultural heart of Yogyakarta"
+      },
+      "panggung": {
+        "name": "Panggung Krapyak",
+        "description": "Southern point of the Philosophical Axis symbolizing the origin and destination of human life"
+      }
+    },
+    "unesco": {
+      "badge": "UNESCO World Heritage",
+      "title": "World Cultural Heritage",
+      "description": "In 2023, the Yogyakarta Philosophical Axis was officially recognized by UNESCO as a World Cultural Heritage Site under the name \"The Cosmological Axis of Yogyakarta and its Historic Landmarks\".\n\nThis recognition affirms the outstanding universal value of an urban planning concept that integrates Javanese cosmology, traditional architecture, and life philosophy. The Philosophical Axis represents harmony between nature, humanity, and the Creator that has been preserved for centuries.\n\nThis corridor encompasses historic monuments from Tugu Pal Putih in the north to Panggung Krapyak in the south, with Yogyakarta Palace at its center, reflecting the spiritual journey of human life from birth to return to the Almighty.",
+      "ctaButton": "View Details on UNESCO"
+    }
+  },
+  "wisata": {
+    "badge": "Tourism",
+    "title": "Tourism Potential",
+    "subtitle": "Explore amazing tourist destinations along the Philosophical Axis corridor - from legendary beaches to magnificent temples",
+    "stats": {
+      "destinations": "Destinations",
+      "categories": "Categories"
+    },
+    "section": {
+      "title": "Tourist Destinations",
+      "description": "Discover the best tourist destinations along the Yogyakarta Philosophical Axis"
+    },
+    "filter": {
+      "all": "All Categories",
+      "nature": "Nature Tourism",
+      "cultural": "Cultural Tourism",
+      "historical": "Historical Tourism",
+      "shopping": "Shopping Tourism",
+      "religious": "Religious Tourism"
+    },
+    "results": {
+      "showing": "Showing",
+      "of": "of",
+      "results": "results"
+    },
+    "card": {
+      "rating": "Rating",
+      "facilities": "Facilities",
+      "getDirections": "Get Directions"
+    },
+    "map": {
+      "title": "Tourism Interactive Map",
+      "subtitle": "Click markers on the map to view tourist location details and important information",
+      "notConfigured": "Map Not Configured",
+      "notConfiguredDesc": "Admin can set the map URL in the admin dashboard."
+    },
+    "destinations": {
+      "parangtritis": {
+        "name": "Parangtritis Beach",
+        "description": "Legendary beach with spectacular sunsets, volcanic black sand, and Labuhan tradition. Perfect place to enjoy water sports and cultural tourism.",
+        "category": "nature",
+        "facilities": ["Parking", "Restrooms", "Food Stalls", "Accommodation"]
+      },
+      "alunAlunKidul": {
+        "name": "South Square",
+        "description": "Open square with iconic twin banyan trees. Famous for \"Masangin\" tradition - walking blindfolded between two banyan trees. Bustling night culinary area.",
+        "category": "cultural",
+        "facilities": ["Parking Area", "Lighting", "Food Court", "Public Restrooms"]
+      },
+      "kraton": {
+        "name": "Yogyakarta Palace",
+        "description": "The Sultan's palace still in use today. Visit museums, watch dance and gamelan performances, and learn about magnificent traditional Javanese architecture.",
+        "category": "historical",
+        "facilities": ["Museum", "Guide", "Gift Shop", "Audio Tour"]
+      },
+      "malioboro": {
+        "name": "Malioboro Street",
+        "description": "The heart of Yogyakarta shopping tourism. Iconic street with batik, handicrafts, local cuisine, and street performances. An unforgettable shopping experience.",
+        "category": "shopping",
+        "facilities": ["Shops", "ATM", "Hotels", "Restaurants"]
+      },
+      "tugu": {
+        "name": "Yogyakarta Monument",
+        "description": "Iconic monument that serves as the city's landmark. Symbol of Yogyakarta people's resistance. Beautiful public area for photos and relaxation.",
+        "category": "historical",
+        "facilities": ["Park", "Photo Spots", "Lighting", "Easy Access"]
+      },
+      "bentengVredeburg": {
+        "name": "Fort Vredeburg Museum",
+        "description": "Historic fort now serving as a museum. Learn about Indonesia's independence struggle through dioramas and interactive exhibitions.",
+        "category": "historical",
+        "facilities": ["Museum", "Library", "Auditorium", "Canteen"]
+      },
+      "tamanSari": {
+        "name": "Taman Sari Water Castle",
+        "description": "Former Sultan's water palace complex. Unique architecture blending Javanese and European styles. Bathing pools, underground tunnels, and the mysterious Sumur Gumuling.",
+        "category": "historical",
+        "facilities": ["Guide", "Restrooms", "Photo Spots", "Parking"]
+      },
+      "prambanan": {
+        "name": "Prambanan Temple",
+        "description": "The largest Hindu temple complex in Indonesia. UNESCO World Heritage Site with stunning Ramayana reliefs. Ramayana Ballet performances every night.",
+        "category": "religious",
+        "facilities": ["Museum", "Guide", "Restaurant", "Theater"]
+      },
+      "kaliurang": {
+        "name": "Kaliurang",
+        "description": "Cool mountain resort area on Mount Merapi's slopes. Fresh air, natural scenery, and various outdoor activities like hiking and camping.",
+        "category": "nature",
+        "facilities": ["Hotels", "Restaurants", "Hiking Trails", "Camping Areas"]
+      }
+    },
+    "tips": {
+      "bestTime": {
+        "title": "Best Time",
+        "description": "Visit during dry season (April-October) for optimal weather"
+      },
+      "photoSpots": {
+        "title": "Photo Spots",
+        "description": "Each destination has charming Instagram-worthy photo spots"
+      },
+      "localCulture": {
+        "title": "Local Culture",
+        "description": "Respect local customs and traditions when visiting"
+      },
+      "accessibility": {
+        "title": "Accessibility",
+        "description": "All destinations easily accessible by public transport"
+      }
+    },
+    "cta": {
+      "title": "Plan Your Visit",
+      "description": "Need help planning your tourist trip? Contact us for more information and personal recommendations.",
+      "button": "Contact Us"
+    }
+  },
+  "sejarah": {
+    "badge": "History & Research",
+    "title": "History and Research of Yogyakarta's Philosophical Axis",
+    "subtitle": "Learn about the history and philosophy that shapes Yogyakarta's cultural identity",
+    "sections": {
+      "unesco": {
+        "title": "UNESCO Recognition as World Heritage",
+        "content": "On September 18, 2023, the international community bestowed special recognition upon Yogyakarta's cultural wealth. During the World Heritage Committee meeting held in Saudi Arabia, the UN organization for education and culture designated the Yogyakarta Philosophical Axis with the official name \"the Cosmological Axis of Yogyakarta and Its Historic Landmarks\" as part of the world's cultural heritage."
+      },
+      "universal": {
+        "title": "Universal Values Contained",
+        "content": "This designation was not without reason. The Yogyakarta Philosophical Axis was deemed to meet the strict criteria established for showcasing extraordinary intercultural dialogue. This area stands as living proof of how various belief systems, from animism, Hindu-Buddhism, Islam with Sufi influences, to touches of Western civilization, converge and form a unique cultural identity. According to officials from the DIY Cultural Office, this area holds universal significance, not only for the people of Yogyakarta or Indonesia, but for all of humanity."
+      },
+      "philosophy": {
+        "title": "Deep Philosophy That Must Be Preserved",
+        "content": "The Governor of DIY emphasized that this Philosophical Axis is not merely a physical heritage in the form of buildings or urban spatial planning. Beyond that, this area is rich with profound philosophy that must be maintained along with all its attributes and meanings. The hope is that this international recognition can become a momentum for collective learning about the noble values needed to build a better future."
+      },
+      "livingHeritage": {
+        "title": "Continuing Cultural Life",
+        "content": "What makes the Yogyakarta Philosophical Axis special is its existence as a living heritage. Not merely monuments of the past, this area remains the center of various Javanese traditions and cultural practices that continue to this day. From state ceremonies, implementation of customary law, art and literary performances, cultural festivals, to spiritual rituals, all are still conducted around this historic area."
+      },
+      "responsibility": {
+        "title": "Shared Responsibility",
+        "content": "This UNESCO recognition is expected to inspire all parties, both in Yogyakarta and throughout Indonesia, to jointly preserve and maintain the cultural heritage we possess. This preservation is not only the responsibility of the government, but also of the entire community as heirs of this culture."
+      }
+    },
+    "cta": {
+      "title": "Explore Further",
+      "description": "Discover more information about the Yogyakarta Philosophical Axis"
+    }
+  },
+  "tentang": {
+    "badge": "About",
+    "title": "About",
+    "subtitle": "Digital encyclopedia of Yogyakarta Philosophical Axis cultural heritage",
+    "content": {
+      "paragraph1": "The Yogyakarta Philosophical Axis Encyclopedia is a digital platform dedicated to documenting, promoting, and preserving the rich cultural heritage along the Philosophical Axis corridor.",
+      "paragraph2": "Our mission is to be a trusted source of information about the history, culture, and economic potential of the Philosophical Axis area, while supporting cultural heritage preservation and local community empowerment.",
+      "paragraph3": "This platform is developed with a combination of traditional Javanese aesthetics and elegant modern interface, creating an educational and captivating digital experience."
+    },
+    "cta": {
+      "title": "Join Us",
+      "description": "Let's work together to preserve and promote the cultural heritage of Yogyakarta's Philosophical Axis"
+    }
+  },
+  "umkmPotential": {
+    "badge": "MSME",
+    "title": "MSME Potential",
+    "subtitle": "Discover quality products from local MSME entrepreneurs along the Philosophical Axis corridor - supporting local economy and cultural preservation",
+    "stats": {
+      "registered": "Registered MSMEs",
+      "categories": "Categories",
+      "localProducts": "Local Products"
+    },
+    "map": {
+      "title": "MSME Business Interactive Map",
+      "subtitle": "Click markers on the map to view MSME locations and contact details",
+      "notConfigured": "Map Not Configured",
+      "notConfiguredDesc": "Admin can configure Google My Maps URL for MSME in the admin dashboard settings page."
+    },
+    "featured": {
+      "title": "Featured MSMEs",
+      "description": "Meet selected MSME entrepreneurs preserving traditional crafts and culinary in the Philosophical Axis area",
+      "viewCatalog": "View Full Catalog",
+      "catalogInfo": "Explore all MSMEs with location and category filters"
+    },
+    "section": {
+      "title": "MSME Catalog",
+      "description": "Support local products from MSME entrepreneurs preserving Yogyakarta's traditional culture and crafts"
+    },
+    "filter": {
+      "label": "Filter Category:",
+      "all": "All",
+      "batikTextile": "Batik & Textile",
+      "handicrafts": "Handicrafts",
+      "culinary": "Culinary",
+      "jewelryAccessories": "Jewelry & Accessories",
+      "fashionAccessories": "Fashion & Accessories",
+      "healthBeauty": "Health & Beauty"
+    },
+    "results": {
+      "showing": "Showing",
+      "of": "of",
+      "results": "results"
+    },
+    "card": {
+      "category": "Category",
+      "products": "Main Products",
+      "priceRange": "Price Range",
+      "contact": "Contact",
+      "getDirections": "Get Directions"
+    },
+    "businesses": {
+      "batikWinotosastro": {
+        "name": "Batik Winotosastro",
+        "description": "Traditional hand-drawn batik artisan with classic Yogyakarta motifs. Provides high-quality stamped and hand-drawn batik with natural dyes.",
+        "category": "batikTextile",
+        "products": ["Hand-drawn Batik", "Stamped Batik", "Jarik Cloth", "Batik Shirts"],
+        "priceRange": "Rp 150,000 - Rp 2,500,000"
+      },
+      "wayangPakJoko": {
+        "name": "Wayang Kulit Pak Joko",
+        "description": "Handcrafted shadow puppets made by experienced craftsmen. Each puppet is meticulously carved with high artistic value.",
+        "category": "handicrafts",
+        "products": ["Shadow Puppets", "Miniature Puppets", "Puppet Accessories", "Customized Puppets"],
+        "priceRange": "Rp 250,000 - Rp 5,000,000"
+      },
+      "gudegYuDjum": {
+        "name": "Gudeg Yu Djum",
+        "description": "Legendary authentic Yogyakarta gudeg with recipes passed down through generations. Sweet, savory, and tender flavors in every bite.",
+        "category": "culinary",
+        "products": ["Dry Gudeg", "Wet Gudeg", "Packaged Gudeg", "Complete Gudeg Set"],
+        "priceRange": "Rp 15,000 - Rp 100,000"
+      },
+      "silverKotagede": {
+        "name": "Silver Kotagede",
+        "description": "Fine silver craftsmen from the historic Kotagede area. Creates jewelry and accessories with intricate details and guaranteed quality.",
+        "category": "jewelryAccessories",
+        "products": ["Silver Jewelry", "Silver Brooches", "Silver Accessories", "Custom Silver"],
+        "priceRange": "Rp 200,000 - Rp 3,000,000"
+      },
+      "gerabahKasongan": {
+        "name": "Gerabah Kasongan",
+        "description": "Handcrafted ceramics from Kasongan Village, famous for creative ceramic products. Perfect for home decoration and souvenirs.",
+        "category": "handicrafts",
+        "products": ["Decorative Vases", "Clay Pots", "Statues", "Utensils"],
+        "priceRange": "Rp 25,000 - Rp 500,000"
+      },
+      "bakpiaPathok25": {
+        "name": "Bakpia Pathok 25",
+        "description": "Legendary Bakpia Pathok with various flavors. The most popular souvenir from Yogyakarta with authentic taste and guaranteed quality.",
+        "category": "culinary",
+        "products": ["Mung Bean Bakpia", "Chocolate Bakpia", "Cheese Bakpia", "Durian Bakpia"],
+        "priceRange": "Rp 35,000 - Rp 80,000"
+      },
+      "lurikBuYanti": {
+        "name": "Lurik Bu Yanti",
+        "description": "Traditional Yogyakarta lurik fabric woven by hand. Features typical striped patterns with natural colors and high durability.",
+        "category": "batikTextile",
+        "products": ["Lurik Cloth", "Lurik Bags", "Lurik Scarves", "Lurik Accessories"],
+        "priceRange": "Rp 75,000 - Rp 800,000"
+      },
+      "kulitManding": {
+        "name": "Kerajinan Kulit Manding",
+        "description": "Quality leather crafts from Manding Village. Creates various leather products from bags to shoes with modern designs.",
+        "category": "fashionAccessories",
+        "products": ["Leather Bags", "Leather Wallets", "Leather Shoes", "Leather Belts"],
+        "priceRange": "Rp 100,000 - Rp 1,500,000"
+      },
+      "jamuAyuManis": {
+        "name": "Jamu Ayu Manis",
+        "description": "Traditional herbal remedies made from selected natural ingredients. Various formulations for health and beauty care.",
+        "category": "healthBeauty",
+        "products": ["Herbal Drinks", "Herbal Powder", "Body Scrub", "Health Supplements"],
+        "priceRange": "Rp 10,000 - Rp 150,000"
+      },
+      "blangkonPakDarmo": {
+        "name": "Blangkon Pak Darmo",
+        "description": "Traditional Javanese headgear handmade with various patterns and motifs. Perfect for traditional ceremonies and cultural performances.",
+        "category": "fashionAccessories",
+        "products": ["Blangkon Solo", "Blangkon Yogya", "Blangkon Manten", "Blangkon Modern"],
+        "priceRange": "Rp 50,000 - Rp 300,000"
+      },
+      "keripikTempeBuHadi": {
+        "name": "Keripik Tempe Bu Hadi",
+        "description": "Crispy tempe chips with savory and crunchy flavor. Made from quality soybeans and hygienic processing.",
+        "category": "culinary",
+        "products": ["Original Tempe Chips", "Spicy Tempe Chips", "Sweet Tempe Chips", "Mixed Tempe Chips"],
+        "priceRange": "Rp 15,000 - Rp 50,000"
+      },
+      "souvenirKayuJogja": {
+        "name": "Souvenir Kayu Jogja",
+        "description": "Wooden handicrafts with various unique and artistic designs. Perfect for souvenirs, gifts, and home decorations.",
+        "category": "handicrafts",
+        "products": ["Wooden Miniatures", "Key Chains", "Name Plates", "Wall Decorations"],
+        "priceRange": "Rp 20,000 - Rp 400,000"
+      }
+    },
+    "benefits": {
+      "title": "Why Support MSMEs?",
+      "localEconomy": {
+        "title": "Local Economy",
+        "description": "Empowering local communities and creating job opportunities"
+      },
+      "authenticQuality": {
+        "title": "Authentic Quality",
+        "description": "High-quality products with authentic traditional touch"
+      },
+      "sustainableGrowth": {
+        "title": "Sustainable Growth",
+        "description": "Supporting sustainable and environmentally friendly economic growth"
+      },
+      "culturalPreservation": {
+        "title": "Cultural Preservation",
+        "description": "Preserving cultural heritage and traditional skills"
+      }
+    },
+    "cta": {
+      "title": "Join as MSME Partner",
+      "description": "Are you an MSME in the Philosophical Axis area? Register your business to reach more customers.",
+      "button": "Register Now"
+    }
+  },
+  "agenda": {
+    "badge": "AGENDA",
+    "title": "Arts & Culture Agenda",
+    "subtitle": "Follow various art and cultural events celebrating Javanese heritage in the Philosophical Axis area",
+    "stats": {
+      "upcomingEvents": "Upcoming Events",
+      "categories": "Categories"
+    },
+    "sampleNotice": "✨ These are sample events. Admins can manage events through the Admin Dashboard.",
+    "filter": {
+      "label": "Filter by Category:",
+      "all": "All",
+      "showing": "Showing",
+      "of": "of",
+      "events": "events"
+    },
+    "card": {
+      "date": "Date",
+      "time": "Time",
+      "location": "Location"
+    },
+    "cta": {
+      "title": "Want to Host an Event?",
+      "description": "We welcome collaborations with art and cultural communities to promote Javanese heritage in the Philosophical Axis area.",
+      "button": "Contact Us"
+    }
+  },
+  "katalogUmkm": {
+    "badge": "MSME CATALOG",
+    "title": "Philosophical Axis MSME Catalog",
+    "subtitle": "Explore and support local MSMEs that preserve traditional crafts and culinary along the Yogyakarta Philosophical Axis corridor",
+    "filter": {
+      "title": "Filter",
+      "category": "Category",
+      "location": "Location",
+      "showing": "Showing",
+      "results": "results"
+    },
+    "viewDetails": "View Details",
+    "noResults": "No MSME found with the selected filters",
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "modal": {
+      "description": "Description",
+      "category": "Category",
+      "location": "Location",
+      "contact": "Contact",
+      "socialMedia": "Social Media"
+    }
+  },
+  "gallery": {
+    "badge": "PHOTO GALLERY",
+    "title": "Philosophical Axis Photo Gallery",
+    "subtitle": "A photo collection showcasing the beauty and uniqueness of the Yogyakarta Philosophical Axis",
+    "filter": "Filter",
+    "categories": {
+      "all": "All",
+      "kawasan": "Area",
+      "sejarah": "History",
+      "wisata": "Tourism",
+      "umkm": "MSME",
+      "agenda": "Events"
+    },
+    "loading": "Loading photos...",
+    "noImages": "No photos found",
+    "sampleNotice": "✨ These are sample photos. Admins can manage the gallery through the Admin Dashboard.",
+    "imageCounter": "of"
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "loginTitle": "Admin Login",
+    "loginSubtitle": "Sign in to manage content",
+    "email": "Email",
+    "password": "Password",
+    "login": "Sign In",
+    "logout": "Sign Out",
+    "loginNote": "Note: Admin needs to create an account first through the API. Please contact the system administrator.",
+    "manageContent": "Manage encyclopedia content",
+    "manageUmkm": "Manage MSMEs",
+    "manageGallery": "Manage Gallery",
+    "manageEvents": "Manage Events",
+    "settings": "Settings",
+    "add": "Add",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit"
+  }
+}

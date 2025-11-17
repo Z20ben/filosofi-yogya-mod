@@ -1,0 +1,520 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Javanese-inspired color palette - Light mode */
+    --javanese-brown-text: #4A2C2A;
+    --javanese-brown-bg: #4A2C2A;
+    --javanese-gold: #D4AF37;
+    --javanese-ivory: #FFFFF0;
+    --javanese-green: #2C5F2D;
+    --javanese-terracotta: #C65D3B;
+
+    /* Semantic colors - Light mode */
+    --background: #FFFFF0;
+    --foreground: #4A2C2A;
+    --card: #ffffff;
+    --card-foreground: #4A2C2A;
+    --popover: #ffffff;
+    --popover-foreground: #4A2C2A;
+    --primary: #4A2C2A;
+    --primary-foreground: #FFFFF0;
+    --secondary: #D4AF37;
+    --secondary-foreground: #4A2C2A;
+    --muted: #F5F0E8;
+    --muted-foreground: #6B4F47;
+    --accent: #D4AF37;
+    --accent-foreground: #4A2C2A;
+    --destructive: #d4183d;
+    --destructive-foreground: #ffffff;
+    --border: rgba(74, 44, 42, 0.15);
+    --input: transparent;
+    --ring: #D4AF37;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    /* Javanese dark mode palette */
+    --javanese-brown-text: #F5E6D3;  /* Light cream untuk text visibility */
+    --javanese-brown-bg: #2A1810;    /* Dark brown untuk backgrounds */
+    --javanese-gold: #FFD700;        /* Brighter gold untuk visibility */
+    --javanese-ivory: #FFFFF0;       /* Tetap light untuk text di overlay */
+    --javanese-green: #3D7C3F;
+    --javanese-terracotta: #3D1F15;
+
+    /* Semantic colors */
+    --background: #1A1412;
+    --foreground: #F5E6D3;
+    --card: #241C1A;
+    --card-foreground: #F5E6D3;
+    --popover: #241C1A;
+    --popover-foreground: #F5E6D3;
+    --primary: #FFD700;
+    --primary-foreground: #1A1412;
+    --secondary: #3D2817;
+    --secondary-foreground: #F5E6D3;
+    --muted: #2D2420;
+    --muted-foreground: #C4A57B;
+    --accent: #FFD700;
+    --accent-foreground: #1A1412;
+    --destructive: #d4183d;
+    --destructive-foreground: #ffffff;
+    --border: rgba(245, 230, 211, 0.15);
+    --input: transparent;
+    --ring: #FFD700;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+  }
+
+  /* Smooth theme transitions for all themed elements */
+  * {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: ease-in-out;
+    transition-duration: 300ms;
+  }
+
+  /* Exclude animations and transforms from theme transition */
+  *:where(:not(:has([class*="animate-"])), :not([class*="transition-transform"]), :not([class*="duration-"])) {
+    transition-property: background-color, border-color, color, fill, stroke;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+/* Hero overlay gradient - REQUIRED: Tailwind can't compile CSS var + opacity in arbitrary values */
+@layer utilities {
+  .hero-overlay-gradient {
+    background-image: linear-gradient(
+      to bottom right,
+      rgba(74, 44, 42, 0.8),
+      rgba(74, 44, 42, 0.6),
+      rgba(74, 44, 42, 0.4)
+    );
+  }
+
+  .dark .hero-overlay-gradient {
+    background-image: linear-gradient(
+      to bottom right,
+      rgba(42, 24, 16, 0.8),
+      rgba(42, 24, 16, 0.6),
+      rgba(42, 24, 16, 0.4)
+    );
+  }
+
+  /* Lighter overlay for landmark cards - bottom to top gradient */
+  .landmark-overlay-gradient {
+    background-image: linear-gradient(
+      to top,
+      rgba(74, 44, 42, 0.6),
+      transparent
+    );
+  }
+
+  .dark .landmark-overlay-gradient {
+    background-image: linear-gradient(
+      to top,
+      rgba(42, 24, 16, 0.6),
+      transparent
+    );
+  }
+
+  /* Gallery overlay - tipis brown yang selalu ada */
+  .gallery-overlay-light {
+    background-image: linear-gradient(
+      to top,
+      rgba(74, 44, 42, 0.2) 0%,
+      transparent 40%
+    );
+  }
+
+  .dark .gallery-overlay-light {
+    background-image: linear-gradient(
+      to top,
+      rgba(42, 24, 16, 0.2) 0%,
+      transparent 40%
+    );
+  }
+
+  /* Gallery overlay - lebih gelap saat hover */
+  .gallery-overlay-dark {
+    background-image: linear-gradient(
+      to top,
+      rgba(74, 44, 42, 0.9) 0%,
+      rgba(74, 44, 42, 0.4) 25%,
+      transparent 50%
+    );
+  }
+
+  .dark .gallery-overlay-dark {
+    background-image: linear-gradient(
+      to top,
+      rgba(42, 24, 16, 0.9) 0%,
+      rgba(42, 24, 16, 0.4) 25%,
+      transparent 50%
+    );
+  }
+
+  /* Background colors with opacity - Light mode */
+  .bg-javanese-gold-10 {
+    background-color: rgba(212, 175, 55, 0.1);
+  }
+
+  .bg-javanese-gold-20 {
+    background-color: rgba(212, 175, 55, 0.2);
+  }
+
+  .bg-javanese-gold-90 {
+    background-color: rgba(212, 175, 55, 0.9);
+  }
+
+  .bg-javanese-terracotta-10 {
+    background-color: rgba(198, 93, 59, 0.1);
+  }
+
+  .bg-javanese-brown-10 {
+    background-color: rgba(74, 44, 42, 0.1);
+  }
+
+  /* Background colors with opacity - Dark mode */
+  .dark .bg-javanese-gold-10 {
+    background-color: rgba(255, 215, 0, 0.2);
+  }
+
+  .dark .bg-javanese-gold-20 {
+    background-color: rgba(255, 215, 0, 0.3);
+  }
+
+  .dark .bg-javanese-gold-90 {
+    background-color: rgba(255, 215, 0, 0.9);
+  }
+
+  .dark .bg-javanese-terracotta-10 {
+    background-color: rgba(255, 140, 0, 0.2);
+  }
+
+  .dark .bg-javanese-brown-10 {
+    background-color: rgba(245, 230, 211, 0.1);
+  }
+
+  /* Text colors with opacity - Light mode */
+  .text-javanese-brown-60 {
+    color: rgba(74, 44, 42, 0.6);
+  }
+
+  .text-javanese-brown-70 {
+    color: rgba(74, 44, 42, 0.7);
+  }
+
+  /* Text colors with opacity - Dark mode */
+  .dark .text-javanese-brown-60 {
+    color: rgba(245, 230, 211, 0.6);
+  }
+
+  .dark .text-javanese-brown-70 {
+    color: rgba(245, 230, 211, 0.7);
+  }
+
+  /* Card background - for tips cards */
+  .bg-white {
+    background-color: #ffffff;
+  }
+
+  .dark .bg-white {
+    background-color: #241C1A;
+  }
+}
+
+/* Batik Kawung pattern background with gradient fade */
+@layer utilities {
+  .batik-pattern {
+    position: relative;
+    background-color: var(--background);
+    background-image: url("data:image/svg+xml,<svg id='kawung-bg' width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='kawung-p' patternUnits='userSpaceOnUse' width='20' height='20' patternTransform='scale(2) rotate(0)'><path d='M0-10C-.011-4.49-4.485.03-10 .03-4.485.03-.011 4.49 0 10 .011 4.498 4.493.001 10-.01 4.493-.02.012-4.498 0-10zm0 20c-.011 5.51-4.485 10.03-10 10.03 5.515 0 9.989 4.46 10 9.97.011-5.502 4.493-9.999 10-10.01C4.493 19.98.012 15.502 0 10zm20-20C19.989-4.49 15.515.03 10 .03c5.515 0 9.989 4.46 10 9.97.011-5.502 4.493-9.999 10-10.01-5.507-.01-9.988-4.488-10-9.99zm0 20c-.011 5.51-4.485 10.03-10 10.03 5.515 0 9.989 4.46 10 9.97.011-5.502 4.493-9.999 10-10.01-5.507-.01-9.988-4.488-10-9.99z' stroke-width='1' stroke='none' fill='rgba(212, 175, 55, 0.08)'/><path d='M10 0C9.989 5.51 5.515 10.03 0 10.03c5.515 0 9.989 4.46 10 9.97.011-5.502 4.493-9.998 10-10.01-5.507-.01-9.988-4.488-10-9.99z' stroke-width='1' stroke='none' fill='rgba(212, 175, 55, 0.08)'/></pattern></defs><rect width='800%25' height='800%25' transform='translate(0,0)' fill='url(%23kawung-p)'/></svg>");
+  }
+
+  .batik-pattern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      to bottom,
+      var(--background) 0%,
+      transparent 15%,
+      transparent 85%,
+      var(--background) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  /* All direct children of batik-pattern should be above the gradient */
+  .batik-pattern > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Dark mode specific batik pattern */
+  .dark .batik-pattern {
+    background-image: url("data:image/svg+xml,<svg id='kawung-bg' width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='kawung-p' patternUnits='userSpaceOnUse' width='20' height='20' patternTransform='scale(2) rotate(0)'><path d='M0-10C-.011-4.49-4.485.03-10 .03-4.485.03-.011 4.49 0 10 .011 4.498 4.493.001 10-.01 4.493-.02.012-4.498 0-10zm0 20c-.011 5.51-4.485 10.03-10 10.03 5.515 0 9.989 4.46 10 9.97.011-5.502 4.493-9.999 10-10.01C4.493 19.98.012 15.502 0 10zm20-20C19.989-4.49 15.515.03 10 .03c5.515 0 9.989 4.46 10 9.97.011-5.502 4.493-9.999 10-10.01-5.507-.01-9.988-4.488-10-9.99zm0 20c-.011 5.51-4.485 10.03-10 10.03 5.515 0 9.989 4.46 10 9.97.011-5.502 4.493-9.999 10-10.01-5.507-.01-9.988-4.488-10-9.99z' stroke-width='1' stroke='none' fill='rgba(244, 208, 63, 0.06)'/><path d='M10 0C9.989 5.51 5.515 10.03 0 10.03c5.515 0 9.989 4.46 10 9.97.011-5.502 4.493-9.998 10-10.01-5.507-.01-9.988-4.488-10-9.99z' stroke-width='1' stroke='none' fill='rgba(244, 208, 63, 0.06)'/></pattern></defs><rect width='800%25' height='800%25' transform='translate(0,0)' fill='url(%23kawung-p)'/></svg>");
+  }
+}
+
+/* Animation utilities */
+@layer utilities {
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-in-from-top {
+    from {
+      transform: translateY(-100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out;
+  }
+
+  .animate-slide-in {
+    animation: slide-in-from-top 0.3s ease-out;
+  }
+
+  /* Wayang geometric decoration border */
+  .wayang-border {
+    position: relative;
+  }
+
+  .wayang-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--javanese-gold) 25%,
+      var(--javanese-brown-text) 50%,
+      var(--javanese-gold) 75%,
+      transparent 100%
+    );
+  }
+}
+
+/* Footer border with color-mix */
+.footer-border-top {
+  border-top: 1px solid;
+  border-color: color-mix(in oklab, var(--javanese-gold) 20%, transparent);
+}
+
+/* Fallback for browsers that don't support color-mix */
+@supports not (color: color-mix(in oklab, red, red)) {
+  .footer-border-top {
+    border-color: rgba(212, 175, 55, 0.2);
+  }
+}
+
+/* Dark mode overrides for Footer */
+.dark footer {
+  background-color: #1A1412 !important;
+}
+
+.dark footer h3,
+.dark footer h4 {
+  color: #FFFFFF !important;
+}
+
+.dark footer p,
+.dark footer li,
+.dark footer a,
+.dark footer span {
+  color: #F5E6D3 !important;
+}
+
+.dark footer .text-javanese-ivory\/80 {
+  color: rgba(245, 230, 211, 0.85) !important;
+}
+
+.dark footer > div:last-child {
+  background-color: #1A1412 !important;
+}
+
+.dark footer svg {
+  color: #FFFFFF !important;
+}
+
+/* Dark mode - Social media icons hover state */
+.dark footer a.hover\:bg-javanese-gold:hover,
+.dark footer a[class*="hover:bg-javanese-gold"]:hover {
+  background-color: #FFD700 !important;
+  color: #1A1412 !important;
+}
+
+.dark footer a.hover\:text-javanese-brown:hover,
+.dark footer a[class*="hover:text-javanese-brown"]:hover {
+  color: #1A1412 !important;
+}
+
+/* Ensure SVG icons inside social media buttons also change color on hover */
+.dark footer a:hover svg {
+  color: #1A1412 !important;
+}
+
+/* ===================================
+   GRADIENT BACKGROUNDS IN DARK MODE
+   =================================== */
+
+/* FAQ Chat Header - Dark gradient */
+.dark .bg-gradient-to-r.from-\[var\(--javanese-brown\)\].to-\[var\(--javanese-terracotta\)\] {
+  background-image: linear-gradient(to right, #2A1810, #3D1F15) !important;
+}
+
+/* All divs with brown-terracotta gradient */
+.dark div.bg-gradient-to-r.from-\[var\(--javanese-brown\)\].to-\[var\(--javanese-terracotta\)\] {
+  background-image: linear-gradient(to right, #2A1810, #3D1F15) !important;
+}
+
+/* Sections with gradient backgrounds */
+.dark section.bg-gradient-to-r.from-\[var\(--javanese-brown\)\].to-\[var\(--javanese-terracotta\)\] {
+  background-image: linear-gradient(to right, #2A1810, #3D1F15) !important;
+}
+
+.dark section.bg-gradient-to-br.from-\[var\(--javanese-brown\)\].to-\[var\(--javanese-terracotta\)\] {
+  background-image: linear-gradient(to bottom right, #2A1810, #3D1F15) !important;
+}
+
+/* Text on gradient backgrounds should be white */
+.dark .bg-gradient-to-r.from-\[var\(--javanese-brown\)\].to-\[var\(--javanese-terracotta\)\] .text-white,
+.dark .bg-gradient-to-r.from-\[var\(--javanese-brown\)\].to-\[var\(--javanese-terracotta\)\] h3,
+.dark .bg-gradient-to-r.from-\[var\(--javanese-brown\)\].to-\[var\(--javanese-terracotta\)\] p {
+  color: #FFFFFF !important;
+}
+
+/* FAQ Chat specific styles */
+.dark .faq-chat-panel .bg-gradient-to-r {
+  background-image: linear-gradient(to right, #2A1810, #3D1F15) !important;
+}
+
+/* Ensure FAQ icons are white in dark mode */
+.dark .faq-chat-panel svg {
+  color: #FFFFFF !important;
+}
+
+/* FAQ Chat - Golden border in dark mode */
+.dark .faq-chat-panel {
+  border-color: #D4AF37 !important;
+  border-width: 2px;
+}
+
+/* FAQ Chat Button - Darker gradient in dark mode */
+.dark button[aria-label="Open FAQ"] {
+  background: linear-gradient(to bottom right, #2A1810, #3D1F15) !important;
+}
+
+/* FAQ individual item borders - subtle gold in dark mode */
+.dark .faq-chat-panel .border-\[var\(--javanese-brown\)\]\/10 {
+  border-color: rgba(212, 175, 55, 0.15) !important;
+}
+
+/* FAQ item hover - brighter gold */
+.dark .faq-chat-panel .hover\:border-\[var\(--javanese-gold\)\]\/50:hover {
+  border-color: rgba(212, 175, 55, 0.6) !important;
+}
+
+/* FAQ category badge - brighter in dark mode */
+.dark .faq-category-badge {
+  background: linear-gradient(to right, rgba(255, 215, 0, 0.25), rgba(255, 223, 0, 0.35)) !important;
+  color: #FFD700 !important;
+  border-color: rgba(255, 215, 0, 0.5) !important;
+}
+
+/* UMKM category badge - dark brown gradient in dark mode */
+.dark .umkm-category-badge {
+  background: linear-gradient(to right, #2A1810, #3D1F15) !important;
+  color: #FFD700 !important;
+  border-color: rgba(255, 215, 0, 0.5) !important;
+}
+
+/* UMKM category badge icon - gold in dark mode */
+.dark .umkm-category-badge svg {
+  color: #FFD700 !important;
+}
+
+/* FAQ Search Box - Dark mode styling */
+.dark .faq-chat-panel input[type="text"] {
+  background-color: #2D2420 !important;
+  border-color: rgba(212, 175, 55, 0.3) !important;
+  color: #F5E6D3 !important;
+}
+
+/* FAQ Search Box placeholder */
+.dark .faq-chat-panel input[type="text"]::placeholder {
+  color: rgba(245, 230, 211, 0.5) !important;
+}
+
+/* FAQ Search Box focus state */
+.dark .faq-chat-panel input[type="text"]:focus {
+  background-color: #2D2420 !important;
+  border-color: #D4AF37 !important;
+  ring-color: rgba(212, 175, 55, 0.3) !important;
+}
+
+/* FAQ Search icon color - target the Search component specifically */
+.dark .faq-chat-panel .relative > svg {
+  color: rgba(212, 175, 55, 0.6) !important;
+}
+
+/* Alternative selector for search icon */
+.dark .faq-chat-panel svg.text-\[var\(--javanese-brown\)\]\/40 {
+  color: rgba(212, 175, 55, 0.6) !important;
+}
+
+/* FAQ Search section border */
+.dark .faq-chat-panel .border-b.border-\[var\(--javanese-brown\)\]\/10 {
+  border-color: rgba(212, 175, 55, 0.15) !important;
+}
+
+/* FAQ Footer section */
+.dark .faq-chat-panel .bg-\[var\(--javanese-ivory\)\] {
+  background-color: #2D2420 !important;
+}
+
+/* FAQ Footer text */
+.dark .faq-chat-panel .text-\[var\(--javanese-brown\)\]\/60 {
+  color: rgba(245, 230, 211, 0.7) !important;
+}
