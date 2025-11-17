@@ -4,6 +4,7 @@ declare module 'react-responsive-masonry' {
   export interface MasonryProps {
     columnsCount?: number;
     gutter?: string;
+    responsive?: { [key: number]: number };
     children?: ReactNode;
   }
 
