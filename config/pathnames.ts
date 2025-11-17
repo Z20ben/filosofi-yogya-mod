@@ -1,5 +1,3 @@
-import { Pathnames } from 'next-intl/navigation';
-
 export const pathnames = {
   // Home
   '/': '/',
@@ -53,7 +51,7 @@ export const pathnames = {
 
   // Admin
   '/admin': '/admin', // No translation for admin
-} satisfies Pathnames<typeof locales>;
+} as const;
 
 export const locales = ['id', 'en'] as const;
 export const defaultLocale = 'id' as const;
