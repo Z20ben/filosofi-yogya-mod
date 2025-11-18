@@ -24,14 +24,6 @@ export const metadata: Metadata = {
   creator: "Filosofi Jogja",
   publisher: "Filosofi Jogja",
   metadataBase: new URL('http://localhost:3000'),
-  icons: {
-    icon: [
-      { url: '/icon.png', sizes: '192x192', type: 'image/png' },
-      { url: '/icon.png', sizes: '512x512', type: 'image/png' },
-    ],
-    apple: '/apple-icon.png',
-    shortcut: '/icon.png',
-  },
   openGraph: {
     type: "website",
     locale: "id_ID",
