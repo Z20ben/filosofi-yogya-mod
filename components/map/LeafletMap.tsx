@@ -270,7 +270,7 @@ export function LeafletMap({ locations }: LeafletMapProps) {
       {/* Satellite View Toggle Button */}
       <button
         onClick={() => setIsSatelliteView(!isSatelliteView)}
-        className={`absolute top-4 right-4 z-[1000] p-3 rounded-lg shadow-lg transition-all duration-200 ${
+        className={`absolute top-4 right-4 z-10 p-3 rounded-lg shadow-lg transition-all duration-200 ${
           isSatelliteView
             ? 'bg-primary text-white hover:bg-primary/90'
             : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
