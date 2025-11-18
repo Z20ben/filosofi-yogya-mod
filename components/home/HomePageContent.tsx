@@ -86,13 +86,30 @@ export function HomePageContent() {
           </FadeInSection>
 
           <FadeInSection direction="left" delay={200}>
-            <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
+            {/* Old Image - Commented for reference */}
+            {/* <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
               <ImageLightbox
                 src="/assets/886c6bc1ce68b717af693495bab82e00764eb15c.png"
                 alt={t('imageAlt')}
                 className="h-full w-full"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-javanese-brown/20 to-transparent pointer-events-none"></div>
+            </div> */}
+
+            {/* Google Maps Embed */}
+            <div className="relative w-full rounded-2xl overflow-hidden shadow-2xl">
+              <div className="aspect-[4/3] w-full">
+                <iframe
+                  src="https://www.google.com/maps/d/embed?mid=1_NlABnyyjY7LOPr-oENcLjMhJQbpFRQ&ehbc=2E312F&noprof=1"
+                  className="w-full h-full border-0"
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+                  allow="geolocation"
+                  title={t('imageAlt')}
+                ></iframe>
+              </div>
             </div>
           </FadeInSection>
         </div>
