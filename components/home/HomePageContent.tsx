@@ -105,7 +105,6 @@ export function HomePageContent() {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
                   allow="geolocation"
                   title={t('imageAlt')}
                 ></iframe>
