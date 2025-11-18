@@ -593,5 +593,50 @@
     "save": "Simpan",
     "delete": "Hapus",
     "edit": "Edit"
+  },
+  "interactiveMap": {
+    "title": "Peta Interaktif Sumbu Filosofi",
+    "subtitle": "Jelajahi lokasi bersejarah, wisata, dan UMKM di sepanjang koridor Sumbu Filosofi Yogyakarta",
+    "search": "Cari lokasi...",
+    "showAll": "Tampilkan Semua",
+    "categories": {
+      "all": "Semua Lokasi",
+      "heritage": "Warisan Budaya",
+      "monument": "Monumen",
+      "religious": "Tempat Ibadah",
+      "tourism": "Wisata",
+      "umkm": "UMKM",
+      "culinary": "Kuliner",
+      "attraction": "Atraksi"
+    },
+    "filters": {
+      "title": "Filter Kategori",
+      "clear": "Hapus Filter"
+    },
+    "details": {
+      "viewDetails": "Lihat Detail",
+      "getDirections": "Petunjuk Arah",
+      "openingHours": "Jam Buka",
+      "entryFee": "Harga Tiket",
+      "local": "Lokal",
+      "foreign": "Asing",
+      "contact": "Kontak",
+      "facilities": "Fasilitas",
+      "products": "Produk",
+      "priceRange": "Kisaran Harga",
+      "address": "Alamat"
+    },
+    "map": {
+      "loading": "Memuat peta...",
+      "error": "Gagal memuat peta",
+      "zoomIn": "Perbesar",
+      "zoomOut": "Perkecil",
+      "resetView": "Reset Tampilan"
+    },
+    "stats": {
+      "totalLocations": "Total Lokasi",
+      "showing": "Menampilkan",
+      "of": "dari"
+    }
   }
 }

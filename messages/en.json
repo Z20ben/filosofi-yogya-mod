@@ -594,5 +594,50 @@
     "save": "Save",
     "delete": "Delete",
     "edit": "Edit"
+  },
+  "interactiveMap": {
+    "title": "Philosophical Axis Interactive Map",
+    "subtitle": "Explore historical sites, tourism destinations, and local businesses along the Yogyakarta Philosophical Axis corridor",
+    "search": "Search location...",
+    "showAll": "Show All",
+    "categories": {
+      "all": "All Locations",
+      "heritage": "Cultural Heritage",
+      "monument": "Monument",
+      "religious": "Religious Site",
+      "tourism": "Tourism",
+      "umkm": "MSME",
+      "culinary": "Culinary",
+      "attraction": "Attraction"
+    },
+    "filters": {
+      "title": "Filter by Category",
+      "clear": "Clear Filter"
+    },
+    "details": {
+      "viewDetails": "View Details",
+      "getDirections": "Get Directions",
+      "openingHours": "Opening Hours",
+      "entryFee": "Entry Fee",
+      "local": "Local",
+      "foreign": "Foreign",
+      "contact": "Contact",
+      "facilities": "Facilities",
+      "products": "Products",
+      "priceRange": "Price Range",
+      "address": "Address"
+    },
+    "map": {
+      "loading": "Loading map...",
+      "error": "Failed to load map",
+      "zoomIn": "Zoom In",
+      "zoomOut": "Zoom Out",
+      "resetView": "Reset View"
+    },
+    "stats": {
+      "totalLocations": "Total Locations",
+      "showing": "Showing",
+      "of": "of"
+    }
   }
 }
