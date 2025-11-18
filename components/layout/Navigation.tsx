@@ -13,6 +13,7 @@ type MenuGroup = {
   label: string;
   type: 'single' | 'dropdown';
   href?: string;
+  badge?: boolean;
   items?: Array<{
     key: string;
     label: string;
@@ -80,6 +81,13 @@ export function Navigation() {
       label: t('tentang'),
       type: 'single',
       href: `/${locale}/tentang`,
+    },
+    {
+      key: 'peta-interaktif',
+      label: t('petaInteraktif'),
+      type: 'single',
+      href: `/${locale}/peta-interaktif`,
+      badge: true,
     },
   ];
 
@@ -174,13 +182,18 @@ export function Navigation() {
                   <Link
                     key={group.key}
                     href={group.href!}
-                    className={`px-4 py-2 rounded-lg transition-all ${
+                    className={`relative px-4 py-2 rounded-lg transition-all ${
                       isActiveGroup(group)
                         ? 'bg-[var(--javanese-brown-bg)] text-javanese-ivory shadow-sm'
                         : 'text-[var(--javanese-brown-text)] hover:bg-gold-100'
                     }`}
                   >
                     {group.label}
+                    {group.badge && (
+                      <span className="absolute -top-1 -right-1 px-1.5 py-0.5 text-[10px] font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-full shadow-md animate-pulse">
+                        ★
+                      </span>
+                    )}
                   </Link>
                 );
               }
@@ -301,13 +314,18 @@ export function Navigation() {
                       key={group.key}
                       href={group.href!}
                       onClick={() => setMobileMenuOpen(false)}
-                      className={`block px-4 py-3 rounded-lg text-left transition-all ${
+                      className={`relative flex items-center gap-2 px-4 py-3 rounded-lg text-left transition-all ${
                         isActiveGroup(group)
                           ? 'bg-[var(--javanese-brown-bg)] text-javanese-ivory shadow-sm'
                           : 'text-[var(--javanese-brown-text)] hover:bg-gold-100'
                       }`}
                     >
                       {group.label}
+                      {group.badge && (
+                        <span className="px-1.5 py-0.5 text-[10px] font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-full shadow-md">
+                          ★
+                        </span>
+                      )}
                     </Link>
                   );
                 }
