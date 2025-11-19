@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
-import { MapPin, Satellite, Landmark, Pyramid, Building, Store, UtensilsCrossed, ShoppingCart, Plus, Minus, Layers, HelpCircle, Search, Locate } from 'lucide-react';
+import { MapPin, Satellite, Landmark, Pyramid, Building, Store, UtensilsCrossed, ShoppingCart, Plus, Minus, Layers, HelpCircle, Search, Locate, Maximize2, Minimize2 } from 'lucide-react';
 import { categoryMetadata, type SiteLocation, type SiteCategory } from '@/lib/data/mapLocations';
 import L from 'leaflet';
 import 'leaflet.markercluster';
@@ -38,9 +38,11 @@ interface LeafletMapProps {
   isSearchOpen: boolean;
   onSearchOpenChange: (open: boolean) => void;
   selectedLocation: SiteLocation | null;
+  searchSidebar: React.ReactNode;
+  locationSidebar: React.ReactNode;
 }
 
-export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearchOpenChange, selectedLocation }: LeafletMapProps) {
+export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearchOpenChange, selectedLocation, searchSidebar, locationSidebar }: LeafletMapProps) {
   const locale = useLocale();
   const t = useTranslations('interactiveMap');
   const { theme } = useTheme();
@@ -49,11 +51,13 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
   const [isLegendOpen, setIsLegendOpen] = useState(false);
   const [userLocation, setUserLocation] = useState<{lat: number, lng: number} | null>(null);
   const [isLocating, setIsLocating] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<Set<SiteCategory>>(
     new Set(Object.keys(categoryMetadata) as SiteCategory[])
   );
   const mapRef = useRef<L.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
+  const containerWrapperRef = useRef<HTMLDivElement>(null);
   const currentLayerRef = useRef<L.TileLayer | null>(null);
   const markerClusterGroupRef = useRef<L.MarkerClusterGroup | null>(null);
   const userMarkerRef = useRef<L.Marker | null>(null);
@@ -81,9 +85,14 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
       maxBounds: yogyakartaBounds,
       maxBoundsViscosity: 0.8, // How strongly to stick to bounds
       scrollWheelZoom: true,
-      attributionControl: false, // Remove attribution control
+      attributionControl: true, // Enable attribution control for proper credits
       zoomControl: false, // Remove default zoom control
     });
+
+    // Customize attribution position and prefix
+    if (map.attributionControl) {
+      map.attributionControl.setPrefix('<a href="https://leafletjs.com" target="_blank">Leaflet</a>');
+    }
 
     mapRef.current = map;
 
@@ -111,15 +120,16 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
     let tileLayer: L.TileLayer;
 
     if (isSatelliteView) {
-      // Satellite view
+      // Satellite view - Using Esri World Imagery (Free for commercial use with attribution)
       tileLayer = L.tileLayer(
         'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
         {
           maxZoom: 19,
+          attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
         }
       );
     } else {
-      // Theme-based view (Light or Dark)
+      // Theme-based view (Light or Dark) - Using CARTO (Free for commercial with attribution)
       const isDark = theme === 'dark';
       tileLayer = L.tileLayer(
         isDark
@@ -127,6 +137,7 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
           : 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
         {
           maxZoom: 19,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         }
       );
     }
@@ -235,7 +246,7 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
 
     // Add cluster group to map
     map.addLayer(markerClusterGroup);
-  }, [filteredLocations, locale, t, onLocationSelect]);
+  }, [filteredLocations, onLocationSelect]);
 
   const handleZoomIn = () => {
     if (mapRef.current) {
@@ -246,6 +257,31 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
   const handleZoomOut = () => {
     if (mapRef.current) {
       mapRef.current.zoomOut();
+    }
+  };
+
+  const toggleFullscreen = async () => {
+    if (!containerWrapperRef.current) return;
+
+    try {
+      if (!document.fullscreenElement) {
+        // Enter fullscreen
+        await containerWrapperRef.current.requestFullscreen();
+        setIsFullscreen(true);
+      } else {
+        // Exit fullscreen
+        await document.exitFullscreen();
+        setIsFullscreen(false);
+      }
+
+      // Invalidate map size after fullscreen toggle to ensure proper rendering
+      setTimeout(() => {
+        if (mapRef.current) {
+          mapRef.current.invalidateSize();
+        }
+      }, 100);
+    } catch (error) {
+      console.error('Fullscreen error:', error);
     }
   };
 
@@ -397,9 +433,43 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
     }
   }, [selectedLocation]);
 
+  // Handle fullscreen change events (including ESC key)
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      const isCurrentlyFullscreen = !!document.fullscreenElement;
+      setIsFullscreen(isCurrentlyFullscreen);
+
+      // Invalidate map size when fullscreen state changes
+      setTimeout(() => {
+        if (mapRef.current) {
+          mapRef.current.invalidateSize();
+        }
+      }, 100);
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+    };
+  }, []);
+
   return (
-    <div className="relative">
-      <div ref={mapContainerRef} style={{ height: '600px', width: '100%' }} />
+    <div
+      ref={containerWrapperRef}
+      className="relative"
+      style={{
+        height: isFullscreen ? '100vh' : '600px',
+        width: '100%',
+        backgroundColor: 'var(--background)'
+      }}
+    >
+      <div
+        ref={mapContainerRef}
+        style={{
+          height: '100%',
+          width: '100%'
+        }}
+      />
 
       {/* Control Buttons Stack */}
       <div className="absolute top-4 right-4 z-30 flex flex-col gap-2">
@@ -421,12 +491,25 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
           <Minus className="w-5 h-5" />
         </button>
 
+        {/* Fullscreen Toggle Button */}
+        <button
+          onClick={toggleFullscreen}
+          className={`p-3 rounded-lg shadow-lg transition-all duration-200 ${
+            isFullscreen
+              ? 'map-button-active text-white'
+              : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
+          }`}
+          title={isFullscreen ? (locale === 'id' ? 'Keluar Layar Penuh' : 'Exit Fullscreen') : (locale === 'id' ? 'Layar Penuh' : 'Fullscreen')}
+        >
+          {isFullscreen ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
+        </button>
+
         {/* Satellite View Toggle Button */}
         <button
           onClick={() => setIsSatelliteView(!isSatelliteView)}
           className={`p-3 rounded-lg shadow-lg transition-all duration-200 ${
             isSatelliteView
-              ? 'bg-primary text-white hover:bg-primary/90'
+              ? 'map-button-active text-white'
               : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
           }`}
           title={isSatelliteView ? 'Switch to Map View' : 'Switch to Satellite View'}
@@ -439,7 +522,7 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
           onClick={() => setIsFilterOpen(!isFilterOpen)}
           className={`p-3 rounded-lg shadow-lg transition-all duration-200 ${
             isFilterOpen
-              ? 'bg-primary text-white hover:bg-primary/90'
+              ? 'map-button-active text-white'
               : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
           }`}
           title="Filter Categories"
@@ -452,7 +535,7 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
           onClick={() => onSearchOpenChange(!isSearchOpen)}
           className={`p-3 rounded-lg shadow-lg transition-all duration-200 ${
             isSearchOpen
-              ? 'bg-primary text-white hover:bg-primary/90'
+              ? 'map-button-active text-white'
               : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
           }`}
           title={locale === 'id' ? 'Cari Lokasi' : 'Search Location'}
@@ -466,9 +549,9 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
           disabled={isLocating}
           className={`p-3 rounded-lg shadow-lg transition-all duration-200 ${
             isLocating
-              ? 'bg-primary/50 text-white cursor-wait'
+              ? 'map-button-active text-white cursor-wait opacity-50'
               : userLocation
-              ? 'bg-primary text-white hover:bg-primary/90'
+              ? 'map-button-active text-white'
               : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
           }`}
           title={locale === 'id' ? 'Lokasi Saya' : 'My Location'}
@@ -594,6 +677,10 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
           })}
         </div>
       </div>
+
+      {/* Sidebars - Render inside fullscreen container */}
+      {searchSidebar}
+      {locationSidebar}
     </div>
   );
 }

@@ -10,9 +10,13 @@
 .leaflet-tile-pane,
 .leaflet-overlay-pane,
 .leaflet-shadow-pane,
-.leaflet-marker-pane,
 .leaflet-tooltip-pane {
   z-index: auto !important;
+}
+
+/* Ensure marker pane has proper z-index for visibility */
+.leaflet-marker-pane {
+  z-index: 600 !important;
 }
 
 /* Popup needs higher z-index to be visible, but below navigation (z-50) */
@@ -70,9 +74,53 @@ div[style*="background: linear-gradient"] {
   display: block !important;
   visibility: visible !important;
   opacity: 1 !important;
+  z-index: 1000 !important;
+  position: relative !important;
 }
 
 .leaflet-marker-icon.custom-marker > div {
   display: flex !important;
   visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+/* Ensure cluster icons are visible */
+.leaflet-marker-icon.custom-cluster-icon {
+  z-index: 900 !important;
+  position: relative !important;
+}
+
+/* Map control button active state with brown gradient in dark mode */
+.map-button-active {
+  background: linear-gradient(135deg, #4A2C2A, #6B4423) !important;
+}
+
+.dark .map-button-active {
+  background: linear-gradient(135deg, #2A1810, #3D1F15) !important;
+}
+
+.map-button-active:hover {
+  opacity: 0.9;
+}
+
+/* Attribution styling */
+.leaflet-control-attribution {
+  background: rgba(255, 255, 255, 0.9) !important;
+  padding: 2px 6px !important;
+  font-size: 10px !important;
+  border-radius: 4px 0 0 0 !important;
+}
+
+.dark .leaflet-control-attribution {
+  background: rgba(31, 41, 55, 0.9) !important;
+  color: rgba(229, 231, 235, 0.8) !important;
+}
+
+.leaflet-control-attribution a {
+  color: #4A2C2A !important;
+  text-decoration: none !important;
+}
+
+.dark .leaflet-control-attribution a {
+  color: #F5E6D3 !important;
 }

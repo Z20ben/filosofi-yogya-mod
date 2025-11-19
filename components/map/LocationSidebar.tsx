@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useLocale } from 'next-intl';
-import { X, ChevronLeft, ChevronRight, ChevronUp, MapPin, Info, Image as ImageIcon, Link2 } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, ChevronUp, MapPin, Info, Image as ImageIcon, Link2, Navigation } from 'lucide-react';
 import { categoryMetadata, type SiteLocation } from '@/lib/data/mapLocations';
 import Image from 'next/image';
 
@@ -81,19 +81,20 @@ export function LocationSidebar({ location, isOpen, onClose, allLocations, onLoc
             bg-background border-border shadow-2xl z-40
             transition-transform duration-300 ease-in-out
             rounded-t-2xl lg:rounded-t-none lg:rounded-r-2xl
-            h-[65vh] lg:h-full
+            h-[60vh] lg:h-full
             w-full lg:w-96 xl:w-[28rem]
             ${isOpen
               ? 'translate-y-0 lg:translate-x-0'
               : 'translate-y-full lg:translate-y-0 lg:-translate-x-full'
             }
-            border-t lg:border-t-0 lg:border-r`}
+            border-t lg:border-t-0 lg:border-r
+            flex flex-col`}
         >
           {/* Mobile Handle Bar - Top Center */}
-          <div className="lg:hidden flex justify-center pt-3 pb-2">
+          <div className="lg:hidden flex justify-center pt-3 pb-2 flex-shrink-0">
             <button
               onClick={() => setIsCollapsed(true)}
-              className="w-10 h-1.5 bg-gray-300 dark:bg-gray-600 rounded-full cursor-pointer hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors"
+              className="w-10 h-2 bg-gray-300 dark:bg-gray-600 rounded-full cursor-pointer hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors"
               title="Hide"
             />
           </div>
@@ -101,25 +102,25 @@ export function LocationSidebar({ location, isOpen, onClose, allLocations, onLoc
           {/* Desktop Toggle & Close Buttons */}
           <div className="hidden lg:flex absolute top-4 right-2 gap-2 z-50">
             <button
-              onClick={onClose}
-              className="p-2 rounded-lg bg-background hover:bg-accent transition-colors shadow-md"
-              title="Close"
-            >
-              <X className="w-4 h-4" />
-            </button>
-            <button
               onClick={() => setIsCollapsed(true)}
               className="p-2 rounded-lg bg-background hover:bg-accent transition-colors shadow-md"
               title="Collapse"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
+            <button
+              onClick={onClose}
+              className="p-2 rounded-lg bg-background hover:bg-accent transition-colors shadow-md"
+              title="Close"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
 
           {/* Sidebar Content */}
-          <div className="h-full overflow-y-auto">
-            {/* Photo Section */}
-            <div className="relative h-48 bg-muted">
+          <div className="flex-1 overflow-y-auto overscroll-contain pb-safe">
+            {/* Photo Section with Floating Get Directions Button */}
+            <div className="relative h-48 bg-muted flex-shrink-0">
               {location.images && location.images.length > 0 ? (
                 <Image
                   src={location.images[0]}
@@ -132,6 +133,17 @@ export function LocationSidebar({ location, isOpen, onClose, allLocations, onLoc
                   <ImageIcon className="w-16 h-16 text-muted-foreground/30" />
                 </div>
               )}
+
+              {/* Floating Get Directions Button */}
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${location.coordinates.lat},${location.coordinates.lng}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute bottom-4 right-4 flex items-center gap-2 px-4 py-2.5 map-button-active text-white rounded-lg shadow-lg transition-all duration-200 hover:shadow-xl hover:opacity-90 font-medium text-sm"
+              >
+                <Navigation className="w-4 h-4" />
+                {locale === 'id' ? 'Petunjuk Arah' : 'Get Directions'}
+              </a>
             </div>
 
             {/* Header Section */}
@@ -198,7 +210,7 @@ export function LocationSidebar({ location, isOpen, onClose, allLocations, onLoc
             {/* Tab Content */}
             <div className="p-4">
               {activeTab === 'info' && (
-                <div className="space-y-4">
+                <div className="space-y-4 pb-6">
                   {/* Description */}
                   <div>
                     <h3 className="font-semibold text-sm mb-2">
@@ -331,22 +343,11 @@ export function LocationSidebar({ location, isOpen, onClose, allLocations, onLoc
                     </div>
                   )}
 
-                  {/* Google Maps Link */}
-                  {location.googleMapsUrl && (
-                    <a
-                      href={location.googleMapsUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block w-full text-center bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors"
-                    >
-                      {locale === 'id' ? 'Lihat di Google Maps' : 'View on Google Maps'}
-                    </a>
-                  )}
                 </div>
               )}
 
               {activeTab === 'media' && (
-                <div className="space-y-4">
+                <div className="space-y-4 pb-6">
                   {location.images && location.images.length > 0 ? (
                     <div className="grid grid-cols-2 gap-2">
                       {location.images.map((image, index) => (
@@ -372,7 +373,7 @@ export function LocationSidebar({ location, isOpen, onClose, allLocations, onLoc
               )}
 
               {activeTab === 'related' && (
-                <div className="space-y-3">
+                <div className="space-y-3 pb-6">
                   {relatedLocations.length === 0 ? (
                     <div className="text-center py-8 text-muted-foreground">
                       <Link2 className="w-12 h-12 mx-auto mb-2 opacity-30" />

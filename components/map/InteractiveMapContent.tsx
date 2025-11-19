@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import dynamic from 'next/dynamic';
 import { Loader2 } from 'lucide-react';
 import { mapLocations, type SiteLocation } from '@/lib/data/mapLocations';
@@ -26,12 +26,12 @@ export function InteractiveMapContent() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [sidebarKey, setSidebarKey] = useState(0);
 
-  const handleLocationSelect = (location: SiteLocation) => {
+  const handleLocationSelect = useCallback((location: SiteLocation) => {
     setSelectedLocation(location);
     setIsSearchOpen(false); // Close search first
     setIsSidebarOpen(true);
     setSidebarKey(prev => prev + 1); // Force sidebar to expand
-  };
+  }, []);
 
   const handleCloseSidebar = () => {
     setIsSidebarOpen(false);
@@ -49,36 +49,34 @@ export function InteractiveMapContent() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="max-w-7xl mx-auto px-0 sm:px-4 lg:px-8 py-0 sm:py-12">
       {/* Map Container */}
-      <div className="rounded-xl shadow-lg border border-border overflow-hidden relative min-h-[600px]">
-        <div className="relative h-full">
-          <LeafletMap
-            locations={mapLocations}
-            onLocationSelect={handleLocationSelect}
-            isSearchOpen={isSearchOpen}
-            onSearchOpenChange={handleSearchOpenChange}
-            selectedLocation={selectedLocation}
-          />
-
-          {/* Search Sidebar */}
-          <SearchSidebar
-            locations={mapLocations}
-            isOpen={isSearchOpen}
-            onClose={handleCloseSearch}
-            onLocationSelect={handleLocationSelect}
-          />
-
-          {/* Location Sidebar */}
-          <LocationSidebar
-            location={selectedLocation}
-            isOpen={isSidebarOpen}
-            onClose={handleCloseSidebar}
-            allLocations={mapLocations}
-            onLocationSelect={handleLocationSelect}
-            key={sidebarKey}
-          />
-        </div>
+      <div className="rounded-none sm:rounded-xl shadow-lg border-0 sm:border border-border overflow-hidden relative min-h-[600px]">
+        <LeafletMap
+          locations={mapLocations}
+          onLocationSelect={handleLocationSelect}
+          isSearchOpen={isSearchOpen}
+          onSearchOpenChange={handleSearchOpenChange}
+          selectedLocation={selectedLocation}
+          searchSidebar={
+            <SearchSidebar
+              locations={mapLocations}
+              isOpen={isSearchOpen}
+              onClose={handleCloseSearch}
+              onLocationSelect={handleLocationSelect}
+            />
+          }
+          locationSidebar={
+            <LocationSidebar
+              location={selectedLocation}
+              isOpen={isSidebarOpen}
+              onClose={handleCloseSidebar}
+              allLocations={mapLocations}
+              onLocationSelect={handleLocationSelect}
+              key={sidebarKey}
+            />
+          }
+        />
       </div>
     </div>
   );
