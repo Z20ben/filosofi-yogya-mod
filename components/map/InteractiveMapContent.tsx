@@ -1,10 +1,11 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { useLocale, useTranslations } from 'next-intl';
+import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { Loader2 } from 'lucide-react';
-import { mapLocations, categoryMetadata, type SiteCategory } from '@/lib/data/mapLocations';
+import { mapLocations, type SiteLocation } from '@/lib/data/mapLocations';
+import { LocationSidebar } from './LocationSidebar';
+import { SearchSidebar } from './SearchSidebar';
 
 // Dynamic import to avoid SSR issues with Leaflet
 const LeafletMap = dynamic(
@@ -20,88 +21,63 @@ const LeafletMap = dynamic(
 );
 
 export function InteractiveMapContent() {
-  const locale = useLocale();
-  const t = useTranslations('interactiveMap');
-  const [selectedCategory, setSelectedCategory] = useState<SiteCategory | 'all'>('all');
+  const [selectedLocation, setSelectedLocation] = useState<SiteLocation | null>(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [sidebarKey, setSidebarKey] = useState(0);
 
-  // Filter locations based on selected category
-  const filteredLocations = useMemo(() => {
-    if (selectedCategory === 'all') {
-      return mapLocations;
+  const handleLocationSelect = (location: SiteLocation) => {
+    setSelectedLocation(location);
+    setIsSearchOpen(false); // Close search first
+    setIsSidebarOpen(true);
+    setSidebarKey(prev => prev + 1); // Force sidebar to expand
+  };
+
+  const handleCloseSidebar = () => {
+    setIsSidebarOpen(false);
+  };
+
+  const handleCloseSearch = () => {
+    setIsSearchOpen(false);
+  };
+
+  const handleSearchOpenChange = (open: boolean) => {
+    if (open) {
+      setIsSidebarOpen(false); // Close location sidebar when search opens
     }
-    return mapLocations.filter((loc) => loc.category === selectedCategory);
-  }, [selectedCategory]);
+    setIsSearchOpen(open);
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Category Filters */}
-      <div className="mb-6">
-        <h2 className="text-lg font-semibold mb-4">{t('filters.title')}</h2>
-        <div className="flex flex-wrap gap-3">
-          <button
-            onClick={() => setSelectedCategory('all')}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
-              selectedCategory === 'all'
-                ? 'bg-primary text-white shadow-md'
-                : 'bg-card text-card-foreground hover:bg-accent'
-            }`}
-          >
-            {t('categories.all')} ({mapLocations.length})
-          </button>
-          {(Object.keys(categoryMetadata) as SiteCategory[]).map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-lg font-medium transition-all ${
-                selectedCategory === category
-                  ? 'text-white shadow-md'
-                  : 'bg-card text-card-foreground hover:bg-accent'
-              }`}
-              style={{
-                backgroundColor:
-                  selectedCategory === category
-                    ? categoryMetadata[category].color
-                    : undefined,
-              }}
-            >
-              {locale === 'id'
-                ? categoryMetadata[category].label_id
-                : categoryMetadata[category].label_en}{' '}
-              ({mapLocations.filter((loc) => loc.category === category).length})
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Stats */}
-      <div className="mb-4 text-sm text-muted-foreground">
-        {t('stats.showing')} <span className="font-semibold">{filteredLocations.length}</span>{' '}
-        {t('stats.of')} <span className="font-semibold">{mapLocations.length}</span>{' '}
-        {t('stats.totalLocations').toLowerCase()}
-      </div>
-
       {/* Map Container */}
-      <div className="rounded-xl overflow-hidden shadow-lg border border-border">
-        <LeafletMap locations={filteredLocations} />
-      </div>
+      <div className="rounded-xl shadow-lg border border-border overflow-hidden relative min-h-[600px]">
+        <div className="relative h-full">
+          <LeafletMap
+            locations={mapLocations}
+            onLocationSelect={handleLocationSelect}
+            isSearchOpen={isSearchOpen}
+            onSearchOpenChange={handleSearchOpenChange}
+            selectedLocation={selectedLocation}
+          />
 
-      {/* Legend */}
-      <div className="mt-6 p-4 bg-card rounded-lg border border-border">
-        <h3 className="font-semibold mb-3 text-sm">{t('categories.all')}</h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
-          {(Object.keys(categoryMetadata) as SiteCategory[]).map((category) => (
-            <div key={category} className="flex items-center gap-2">
-              <div
-                className="w-4 h-4 rounded-full flex-shrink-0"
-                style={{ backgroundColor: categoryMetadata[category].color }}
-              />
-              <span className="text-xs">
-                {locale === 'id'
-                  ? categoryMetadata[category].label_id
-                  : categoryMetadata[category].label_en}
-              </span>
-            </div>
-          ))}
+          {/* Search Sidebar */}
+          <SearchSidebar
+            locations={mapLocations}
+            isOpen={isSearchOpen}
+            onClose={handleCloseSearch}
+            onLocationSelect={handleLocationSelect}
+          />
+
+          {/* Location Sidebar */}
+          <LocationSidebar
+            location={selectedLocation}
+            isOpen={isSidebarOpen}
+            onClose={handleCloseSidebar}
+            allLocations={mapLocations}
+            onLocationSelect={handleLocationSelect}
+            key={sidebarKey}
+          />
         </div>
       </div>
     </div>

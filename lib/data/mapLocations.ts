@@ -5,7 +5,7 @@ export type SiteCategory =
   | 'tourism'     // Tempat Wisata
   | 'umkm'        // UMKM/Kerajinan
   | 'culinary'    // Kuliner
-  | 'attraction'; // Atraksi
+  | 'market';     // Pasar Tradisional
 
 export interface SiteLocation {
   id: string;
@@ -51,7 +51,7 @@ export interface SiteLocation {
 
 // Mockup data - 20 locations across Yogyakarta (Sumbu Filosofi area)
 export const mapLocations: SiteLocation[] = [
-  // ===== HERITAGE SITES (4) =====
+  // ===== HERITAGE SITES (5) =====
   {
     id: 'keraton-yogya',
     name_id: 'Keraton Ngayogyakarta Hadiningrat',
@@ -60,7 +60,7 @@ export const mapLocations: SiteLocation[] = [
     description_en: 'The official palace of the Sultanate of Yogyakarta, still functioning today. It is the center of Javanese culture and a symbol of continuing tradition.',
     category: 'heritage',
     subcategory: 'palace',
-    coordinates: { lat: -7.805327, lng: 110.364447 },
+    coordinates: { lat: -7.8053034, lng: 110.364347 },
     address_id: 'Jl. Rotowijayan Blok No. 1, Panembahan, Kraton',
     address_en: 'Jl. Rotowijayan Block No. 1, Panembahan, Kraton',
     entryFee: { local: 15000, foreign: 25000 },
@@ -70,13 +70,13 @@ export const mapLocations: SiteLocation[] = [
   },
   {
     id: 'museum-sonobudoyo',
-    name_id: 'Museum Sonobudoyo',
-    name_en: 'Sonobudoyo Museum',
+    name_id: 'Museum Sonobudoyo Unit 1',
+    name_en: 'Sonobudoyo Museum Unit 1',
     description_id: 'Museum yang menyimpan koleksi kebudayaan Jawa, termasuk wayang, gamelan, dan berbagai artefak bersejarah.',
     description_en: 'Museum housing Javanese cultural collections, including wayang puppets, gamelan, and various historical artifacts.',
     category: 'heritage',
     subcategory: 'museum',
-    coordinates: { lat: -7.803056, lng: 110.365833 },
+    coordinates: { lat: -7.80221, lng: 110.3639514 },
     address_id: 'Jl. Pangurakan No.6, Ngupasan, Gondomanan',
     address_en: 'Jl. Pangurakan No.6, Ngupasan, Gondomanan',
     entryFee: { local: 10000, foreign: 15000 },
@@ -116,6 +116,22 @@ export const mapLocations: SiteLocation[] = [
     facilities: ['Toilet', 'Parkir', 'Mushola', 'Cafe'],
     googleMapsUrl: 'https://goo.gl/maps/vredeburg',
   },
+  {
+    id: 'makam-imogiri',
+    name_id: 'Makam Raja-raja Imogiri',
+    name_en: 'Imogiri Royal Cemetery',
+    description_id: 'Kompleks pemakaman raja-raja Mataram Islam dan keluarga Kesultanan Yogyakarta serta Surakarta. Situs bersejarah dengan arsitektur sakral dan nilai spiritual tinggi.',
+    description_en: 'Royal cemetery complex of Mataram Islamic kings and families of Yogyakarta and Surakarta Sultanates. Historical site with sacred architecture and high spiritual value.',
+    category: 'heritage',
+    subcategory: 'cemetery',
+    coordinates: { lat: -7.919444, lng: 110.391667 },
+    address_id: 'Pajimatan, Imogiri, Bantul',
+    address_en: 'Pajimatan, Imogiri, Bantul',
+    entryFee: { local: 10000 },
+    openingHours: '08:00 - 16:00 (Jumat 08:00 - 12:00)',
+    facilities: ['Parkir', 'Toilet', 'Mushola', 'Guide'],
+    googleMapsUrl: 'https://goo.gl/maps/imogiri',
+  },
 
   // ===== MONUMENTS (3) =====
   {
@@ -125,7 +141,7 @@ export const mapLocations: SiteLocation[] = [
     description_id: 'Tugu bersejarah yang menjadi simbol kota Yogyakarta dan bagian dari Sumbu Filosofi yang menghubungkan Keraton, Tugu, dan Panggung Krapyak.',
     description_en: 'A historical monument symbolizing Yogyakarta city and part of the Philosophical Axis connecting the Palace, Tugu, and Panggung Krapyak.',
     category: 'monument',
-    coordinates: { lat: -7.782778, lng: 110.367222 },
+    coordinates: { lat: -7.782872, lng: 110.367082 },
     address_id: 'Jl. Jenderal Sudirman, Gowongan, Jetis',
     address_en: 'Jl. Jenderal Sudirman, Gowongan, Jetis',
     googleMapsUrl: 'https://goo.gl/maps/tugu',
@@ -137,7 +153,7 @@ export const mapLocations: SiteLocation[] = [
     description_id: 'Bangunan bersejarah di ujung selatan Sumbu Filosofi, dulunya digunakan sebagai tempat pertemuan Sultan dengan rakyat.',
     description_en: 'A historical building at the southern end of the Philosophical Axis, formerly used as a meeting place between the Sultan and the people.',
     category: 'monument',
-    coordinates: { lat: -7.873333, lng: 110.369722 },
+    coordinates: { lat: -7.827522, lng: 110.3605941 },
     address_id: 'Panggungharjo, Sewon, Bantul',
     address_en: 'Panggungharjo, Sewon, Bantul',
     googleMapsUrl: 'https://goo.gl/maps/krapyak',
@@ -149,7 +165,7 @@ export const mapLocations: SiteLocation[] = [
     description_id: 'Museum dan monumen peringatan perjuangan kemerdekaan Indonesia di Yogyakarta.',
     description_en: 'Museum and memorial monument commemorating the Indonesian independence struggle in Yogyakarta.',
     category: 'monument',
-    coordinates: { lat: -7.749167, lng: 110.368056 },
+    coordinates: { lat: -7.74931, lng: 110.36968 },
     address_id: 'Jl. Ring Road Utara, Jongkang, Sariharjo, Ngaglik, Sleman',
     address_en: 'Jl. Ring Road Utara, Jongkang, Sariharjo, Ngaglik, Sleman',
     entryFee: { local: 10000 },
@@ -166,7 +182,7 @@ export const mapLocations: SiteLocation[] = [
     description_en: 'Legendary street in the heart of Yogyakarta, shopping and cultural tourism center.',
     category: 'tourism',
     subcategory: 'shopping',
-    coordinates: { lat: -7.792778, lng: 110.365278 },
+    coordinates: { lat: -7.79355, lng: 110.365782 }, 
     address_id: 'Jl. Malioboro, Sosromenduran, Gedong Tengen',
     address_en: 'Jl. Malioboro, Sosromenduran, Gedong Tengen',
     openingHours: '24 jam',
@@ -181,7 +197,7 @@ export const mapLocations: SiteLocation[] = [
     description_en: 'Open square south of the Palace, famous for the masangin tradition and night tourism.',
     category: 'tourism',
     subcategory: 'park',
-    coordinates: { lat: -7.812500, lng: 110.363611 },
+    coordinates: { lat: -7.811580, lng: 110.3632375 },
     address_id: 'Patehan, Kraton',
     address_en: 'Patehan, Kraton',
     openingHours: '24 jam',
@@ -196,8 +212,8 @@ export const mapLocations: SiteLocation[] = [
     description_en: 'Famous beach in southern Yogyakarta with beautiful views and mystical value in Javanese belief.',
     category: 'tourism',
     subcategory: 'beach',
-    coordinates: { lat: -8.025000, lng: 110.330833 },
-    address_id: 'Parangtritis, Kretek, Bantul',
+    coordinates: { lat: -8.02378, lng: 110.329028 }, 
+    address_id: 'Parangtritis, Kretek, Bantul', 
     address_en: 'Parangtritis, Kretek, Bantul',
     entryFee: { local: 10000 },
     openingHours: '24 jam',
@@ -212,7 +228,7 @@ export const mapLocations: SiteLocation[] = [
     description_en: 'Mountain tourism area on the slopes of Mount Merapi with cool air and natural scenery.',
     category: 'tourism',
     subcategory: 'nature',
-    coordinates: { lat: -7.601667, lng: 110.423056 },
+    coordinates: { lat: -7.5976156, lng: 110.4261700 }, 
     address_id: 'Hargobinangun, Pakem, Sleman',
     address_en: 'Hargobinangun, Pakem, Sleman',
     openingHours: '24 jam',
@@ -317,7 +333,7 @@ export const mapLocations: SiteLocation[] = [
     description_en: 'Pottery and ceramics craft village with various quality products.',
     category: 'umkm',
     subcategory: 'pottery',
-    coordinates: { lat: -7.839722, lng: 110.345833 },
+    coordinates: { lat: -7.84525414, lng: 110.3379385 }, 
     address_id: 'Kasongan, Bangunjiwo, Kasihan, Bantul',
     address_en: 'Kasongan, Bangunjiwo, Kasihan, Bantul',
     products: ['Vas Bunga', 'Guci', 'Patung', 'Peralatan Rumah Tangga'],
@@ -330,10 +346,10 @@ export const mapLocations: SiteLocation[] = [
       instagram: '@gerabahkasongan',
       facebook: 'gerabahkasongan',
     },
-    googleMapsUrl: 'https://goo.gl/maps/kasongan',
+    googleMapsUrl: 'https://maps.app.goo.gl/qVWnEVfW6vPCRzKy7',
   },
 
-  // ===== CULINARY (2) =====
+  // ===== CULINARY (3) =====
   {
     id: 'gudeg-yu-djum',
     name_id: 'Gudeg Yu Djum',
@@ -341,16 +357,16 @@ export const mapLocations: SiteLocation[] = [
     description_id: 'Rumah makan gudeg legendaris dengan cita rasa autentik khas Yogyakarta.',
     description_en: 'Legendary gudeg restaurant with authentic Yogyakarta taste.',
     category: 'culinary',
-    coordinates: { lat: -7.801944, lng: 110.362778 },
-    address_id: 'Jl. Kemetiran Kidul No.34, Pringgokusuman, Gedongtengen',
-    address_en: 'Jl. Kemetiran Kidul No.34, Pringgokusuman, Gedongtengen',
+    coordinates: { lat: -7.78537, lng: 110.36663 },
+    address_id: 'Jl. Margo Utomo No.77, Gowongan, Jetis, Yogyakarta',
+    address_en: 'Jl. Margo Utomo No.77, Gowongan, Jetis, Yogyakarta',
     openingHours: '24 jam',
     priceRange: 'Rp 15.000 - Rp 50.000',
     contact: {
       phone: '+62 274 515235',
     },
     facilities: ['Parkir', 'Toilet', 'Takeaway'],
-    googleMapsUrl: 'https://goo.gl/maps/gudegyudjum',
+    googleMapsUrl: 'https://maps.app.goo.gl/UdDzpKLXpd3u7QV2A',
   },
   {
     id: 'bakpia-pathok-25',
@@ -359,16 +375,35 @@ export const mapLocations: SiteLocation[] = [
     description_id: 'Toko bakpia terkenal dengan berbagai varian rasa dan kualitas terjaga.',
     description_en: 'Famous bakpia shop with various flavors and maintained quality.',
     category: 'culinary',
-    coordinates: { lat: -7.782222, lng: 110.368889 },
-    address_id: 'Jl. K.H. Ali Maksum, Keparakan, Mergangsan',
-    address_en: 'Jl. K.H. Ali Maksum, Keparakan, Mergangsan',
+    coordinates: { lat: -7.796528, lng: 110.358065 },
+    address_id: 'Jl. Karel Sasuit Tubun, Ngampilan, Yogyakarta,',
+    address_en: 'Jl. Karel Sasuit Tubun, Ngampilan, Yogyakarta',
     openingHours: '08:00 - 20:00',
     priceRange: 'Rp 20.000 - Rp 100.000',
     contact: {
       phone: '+62 274 414222',
     },
     facilities: ['Parkir', 'Toilet'],
-    googleMapsUrl: 'https://goo.gl/maps/bakpiapathok25',
+    googleMapsUrl: 'https://maps.app.goo.gl/wtJUkyqTtHFjqHzP7',
+  },
+  {
+    id: 'pendopo-lawas',
+    name_id: 'Pendopo Lawas',
+    name_en: 'Pendopo Lawas',
+    description_id: 'Restoran dengan konsep pendopo Jawa klasik yang menyajikan masakan tradisional Yogyakarta dalam suasana autentik.',
+    description_en: 'Restaurant with classic Javanese pendopo concept serving traditional Yogyakarta cuisine in an authentic atmosphere.',
+    category: 'culinary',
+    coordinates: { lat: -7.80396, lng: 110.36563 }, 
+    address_id: 'Alun-Alun Utara, Panembahan, Kraton Yogyakarta',
+    address_en: 'Alun-Alun Utara, Panembahan, Kraton Yogyakarta',
+    openingHours: '10:00 - 22:00',
+    priceRange: 'Rp 25.000 - Rp 100.000',
+    contact: {
+      phone: '-',
+      whatsapp: '-',
+    },
+    facilities: ['Parkir', 'Toilet', 'Mushola', 'Live Music', 'Private Room'],
+    googleMapsUrl: 'https://goo.gl/maps/pendopolawas',
   },
 
   // ===== RELIGIOUS SITES (2) =====
@@ -401,6 +436,56 @@ export const mapLocations: SiteLocation[] = [
     openingHours: 'Minggu 06:00, 08:00, 17:00 (Mass schedules)',
     facilities: ['Parkir', 'Toilet'],
     googleMapsUrl: 'https://goo.gl/maps/gerejasantoxaverius',
+  },
+
+  // ===== TRADITIONAL MARKETS (3) =====
+  {
+    id: 'pasar-beringharjo',
+    name_id: 'Pasar Beringharjo',
+    name_en: 'Beringharjo Market',
+    description_id: 'Pasar tradisional tertua dan terbesar di Yogyakarta yang menjual berbagai kebutuhan dari batik, kain, makanan, hingga jamu tradisional.',
+    description_en: 'The oldest and largest traditional market in Yogyakarta selling various goods from batik, fabrics, food, to traditional herbal medicine.',
+    category: 'market',
+    coordinates: { lat: -7.79877, lng: 110.365760 }, 
+    address_id: 'Jl. Margo Mulyo No.16, Ngupasan, Gondomanan', 
+    address_en: 'Jl. Margo Mulyo No.16, Ngupasan, Gondomanan',
+    openingHours: '07:00 - 17:00 (Setiap hari)',
+    products: ['Batik', 'Kain', 'Pakaian', 'Makanan', 'Jamu', 'Souvenir'],
+    facilities: ['Toilet', 'Parkir', 'ATM', 'Mushola'],
+    priceRange: 'Rp 10.000 - Rp 500.000',
+    googleMapsUrl: 'https://goo.gl/maps/beringharjo',
+  },
+  {
+    id: 'pasar-kranggan',
+    name_id: 'Pasar Kranggan',
+    name_en: 'Kranggan Market',
+    description_id: 'Pasar tradisional yang ramai di pagi hari dengan pedagang sayur, buah, ikan, daging, dan kebutuhan dapur lainnya.',
+    description_en: 'Traditional market bustling in the morning with vendors selling vegetables, fruits, fish, meat, and other kitchen necessities.',
+    category: 'market',
+    coordinates: { lat: -7.78261, lng: 110.36565 },
+    address_id: 'Jl. Poncowinatan, Gowongan, Jetis, Yogyakarta', 
+    address_en: 'Jl. Poncowinatan, Gowongan, Jetis, Yogyakarta',
+    openingHours: '05:00 - 11:00 (Pasar pagi)',
+    products: ['Sayuran', 'Buah-buahan', 'Ikan', 'Daging', 'Bumbu Dapur'],
+    facilities: ['Parkir', 'Toilet'],
+    priceRange: 'Rp 5.000 - Rp 100.000',
+    googleMapsUrl: 'https://goo.gl/maps/kranggan',
+  },
+  {
+    id: 'pasar-ngasem',
+    name_id: 'Pasar Ngasem',
+    name_en: 'Ngasem Market',
+    description_id: 'Pasar burung dan hewan peliharaan yang terkenal di Yogyakarta, juga menjual tanaman hias dan perlengkapan hewan.',
+    description_en: 'Famous bird and pet market in Yogyakarta, also selling ornamental plants and pet supplies.',
+    category: 'market',
+    coordinates: { lat: -7.80820, lng: 110.35976 },
+    address_id: 'Jl. Ngasem, Patehan, Keraton',
+    address_en: 'Jl. Ngasem, Patehan, Keraton',
+    openingHours: '06:00 - 17:00 (Setiap hari)',
+    products: ['Burung', 'Hewan Peliharaan', 'Tanaman Hias', 'Perlengkapan Hewan', 'Pakan'],
+    facilities: ['Parkir', 'Toilet'],
+    priceRange: 'Rp 20.000 - Rp 2.000.000',
+    googleMapsUrl: 'https://goo.gl/maps/ngasem',
   },
 ];
 
@@ -442,10 +527,10 @@ export const categoryMetadata = {
     label_id: 'Kuliner',
     label_en: 'Culinary',
   },
-  attraction: {
-    icon: 'Sparkles',
+  market: {
+    icon: 'ShoppingCart',
     color: '#9B59B6', // Purple
-    label_id: 'Atraksi',
-    label_en: 'Attraction',
+    label_id: 'Pasar Tradisional',
+    label_en: 'Traditional Market',
   },
 } as const;

@@ -1,0 +1,78 @@
+/* Override default MarkerCluster background colors */
+/* Global styles for Leaflet library components */
+
+/* Fix z-index to prevent map from covering navigation dropdown */
+.leaflet-container {
+  z-index: 1 !important;
+}
+
+.leaflet-pane,
+.leaflet-tile-pane,
+.leaflet-overlay-pane,
+.leaflet-shadow-pane,
+.leaflet-marker-pane,
+.leaflet-tooltip-pane {
+  z-index: auto !important;
+}
+
+/* Popup needs higher z-index to be visible, but below navigation (z-50) */
+.leaflet-popup-pane {
+  z-index: 40 !important;
+}
+
+.marker-cluster-small,
+.marker-cluster-medium,
+.marker-cluster-large,
+.custom-cluster-icon {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+.marker-cluster-small div,
+.marker-cluster-medium div,
+.marker-cluster-large div,
+.custom-cluster-icon div {
+  background-color: transparent !important;
+  margin: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Remove default span backgrounds */
+.marker-cluster-small span,
+.marker-cluster-medium span,
+.marker-cluster-large span,
+.custom-cluster-icon span {
+  background-color: transparent !important;
+  display: none !important;
+}
+
+/* Make sure our custom div with gradient is visible and has no extra backgrounds */
+div[style*="background: linear-gradient"] {
+  display: flex !important;
+}
+
+/* Remove any parent div backgrounds */
+.leaflet-marker-icon.custom-cluster-icon {
+  background: none !important;
+  border: none !important;
+}
+
+.leaflet-marker-icon.custom-cluster-icon > div {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Ensure custom markers are always visible */
+.leaflet-marker-icon.custom-marker {
+  background: none !important;
+  border: none !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.leaflet-marker-icon.custom-marker > div {
+  display: flex !important;
+  visibility: visible !important;
+}
