@@ -191,7 +191,10 @@
       "cultural": "Wisata Budaya",
       "historical": "Wisata Sejarah",
       "shopping": "Wisata Belanja",
-      "religious": "Wisata Religi"
+      "religious": "Wisata Religi",
+      "adventure": "Wisata Petualangan",
+      "culinary": "Wisata Kuliner",
+      "other": "Lainnya"
     },
     "results": {
       "showing": "Menampilkan",

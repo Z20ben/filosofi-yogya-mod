@@ -191,7 +191,10 @@
       "cultural": "Cultural Tourism",
       "historical": "Historical Tourism",
       "shopping": "Shopping Tourism",
-      "religious": "Religious Tourism"
+      "religious": "Religious Tourism",
+      "adventure": "Adventure Tourism",
+      "culinary": "Culinary Tourism",
+      "other": "Other"
     },
     "results": {
       "showing": "Showing",
