@@ -43,6 +43,12 @@ export const pathnames = {
     en: '/arts-culture-agenda',
   },
 
+  // Peta Interaktif
+  '/peta-interaktif': {
+    id: '/peta-interaktif',
+    en: '/interactive-map',
+  },
+
   // Tentang
   '/tentang': {
     id: '/tentang',
