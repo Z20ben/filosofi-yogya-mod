@@ -44,13 +44,15 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
               </div>
             )}
           </div>
-          {/* Category Badge - Top Right */}
+          {/* Category Badge - Top Right - UMKM Gold */}
           <div className="absolute top-4 right-4 z-10">
-            <span className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--javanese-gold)]/90 text-[#4A2C2A] rounded-full text-xs font-medium border border-[var(--javanese-gold)] backdrop-blur-sm shadow-lg">
+            <span className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--javanese-gold)] dark:bg-amber-700/80 text-[#4A2C2A] dark:text-amber-100 rounded-full text-xs font-medium shadow-lg">
               <Store className="w-4 h-4" />
               {result.category}
             </span>
           </div>
+          {/* Type indicator line */}
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-[var(--javanese-gold)] dark:bg-amber-700/60"></div>
           {/* Price Range Badge - Bottom Left */}
           {priceRange && (
             <div className="absolute bottom-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/60 backdrop-blur-sm rounded-full">
@@ -143,17 +145,19 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
           {hasValidThumbnail(result.thumbnail) ? (
             <img src={result.thumbnail} alt={result.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[var(--javanese-brown-bg)]/20 to-[var(--javanese-terracotta)]/20">
-              <MapPin className="w-12 h-12 text-[var(--javanese-brown-text)]/30" />
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-500/20 to-teal-500/20">
+              <MapPin className="w-12 h-12 text-emerald-500/40" />
             </div>
           )}
-          {/* Category Badge - Top Right */}
+          {/* Category Badge - Top Right - Wisata Emerald */}
           <div className="absolute top-4 right-4 z-10">
-            <span className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--javanese-gold)]/90 text-[#4A2C2A] rounded-full text-xs font-medium border border-[var(--javanese-gold)] backdrop-blur-sm shadow-lg">
+            <span className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500 dark:bg-emerald-700/80 text-white dark:text-emerald-100 rounded-full text-xs font-medium shadow-lg">
               <MapPin className="w-4 h-4" />
               {result.category}
             </span>
           </div>
+          {/* Type indicator line */}
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500 dark:bg-emerald-700/60"></div>
         </div>
         <div className="p-4 flex-1 flex flex-col">
           <h3 className="font-serif text-lg font-semibold text-[var(--javanese-brown-text)] mb-2 line-clamp-2 group-hover:text-[var(--javanese-gold)] transition-colors">{result.title}</h3>
@@ -203,16 +207,18 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
             <img src={result.thumbnail} alt={result.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[var(--javanese-terracotta)]/20 to-[var(--javanese-brown-bg)]/20">
-              <Calendar className="w-12 h-12 text-[var(--javanese-brown-text)]/30" />
+              <Calendar className="w-12 h-12 text-[var(--javanese-terracotta)]/40" />
             </div>
           )}
-          {/* Category Badge - Top Right */}
+          {/* Category Badge - Top Right - Agenda Terracotta */}
           <div className="absolute top-4 right-4 z-10">
-            <span className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--javanese-gold)]/90 text-[#4A2C2A] rounded-full text-xs font-medium border border-[var(--javanese-gold)] backdrop-blur-sm shadow-lg">
+            <span className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--javanese-terracotta)] dark:bg-orange-800/80 text-white dark:text-orange-100 rounded-full text-xs font-medium shadow-lg">
               <Calendar className="w-4 h-4" />
               {result.category}
             </span>
           </div>
+          {/* Type indicator line */}
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-[var(--javanese-terracotta)] dark:bg-orange-800/60"></div>
         </div>
         <div className="p-4 flex-1 flex flex-col">
           <h3 className="font-serif text-lg font-semibold text-[var(--javanese-brown-text)] mb-2 line-clamp-2 group-hover:text-[var(--javanese-gold)] transition-colors">{result.title}</h3>
@@ -244,17 +250,19 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
           {hasValidThumbnail(result.thumbnail) ? (
             <img src={result.thumbnail} alt={result.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[var(--javanese-brown-bg)]/20 to-[var(--javanese-terracotta)]/20">
-              <Camera className="w-12 h-12 text-[var(--javanese-brown-text)]/30" />
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-violet-500/20 to-purple-500/20">
+              <Camera className="w-12 h-12 text-violet-500/40" />
             </div>
           )}
-          {/* Category Badge - Top Right */}
+          {/* Category Badge - Top Right - Galeri Violet */}
           <div className="absolute top-4 right-4 z-10">
-            <span className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--javanese-gold)]/90 text-[#4A2C2A] rounded-full text-xs font-medium border border-[var(--javanese-gold)] backdrop-blur-sm shadow-lg">
+            <span className="inline-flex items-center gap-2 px-3 py-1 bg-violet-500 dark:bg-violet-700/80 text-white dark:text-violet-100 rounded-full text-xs font-medium shadow-lg">
               <Camera className="w-4 h-4" />
               {result.category}
             </span>
           </div>
+          {/* Type indicator line */}
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-violet-500 dark:bg-violet-700/60"></div>
         </div>
         <div className="p-4">
           <h3 className="font-serif text-lg font-semibold text-[var(--javanese-brown-text)] mb-2 line-clamp-2 group-hover:text-[var(--javanese-gold)] transition-colors">{result.title}</h3>
@@ -278,15 +286,18 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
           <img src={result.thumbnail} alt={result.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[var(--javanese-brown-bg)]/20 to-[var(--javanese-terracotta)]/20">
-            <ImageIcon className="w-12 h-12 text-[var(--javanese-brown-text)]/30" />
+            <ImageIcon className="w-12 h-12 text-[var(--javanese-brown-bg)]/40" />
           </div>
         )}
+        {/* Category Badge - Top Right - Default Brown */}
         <div className="absolute top-4 right-4 z-10">
-          <span className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--javanese-gold)]/90 text-[#4A2C2A] rounded-full text-xs font-medium border border-[var(--javanese-gold)] backdrop-blur-sm shadow-lg">
+          <span className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--javanese-brown-bg)] dark:bg-stone-700/80 text-white dark:text-stone-100 rounded-full text-xs font-medium shadow-lg">
             {getTypeIcon(result.type)}
             {getSearchCategoryLabel(result.type, locale)}
           </span>
         </div>
+        {/* Type indicator line */}
+        <div className="absolute bottom-0 left-0 right-0 h-1 bg-[var(--javanese-brown-bg)] dark:bg-stone-700/60"></div>
       </div>
       <div className="p-4">
         <h3 className="font-serif text-lg font-semibold text-[var(--javanese-brown-text)] mb-2 line-clamp-2 group-hover:text-[var(--javanese-gold)] transition-colors">{result.title}</h3>
