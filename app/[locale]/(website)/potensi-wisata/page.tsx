@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
 import { FadeInSection } from '@/components/shared/FadeInSection';
-import { Compass, MapPin, Star, ExternalLink, ChevronLeft, ChevronRight, Navigation, Clock, Camera, Heart } from 'lucide-react';
+import { Compass, MapPin, ExternalLink, ChevronLeft, ChevronRight, Navigation, Clock, Camera, Heart } from 'lucide-react';
+import { mockWisataData } from '@/lib/admin/mock-data/wisata';
 
 // ISR Configuration - uncomment when migrating to database
 // export const revalidate = 300; // Cache 5 minutes
@@ -14,144 +15,33 @@ export default function WisataPage() {
   const t = useTranslations('wisata');
   const locale = useLocale();
 
-  // Sample destinations data - database-ready structure
-  const destinations = [
-    {
-      id: 'parangtritis',
-      name_id: 'Pantai Parangtritis',
-      name_en: 'Parangtritis Beach',
-      description_id: 'Pantai legendaris dengan pemandangan sunset spektakuler, pasir hitam vulkanik, dan tradisi Labuhan. Tempat sempurna untuk menikmati olahraga air dan wisata budaya.',
-      description_en: 'Legendary beach with spectacular sunsets, volcanic black sand, and Labuhan tradition. Perfect place to enjoy water sports and cultural tourism.',
-      category_id: 'nature',
-      category_en: 'nature',
-      facilities_id: ['Parkir', 'Toilet', 'Warung Makan', 'Penginapan'],
-      facilities_en: ['Parking', 'Restrooms', 'Food Stalls', 'Accommodation'],
-      image: 'https://images.unsplash.com/photo-1655793488799-1ffba5b22cbd?w=800&q=80',
-      rating: 4.7,
-      lat: -8.024917,
-      lng: 110.329285,
-    },
-    {
-      id: 'alunAlunKidul',
-      name_id: 'Alun-Alun Kidul',
-      name_en: 'South Square',
-      description_id: 'Lapangan terbuka dengan pohon beringin kembar yang ikonik. Terkenal dengan tradisi "Masangin" - berjalan dengan mata tertutup melewati dua pohon beringin. Area kuliner malam yang ramai.',
-      description_en: 'Open square with iconic twin banyan trees. Famous for "Masangin" tradition - walking blindfolded between two banyan trees. Bustling night culinary area.',
-      category_id: 'cultural',
-      category_en: 'cultural',
-      facilities_id: ['Area Parkir', 'Penerangan', 'Food Court', 'Toilet Umum'],
-      facilities_en: ['Parking Area', 'Lighting', 'Food Court', 'Public Restrooms'],
-      image: 'https://images.unsplash.com/photo-1721747994983-96d23e197487?w=800&q=80',
-      rating: 4.5,
-      lat: -7.811389,
-      lng: 110.364444,
-    },
-    {
-      id: 'kraton',
-      name_id: 'Keraton Yogyakarta',
-      name_en: 'Yogyakarta Palace',
-      description_id: 'Istana Sultan yang masih berfungsi hingga kini. Kunjungi museum, saksikan pertunjukan tari dan gamelan, dan pelajari arsitektur Jawa tradisional yang megah.',
-      description_en: "The Sultan's palace still in use today. Visit museums, watch dance and gamelan performances, and learn about magnificent traditional Javanese architecture.",
-      category_id: 'historical',
-      category_en: 'historical',
-      facilities_id: ['Museum', 'Guide', 'Gift Shop', 'Audio Tour'],
-      facilities_en: ['Museum', 'Guide', 'Gift Shop', 'Audio Tour'],
-      image: '/assets/e68ea45479378a6003bae5ab6b785184768f6914.png',
-      rating: 4.8,
-      lat: -7.805278,
-      lng: 110.364444,
-    },
-    {
-      id: 'malioboro',
-      name_id: 'Malioboro',
-      name_en: 'Malioboro Street',
-      description_id: 'Jantung wisata belanja Yogyakarta. Jalanan ikonik dengan batik, kerajinan tangan, kuliner khas, dan pertunjukan jalanan. Pengalaman berbelanja yang tak terlupakan.',
-      description_en: 'The heart of Yogyakarta shopping tourism. Iconic street with batik, handicrafts, local cuisine, and street performances. An unforgettable shopping experience.',
-      category_id: 'shopping',
-      category_en: 'shopping',
-      facilities_id: ['Toko', 'ATM', 'Hotel', 'Restoran'],
-      facilities_en: ['Shops', 'ATM', 'Hotels', 'Restaurants'],
-      image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80',
-      rating: 4.6,
-      lat: -7.792778,
-      lng: 110.365278,
-    },
-    {
-      id: 'tugu',
-      name_id: 'Tugu Yogyakarta',
-      name_en: 'Yogyakarta Monument',
-      description_id: 'Monumen ikonik yang menjadi landmark kota. Simbol perlawanan rakyat Yogyakarta. Area publik yang indah untuk foto dan bersantai.',
-      description_en: "Iconic monument that serves as the city's landmark. Symbol of Yogyakarta people's resistance. Beautiful public area for photos and relaxation.",
-      category_id: 'historical',
-      category_en: 'historical',
-      facilities_id: ['Taman', 'Spot Foto', 'Penerangan', 'Akses Mudah'],
-      facilities_en: ['Park', 'Photo Spots', 'Lighting', 'Easy Access'],
-      image: '/assets/9f169dd83a8981e7aedcf8dbab93b79692f0d10d.png',
-      rating: 4.4,
-      lat: -7.783056,
-      lng: 110.366667,
-    },
-    {
-      id: 'bentengVredeburg',
-      name_id: 'Museum Benteng Vredeburg',
-      name_en: 'Fort Vredeburg Museum',
-      description_id: 'Benteng bersejarah yang kini menjadi museum. Pelajari sejarah perjuangan kemerdekaan Indonesia melalui diorama dan pameran interaktif.',
-      description_en: "Historic fort now serving as a museum. Learn about Indonesia's independence struggle through dioramas and interactive exhibitions.",
-      category_id: 'historical',
-      category_en: 'historical',
-      facilities_id: ['Museum', 'Perpustakaan', 'Auditorium', 'Kantin'],
-      facilities_en: ['Museum', 'Library', 'Auditorium', 'Canteen'],
-      image: 'https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=800&q=80',
-      rating: 4.5,
-      lat: -7.799167,
-      lng: 110.365833,
-    },
-    {
-      id: 'tamanSari',
-      name_id: 'Taman Sari',
-      name_en: 'Taman Sari Water Castle',
-      description_id: 'Kompleks taman air bekas istana Sultan. Arsitektur unik perpaduan Jawa dan Eropa. Kolam pemandian, terowongan bawah tanah, dan Sumur Gumuling yang misterius.',
-      description_en: "Former Sultan's water palace complex. Unique architecture blending Javanese and European styles. Bathing pools, underground tunnels, and the mysterious Sumur Gumuling.",
-      category_id: 'historical',
-      category_en: 'historical',
-      facilities_id: ['Guide', 'Toilet', 'Spot Foto', 'Parkir'],
-      facilities_en: ['Guide', 'Restrooms', 'Photo Spots', 'Parking'],
-      image: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=800&q=80',
-      rating: 4.6,
-      lat: -7.810278,
-      lng: 110.359444,
-    },
-    {
-      id: 'prambanan',
-      name_id: 'Candi Prambanan',
-      name_en: 'Prambanan Temple',
-      description_id: 'Kompleks candi Hindu terbesar di Indonesia. Warisan Dunia UNESCO dengan relief cerita Ramayana yang memukau. Pertunjukan Ramayana Ballet setiap malam.',
-      description_en: 'The largest Hindu temple complex in Indonesia. UNESCO World Heritage Site with stunning Ramayana reliefs. Ramayana Ballet performances every night.',
-      category_id: 'religious',
-      category_en: 'religious',
-      facilities_id: ['Museum', 'Guide', 'Restoran', 'Teater'],
-      facilities_en: ['Museum', 'Guide', 'Restaurant', 'Theater'],
-      image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80',
-      rating: 4.9,
-      lat: -7.752056,
-      lng: 110.491389,
-    },
-    {
-      id: 'kaliurang',
-      name_id: 'Kaliurang',
-      name_en: 'Kaliurang',
-      description_id: 'Kawasan wisata pegunungan yang sejuk di lereng Gunung Merapi. Udara segar, pemandangan alam, dan berbagai aktivitas outdoor seperti hiking dan camping.',
-      description_en: "Cool mountain resort area on Mount Merapi's slopes. Fresh air, natural scenery, and various outdoor activities like hiking and camping.",
-      category_id: 'nature',
-      category_en: 'nature',
-      facilities_id: ['Hotel', 'Restoran', 'Jalur Hiking', 'Area Camping'],
-      facilities_en: ['Hotels', 'Restaurants', 'Hiking Trails', 'Camping Areas'],
-      image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
-      rating: 4.5,
-      lat: -7.599167,
-      lng: 110.416667,
-    },
-  ];
+  // Filter only published data
+  const destinations = mockWisataData.filter(w => w.status === 'published').map(w => ({
+    id: w.id,
+    slug: w.slug,
+    name_id: w.name_id,
+    name_en: w.name_en,
+    description_id: w.description_id,
+    description_en: w.description_en,
+    category: w.category,
+    facilities_id: w.facilities_id || [],
+    facilities_en: w.facilities_en || [],
+    image: w.featured_image,
+    lat: w.coordinates?.lat || 0,
+    lng: w.coordinates?.lng || 0,
+  }));
+
+  // Category mapping for translations
+  const categoryMap: Record<string, string> = {
+    'Alam': 'nature',
+    'Budaya': 'cultural',
+    'Kuliner': 'culinary',
+    'Petualangan': 'adventure',
+    'Religi': 'religious',
+    'Belanja': 'shopping',
+    'Sejarah': 'historical',
+    'Lainnya': 'other',
+  };
 
   // Category filter state
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -161,12 +51,12 @@ export default function WisataPage() {
   const itemsPerPage = 9;
 
   // Get unique categories from destinations
-  const categories = ['all', ...new Set(destinations.map(d => d.category_id))];
+  const categories = ['all', ...new Set(destinations.map(d => d.category))];
 
   // Filter destinations by category
   const filteredDestinations = selectedCategory === 'all'
     ? destinations
-    : destinations.filter(dest => dest.category_id === selectedCategory);
+    : destinations.filter(dest => dest.category === selectedCategory);
 
   // Pagination logic
   const totalPages = Math.ceil(filteredDestinations.length / itemsPerPage);
@@ -286,7 +176,7 @@ export default function WisataPage() {
                     : 'bg-card text-[var(--javanese-brown-text)] hover:bg-[var(--javanese-gold)]/20 border border-[var(--javanese-brown-text)]/20'
                 }`}
               >
-                {t(`filter.${category}`)}
+                {category === 'all' ? t('filter.all') : t(`filter.${categoryMap[category] || 'other'}`)}
               </button>
             ))}
           </div>
@@ -314,14 +204,8 @@ export default function WisataPage() {
                   {/* Category Badge - Kanan Atas */}
                   <div className="absolute top-4 right-4">
                     <span className="px-3 py-1 bg-javanese-gold-90 text-[#4A2C2A] text-sm rounded-full font-medium">
-                      {t(`filter.${destination.category_id}`)}
+                      {t(`filter.${categoryMap[destination.category] || 'other'}`)}
                     </span>
-                  </div>
-
-                  {/* Rating - Kiri Bawah */}
-                  <div className="absolute bottom-4 left-4 flex items-center gap-1 px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full">
-                    <Star className="w-4 h-4 text-[var(--javanese-gold)] fill-[var(--javanese-gold)]" />
-                    <span className="text-white text-sm font-medium">{destination.rating}</span>
                   </div>
                 </div>
 

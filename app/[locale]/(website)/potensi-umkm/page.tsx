@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { Store, Users, Sparkles, TrendingUp, Award, MapPin, X, MessageCircle, Instagram, Facebook } from 'lucide-react';
 import { FadeInSection } from '@/components/shared/FadeInSection';
 import { UMKMCard, UMKMData } from '@/components/shared/UMKMCard';
+import { mockUMKMData } from '@/lib/admin/mock-data/umkm';
 
 // ISR Configuration - uncomment when migrating to database
 // export const revalidate = 300; // Cache 5 minutes
@@ -16,147 +17,32 @@ export default function UMKMPage() {
   const locale = useLocale();
   const [selectedUmkm, setSelectedUmkm] = useState<UMKMData | null>(null);
 
-  // Featured UMKM - database-ready structure (highlighting best/popular ones)
-  const featuredBusinesses: UMKMData[] = [
-    {
-      id: 'batikWinotosastro',
-      name_id: 'Batik Winotosastro',
-      name_en: 'Batik Winotosastro',
-      description_id: 'Pengrajin batik tulis tradisional dengan motif klasik Yogyakarta. Menyediakan batik cap dan tulis berkualitas tinggi dengan pewarna alami.',
-      description_en: 'Traditional hand-drawn batik artisan with classic Yogyakarta motifs. Provides high-quality stamped and hand-drawn batik with natural dyes.',
-      category_id: 'Batik & Tekstil',
-      category_en: 'Batik & Textile',
-      location_id: 'Kawasan Keraton',
-      location_en: 'Palace Area',
-      products_id: ['Batik Tulis', 'Batik Cap', 'Kain Jarik', 'Kemeja Batik'],
-      products_en: ['Hand-drawn Batik', 'Stamped Batik', 'Jarik Cloth', 'Batik Shirts'],
-      priceRange_id: 'Rp 150.000 - Rp 2.500.000',
-      priceRange_en: 'Rp 150,000 - Rp 2,500,000',
+  // Featured UMKM from mock data
+  const featuredBusinesses: UMKMData[] = mockUMKMData
+    .filter(u => u.status === 'published' && u.featured)
+    .map(u => ({
+      id: u.id,
+      name_id: u.business_name,
+      name_en: u.business_name,
+      description_id: u.description_id,
+      description_en: u.description_en,
+      category_id: u.category,
+      category_en: u.category,
+      location_id: u.location_id || u.location.address,
+      location_en: u.location_en || u.location.address,
+      products_id: u.products_id || u.products.map(p => p.name_id),
+      products_en: u.products_en || u.products.map(p => p.name_en),
+      priceRange_id: u.price_range_id || u.products[0]?.price_range || '',
+      priceRange_en: u.price_range_en || u.products[0]?.price_range || '',
       contact: {
-        phone: '+62 274 123456',
-        email: 'info@batikwino.com'
+        phone: u.contact.phone,
+        email: u.contact.email,
       },
       social_links: {
-        instagram: '@batikwinotosastro',
-        facebook: 'batikwinotosastro'
+        instagram: u.social_media.instagram,
+        facebook: u.social_media.facebook,
       },
-    },
-    {
-      id: 'wayangPakJoko',
-      name_id: 'Kerajinan Wayang Pak Joko',
-      name_en: 'Wayang Kulit Pak Joko',
-      description_id: 'Pembuat wayang kulit tradisional dengan detail rumit. Setiap wayang dibuat dengan teknik ukir dan sungging yang autentik.',
-      description_en: 'Handcrafted shadow puppets made by experienced craftsmen. Each puppet is meticulously carved with high artistic value.',
-      category_id: 'Kerajinan Tangan',
-      category_en: 'Handicrafts',
-      location_id: 'Kawasan Keraton',
-      location_en: 'Palace Area',
-      products_id: ['Wayang Kulit', 'Wayang Golek', 'Miniatur Wayang', 'Gunungan'],
-      products_en: ['Shadow Puppets', 'Miniature Puppets', 'Puppet Accessories', 'Customized Puppets'],
-      priceRange_id: 'Rp 200.000 - Rp 5.000.000',
-      priceRange_en: 'Rp 250,000 - Rp 5,000,000',
-      contact: {
-        phone: '+62 274 234567',
-        email: 'paktomo@wayang.com'
-      },
-      social_links: {
-        instagram: '@wayangpakjoko',
-        facebook: 'wayangpakjoko'
-      },
-    },
-    {
-      id: 'gudegYuDjum',
-      name_id: 'Gudeg Yu Djum',
-      name_en: 'Gudeg Yu Djum',
-      description_id: 'Warung gudeg legendaris dengan resep turun temurun. Menyajikan gudeg khas Yogyakarta dengan cita rasa manis yang khas.',
-      description_en: 'Legendary authentic Yogyakarta gudeg with recipes passed down through generations. Sweet, savory, and tender flavors in every bite.',
-      category_id: 'Kuliner',
-      category_en: 'Culinary',
-      location_id: 'Kawasan Malioboro',
-      location_en: 'Malioboro Area',
-      products_id: ['Gudeg Kering', 'Gudeg Basah', 'Ayam Kampung', 'Telur Pindang'],
-      products_en: ['Dry Gudeg', 'Wet Gudeg', 'Packaged Gudeg', 'Complete Gudeg Set'],
-      priceRange_id: 'Rp 15.000 - Rp 35.000',
-      priceRange_en: 'Rp 15,000 - Rp 100,000',
-      contact: {
-        phone: '+62 274 345678',
-        email: 'info@gudegyudjum.com'
-      },
-      social_links: {
-        instagram: '@gudegyudjum',
-        facebook: 'gudegyudjum'
-      },
-    },
-    {
-      id: 'silverKotagede',
-      name_id: 'Silver Kotagede',
-      name_en: 'Silver Kotagede',
-      description_id: 'Pengrajin perak dengan teknik tatah dan ukir tradisional. Produk perhiasan dan souvenir perak berkualitas ekspor.',
-      description_en: 'Fine silver craftsmen from the historic Kotagede area. Creates jewelry and accessories with intricate details and guaranteed quality.',
-      category_id: 'Perhiasan & Aksesoris',
-      category_en: 'Jewelry & Accessories',
-      location_id: 'Kawasan Kota Gede',
-      location_en: 'Kota Gede Area',
-      products_id: ['Cincin Perak', 'Gelang', 'Liontin', 'Miniatur Perak'],
-      products_en: ['Silver Jewelry', 'Silver Brooches', 'Silver Accessories', 'Custom Silver'],
-      priceRange_id: 'Rp 100.000 - Rp 3.000.000',
-      priceRange_en: 'Rp 200,000 - Rp 3,000,000',
-      contact: {
-        phone: '+62 274 456789',
-        email: 'info@silverkotagede.com'
-      },
-      social_links: {
-        instagram: '@silverkotagede',
-        facebook: 'silverkotagede'
-      },
-    },
-    {
-      id: 'gerabahKasongan',
-      name_id: 'Gerabah Kasongan',
-      name_en: 'Gerabah Kasongan',
-      description_id: 'Sentra kerajinan gerabah dan keramik dengan berbagai bentuk dan ukuran. Dari peralatan dapur hingga dekorasi rumah.',
-      description_en: 'Handcrafted ceramics from Kasongan Village, famous for creative ceramic products. Perfect for home decoration and souvenirs.',
-      category_id: 'Kerajinan Tangan',
-      category_en: 'Handicrafts',
-      location_id: 'Kawasan Kota Gede',
-      location_en: 'Kota Gede Area',
-      products_id: ['Vas Bunga', 'Guci', 'Piring Keramik', 'Patung Tanah Liat'],
-      products_en: ['Decorative Vases', 'Clay Pots', 'Statues', 'Utensils'],
-      priceRange_id: 'Rp 25.000 - Rp 500.000',
-      priceRange_en: 'Rp 25,000 - Rp 500,000',
-      contact: {
-        phone: '+62 274 567890',
-        email: 'info@gerabahkasongan.com'
-      },
-      social_links: {
-        instagram: '@gerabahkasongan',
-        facebook: 'gerabahkasongan'
-      },
-    },
-    {
-      id: 'bakpiaPathok25',
-      name_id: 'Bakpia Pathok 25',
-      name_en: 'Bakpia Pathok 25',
-      description_id: 'Produsen bakpia legendaris dengan berbagai varian rasa. Oleh-oleh khas Yogyakarta yang wajib dibawa pulang.',
-      description_en: 'Legendary Bakpia Pathok with various flavors. The most popular souvenir from Yogyakarta with authentic taste and guaranteed quality.',
-      category_id: 'Kuliner',
-      category_en: 'Culinary',
-      location_id: 'Kawasan Malioboro',
-      location_en: 'Malioboro Area',
-      products_id: ['Bakpia Kacang Hijau', 'Bakpia Coklat', 'Bakpia Keju', 'Bakpia Kumbu'],
-      products_en: ['Mung Bean Bakpia', 'Chocolate Bakpia', 'Cheese Bakpia', 'Durian Bakpia'],
-      priceRange_id: 'Rp 35.000 - Rp 75.000',
-      priceRange_en: 'Rp 35,000 - Rp 80,000',
-      contact: {
-        phone: '+62 274 678901',
-        email: 'info@bakpiapathok.com'
-      },
-      social_links: {
-        instagram: '@bakpiapathok25',
-        facebook: 'bakpiapathok25'
-      },
-    },
-  ];
+    }));
 
   return (
     <div className="min-h-screen bg-background pt-20">

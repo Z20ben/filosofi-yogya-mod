@@ -595,6 +595,31 @@
     "delete": "Hapus",
     "edit": "Edit"
   },
+  "search": {
+    "placeholder": "Cari kawasan, wisata, UMKM, sejarah...",
+    "ariaLabel": "Cari di ensiklopedia",
+    "clear": "Hapus",
+    "submit": "Cari",
+    "title": "Hasil Pencarian",
+    "subtitle": "Menampilkan hasil pencarian untuk",
+    "noResults": "Tidak ada hasil ditemukan",
+    "noResultsDesc": "Coba gunakan kata kunci yang berbeda atau periksa ejaan Anda",
+    "results": "hasil",
+    "filterAll": "Semua",
+    "types": {
+      "kawasan": "Kawasan",
+      "wisata": "Wisata",
+      "umkm": "UMKM",
+      "sejarah": "Sejarah",
+      "agenda": "Agenda",
+      "galeri": "Galeri",
+      "lokasi": "Lokasi"
+    }
+  },
+  "pagination": {
+    "previous": "Sebelumnya",
+    "next": "Selanjutnya"
+  },
   "interactiveMap": {
     "title": "Peta Interaktif Sumbu Filosofi",
     "subtitle": "Jelajahi lokasi bersejarah, wisata, dan UMKM di sepanjang koridor Sumbu Filosofi Yogyakarta",

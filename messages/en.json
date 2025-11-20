@@ -596,6 +596,31 @@
     "delete": "Delete",
     "edit": "Edit"
   },
+  "search": {
+    "placeholder": "Search areas, tourism, MSME, history...",
+    "ariaLabel": "Search encyclopedia",
+    "clear": "Clear",
+    "submit": "Search",
+    "title": "Search Results",
+    "subtitle": "Showing results for",
+    "noResults": "No results found",
+    "noResultsDesc": "Try using different keywords or check your spelling",
+    "results": "results",
+    "filterAll": "All",
+    "types": {
+      "kawasan": "Area",
+      "wisata": "Tourism",
+      "umkm": "MSME",
+      "sejarah": "History",
+      "agenda": "Events",
+      "galeri": "Gallery",
+      "lokasi": "Location"
+    }
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
   "interactiveMap": {
     "title": "Philosophical Axis Interactive Map",
     "subtitle": "Explore historical sites, tourism destinations, and local businesses along the Yogyakarta Philosophical Axis corridor",

@@ -4,51 +4,28 @@ import { useTranslations, useLocale } from 'next-intl';
 import { useState, useRef, useEffect } from 'react';
 import { Calendar, MapPin, Clock, Sparkles, Image } from 'lucide-react';
 import { FadeInSection } from '@/components/shared/FadeInSection';
+import { mockAgendaData } from '@/lib/admin/mock-data/agenda';
 
 // ISR Configuration - uncomment when migrating to database
 // export const revalidate = 300; // Cache 5 minutes
 // NOTE: ISR (revalidate) akan diimplementasikan saat migrasi ke database
 // menggunakan Server Component + Client Component hybrid approach
 
-// Sample events data - will be replaced with actual API/database data later
-const sampleEvents = [
-  {
-    id: '1',
-    title_id: 'Festival Wayang Kulit Yogyakarta',
-    title_en: 'Yogyakarta Shadow Puppet Festival',
-    description_id: 'Festival wayang kulit yang menampilkan dalang-dalang terbaik dari seluruh Jawa. Nikmati pertunjukan wayang dengan cerita klasik Ramayana dan Mahabharata, diiringi gamelan tradisional.',
-    description_en: 'Shadow puppet festival featuring the best puppeteers from across Java. Enjoy wayang performances with classic Ramayana and Mahabharata stories, accompanied by traditional gamelan.',
-    date: '2024-12-15T19:00:00',
-    location: 'Keraton Yogyakarta',
-    category_id: 'Pertunjukan',
-    category_en: 'Performance',
-    image_url: undefined,
-  },
-  {
-    id: '2',
-    title_id: 'Pameran Batik Nusantara',
-    title_en: 'Indonesian Batik Exhibition',
-    description_id: 'Pameran batik dari berbagai daerah di Indonesia dengan workshop membatik untuk umum. Dapatkan kesempatan belajar langsung dari pengrajin batik berpengalaman.',
-    description_en: 'Batik exhibition from various regions in Indonesia with public batik-making workshops. Get the opportunity to learn directly from experienced batik craftsmen.',
-    date: '2024-12-20T09:00:00',
-    location: 'Museum Batik Yogyakarta',
-    category_id: 'Pameran',
-    category_en: 'Exhibition',
-    image_url: undefined,
-  },
-  {
-    id: '3',
-    title_id: 'Pasar Seni & Kuliner Tradisional',
-    title_en: 'Traditional Art & Culinary Market',
-    description_id: 'Pasar mingguan yang menampilkan produk seni dan kuliner khas Yogyakarta. Temukan kerajinan tangan unik dan makanan tradisional yang lezat.',
-    description_en: 'Weekly market featuring traditional Yogyakarta art and culinary products. Discover unique handicrafts and delicious traditional foods.',
-    date: '2024-12-22T10:00:00',
-    location: 'Alun-alun Selatan',
-    category_id: 'Pasar',
-    category_en: 'Market',
-    image_url: undefined,
-  },
-];
+// Events data from mock data
+const sampleEvents = mockAgendaData
+  .filter(a => a.status === 'published')
+  .map(a => ({
+    id: a.id,
+    title_id: a.event_name_id,
+    title_en: a.event_name_en,
+    description_id: a.description_id,
+    description_en: a.description_en,
+    date: a.date_start.toISOString(),
+    location: a.location,
+    category_id: a.category_id || a.category,
+    category_en: a.category_en || a.category,
+    image_url: a.featured_image,
+  }));
 
 export default function AgendaPage() {
   const t = useTranslations('agenda');

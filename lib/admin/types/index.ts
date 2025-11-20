@@ -49,14 +49,20 @@ export interface UMKM extends BaseEntity {
   slug: string;
   business_name: string;
   owner_name: string;
-  category: 'Kerajinan' | 'Kuliner' | 'Fashion' | 'Jasa' | 'Lainnya';
+  category: 'Kerajinan' | 'Kuliner' | 'Fashion' | 'Jasa' | 'Batik & Tekstil' | 'Perhiasan & Aksesoris' | 'Lainnya';
   description_id: string;
   description_en: string;
   products: Product[];
+  products_id?: string[];
+  products_en?: string[];
+  price_range_id?: string;
+  price_range_en?: string;
   images: string[];
   featured_image: string;
   contact: Contact;
   location: Location;
+  location_id?: string;
+  location_en?: string;
   social_media: SocialMedia;
   operating_hours?: OperatingHours;
   status: Status;
@@ -102,7 +108,9 @@ export interface Agenda extends BaseEntity {
   price_type: 'free' | 'paid';
   price_amount?: number;
   registration_link?: string;
-  category: 'Seni' | 'Budaya' | 'Festival' | 'Pameran' | 'Pertunjukan' | 'Workshop' | 'Lainnya';
+  category: 'Seni' | 'Budaya' | 'Festival' | 'Pameran' | 'Pertunjukan' | 'Workshop' | 'Pasar' | 'Lainnya';
+  category_id?: string;
+  category_en?: string;
   status: Status;
   published_at?: Date;
 }
@@ -144,7 +152,7 @@ export interface Wisata extends BaseEntity {
   name_en: string;
   description_id: string;
   description_en: string;
-  category: 'Alam' | 'Budaya' | 'Kuliner' | 'Petualangan' | 'Religi' | 'Belanja' | 'Lainnya';
+  category: 'Alam' | 'Budaya' | 'Kuliner' | 'Petualangan' | 'Religi' | 'Belanja' | 'Sejarah' | 'Lainnya';
   address: string;
   district: string;
   coordinates?: {
@@ -157,7 +165,8 @@ export interface Wisata extends BaseEntity {
   entry_fee_type: 'free' | 'paid';
   entry_fee_amount?: number;
   contact?: Contact;
-  facilities?: string[];
+  facilities_id?: string[];
+  facilities_en?: string[];
   activities?: string[];
   difficulty_level?: 'Easy' | 'Moderate' | 'Hard';
   duration?: string;

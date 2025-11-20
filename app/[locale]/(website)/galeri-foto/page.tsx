@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { X, ChevronLeft, ChevronRight, Filter, Image as ImageIcon, Sparkles } from 'lucide-react';
 import Masonry from 'react-responsive-masonry';
 import { FadeInSection } from '@/components/shared/FadeInSection';
+import { mockGaleriData } from '@/lib/admin/mock-data/galeri';
 
 interface GalleryImage {
   id: string;
@@ -61,87 +62,18 @@ export default function GaleriPage() {
 
   const loadGallery = async () => {
     try {
-      // TODO: Replace with actual API call when backend is ready
-      // const response = await fetch('/api/gallery');
-      // const data = await response.json();
-      // setImages(data || []);
-
-      // Use sample data as fallback
-      const sampleImages: GalleryImage[] = [
-        {
-          id: 'sample-1',
-          category: 'kawasan',
-          url: 'https://images.unsplash.com/photo-1655793488799-1ffba5b22cbd?w=1080',
-          caption_id: 'Keraton Yogyakarta - Pusat Sumbu Filosofi',
-          caption_en: 'Yogyakarta Palace - Center of Philosophical Axis',
-          tags: ['keraton', 'heritage', 'palace'],
-        },
-        {
-          id: 'sample-2',
-          category: 'sejarah',
-          url: 'https://images.unsplash.com/photo-1721747994983-96d23e197487?w=1080',
-          caption_id: 'Upacara Tradisional Jawa',
-          caption_en: 'Traditional Javanese Ceremony',
-          tags: ['ceremony', 'tradition'],
-        },
-        {
-          id: 'sample-3',
-          category: 'umkm',
-          url: 'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=1080',
-          caption_id: 'Kerajinan Batik Tradisional',
-          caption_en: 'Traditional Batik Craft',
-          tags: ['batik', 'craft'],
-        },
-        {
-          id: 'sample-4',
-          category: 'wisata',
-          url: 'https://images.unsplash.com/photo-1675475904342-47d71467df1a?w=1080',
-          caption_id: 'Tugu Yogyakarta',
-          caption_en: 'Yogyakarta Monument',
-          tags: ['monument', 'landmark'],
-        },
-        {
-          id: 'sample-5',
-          category: 'kawasan',
-          url: 'https://images.unsplash.com/photo-1669032667712-4402633fb1e0?w=1080',
-          caption_id: 'Panggung Krapyak',
-          caption_en: 'Krapyak Stage',
-          tags: ['panggung', 'architecture'],
-        },
-        {
-          id: 'sample-6',
-          category: 'agenda',
-          url: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1080',
-          caption_id: 'Pertunjukan Wayang Kulit',
-          caption_en: 'Shadow Puppet Performance',
-          tags: ['wayang', 'performance'],
-        },
-        {
-          id: 'sample-7',
-          category: 'kawasan',
-          url: 'https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=1080',
-          caption_id: 'Alun-alun Kidul',
-          caption_en: 'South Square',
-          tags: ['alun-alun', 'public space'],
-        },
-        {
-          id: 'sample-8',
-          category: 'wisata',
-          url: 'https://images.unsplash.com/photo-1528127269322-539801943592?w=1080',
-          caption_id: 'Taman Sari',
-          caption_en: 'Taman Sari Water Castle',
-          tags: ['taman sari', 'heritage'],
-        },
-        {
-          id: 'sample-9',
-          category: 'umkm',
-          url: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=1080',
-          caption_id: 'Kuliner Tradisional',
-          caption_en: 'Traditional Cuisine',
-          tags: ['food', 'culinary'],
-        },
-      ];
-      setImages(sampleImages);
+      // Load from mock data
+      const galleryImages: GalleryImage[] = mockGaleriData
+        .filter(g => g.status === 'published')
+        .map(g => ({
+          id: g.id,
+          category: g.category.toLowerCase(),
+          url: g.image_url,
+          caption_id: g.title_id,
+          caption_en: g.title_en,
+          tags: g.tags,
+        }));
+      setImages(galleryImages);
     } catch (error) {
       console.error('Error loading gallery:', error);
       setImages([]);
