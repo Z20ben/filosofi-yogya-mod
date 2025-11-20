@@ -82,11 +82,10 @@ export default function UMKMPage() {
         </div>
       </section>
 
-      {/* Interactive Map Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      {/* Interactive Map Section - temporarily hidden */}
+      {/* <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <FadeInSection>
           <div className="bg-card rounded-2xl shadow-xl overflow-hidden">
-            {/* Map Header */}
             <div className="p-6 bg-[var(--javanese-brown-bg)] text-[var(--javanese-ivory)] dark:bg-[var(--javanese-ivory)] dark:text-primary-foreground">
               <div className="flex items-center gap-3">
                 <MapPin className="w-6 h-6 text-[var(--javanese-gold)]" />
@@ -99,7 +98,6 @@ export default function UMKMPage() {
               </p>
             </div>
 
-            {/* Map Container */}
             <div className="aspect-video bg-muted flex items-center justify-center p-8">
               <div className="text-center">
                 <MapPin className="w-16 h-16 text-[var(--javanese-brown-text)]/30 mx-auto mb-4" />
@@ -113,10 +111,10 @@ export default function UMKMPage() {
             </div>
           </div>
         </FadeInSection>
-      </section>
+      </section> */}
 
       {/* Featured UMKM Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <FadeInSection>
           <div className="text-center mb-12">
             <h2 className="text-[var(--javanese-brown-text)] mb-4 font-serif text-4xl">

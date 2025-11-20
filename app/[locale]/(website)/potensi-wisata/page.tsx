@@ -119,8 +119,8 @@ export default function WisataPage() {
         </div>
       </section>
 
-      {/* Interactive Map Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      {/* Interactive Map Section - temporarily hidden */}
+      {/* <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <FadeInSection>
           <div className="bg-card rounded-2xl shadow-xl overflow-hidden">
             <div className="p-6 bg-[var(--javanese-brown-bg)] text-[var(--javanese-ivory)] dark:bg-[var(--javanese-ivory)] dark:text-primary-foreground">
@@ -148,7 +148,7 @@ export default function WisataPage() {
             </div>
           </div>
         </FadeInSection>
-      </section>
+      </section> */}
 
       {/* Destinations Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

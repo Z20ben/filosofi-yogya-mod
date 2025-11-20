@@ -191,8 +191,8 @@ export default function KawasanPage() {
         </FadeInSection>
       </section>
 
-      {/* Interactive Map Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      {/* Interactive Map Section - temporarily hidden */}
+      {/* <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <FadeInSection>
           <div className="bg-card rounded-2xl shadow-xl overflow-hidden">
             <div className="p-6 bg-[var(--javanese-brown-bg)] text-[var(--javanese-ivory)] dark:bg-[var(--javanese-ivory)] dark:text-primary-foreground">
@@ -208,7 +208,6 @@ export default function KawasanPage() {
             </div>
 
             <div className="aspect-video bg-muted">
-              {/* Placeholder for map - will be replaced with DB iframe */}
               <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center">
                 <MapPin className="w-16 h-16 text-[var(--javanese-brown-text)]/30 mb-4" />
                 <h3 className="text-[var(--javanese-brown-text)] mb-2">
@@ -221,7 +220,7 @@ export default function KawasanPage() {
             </div>
           </div>
         </FadeInSection>
-      </section>
+      </section> */}
 
       {/* Landmarks Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

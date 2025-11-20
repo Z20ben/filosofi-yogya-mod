@@ -15,6 +15,39 @@ export type SearchResultType =
   | 'galeri'
   | 'lokasi';
 
+// Extended data for specific types
+export interface WisataExtendedData {
+  facilities_id?: string[];
+  facilities_en?: string[];
+  coordinates?: { lat: number; lng: number };
+}
+
+export interface UMKMExtendedData {
+  products_id?: string[];
+  products_en?: string[];
+  price_range_id?: string;
+  price_range_en?: string;
+  location_id?: string;
+  location_en?: string;
+  contact?: { phone: string; email?: string };
+  social_media?: { instagram?: string; facebook?: string };
+  gallery_images?: string[];
+}
+
+export interface AgendaExtendedData {
+  date_start?: Date;
+  date_end?: Date;
+  time_start?: string;
+  time_end?: string;
+  location?: string;
+  venue_name?: string;
+}
+
+export interface GaleriExtendedData {
+  photographer?: string;
+  tags?: string[];
+}
+
 export interface SearchResult {
   id: string;
   type: SearchResultType;
@@ -24,6 +57,11 @@ export interface SearchResult {
   category: string;
   thumbnail?: string;
   url: string;
+  // Extended data based on type
+  wisataData?: WisataExtendedData;
+  umkmData?: UMKMExtendedData;
+  agendaData?: AgendaExtendedData;
+  galeriData?: GaleriExtendedData;
 }
 
 export interface SearchOptions {
@@ -106,6 +144,11 @@ export function searchAllData(
             category: item.category,
             thumbnail: item.featured_image,
             url: `/${locale}/potensi-wisata/${item.slug}`,
+            wisataData: {
+              facilities_id: item.facilities_id,
+              facilities_en: item.facilities_en,
+              coordinates: item.coordinates,
+            },
           });
         }
       });
@@ -142,6 +185,16 @@ export function searchAllData(
             category: item.category,
             thumbnail: item.featured_image,
             url: `/${locale}/potensi-umkm/${item.slug}`,
+            umkmData: {
+              products_id: item.products_id || item.products?.map(p => p.name_id),
+              products_en: item.products_en || item.products?.map(p => p.name_en),
+              price_range_id: item.price_range_id || item.products?.[0]?.price_range,
+              price_range_en: item.price_range_en || item.products?.[0]?.price_range,
+              location_id: item.location_id || item.location.address,
+              location_en: item.location_en || item.location.address,
+              contact: { phone: item.contact.phone, email: item.contact.email },
+              social_media: { instagram: item.social_media.instagram, facebook: item.social_media.facebook },
+            },
           });
         }
       });
@@ -209,6 +262,14 @@ export function searchAllData(
             category: locale === 'id' ? (item.category_id || item.category) : (item.category_en || item.category),
             thumbnail: item.featured_image,
             url: `/${locale}/agenda-seni-budaya/${item.slug}`,
+            agendaData: {
+              date_start: item.date_start,
+              date_end: item.date_end,
+              time_start: item.time_start,
+              time_end: item.time_end,
+              location: item.location,
+              venue_name: item.venue_name,
+            },
           });
         }
       });
@@ -240,6 +301,10 @@ export function searchAllData(
             category: item.category,
             thumbnail: item.image_url,
             url: `/${locale}/galeri-foto?id=${item.id}`,
+            galeriData: {
+              photographer: item.photographer,
+              tags: item.tags,
+            },
           });
         }
       });
