@@ -200,7 +200,7 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
 
         return L.divIcon({
           html: `<div style="
-            background: linear-gradient(135deg, var(--javanese-brown-bg), var(--javanese-terracotta));
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
             color: white;
             border-radius: 50%;
             width: ${diameter}px;

@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useTranslations, useLocale } from 'next-intl';
@@ -34,61 +33,83 @@ export function Navigation() {
   const [mounted, setMounted] = useState(false);
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Wait for component to mount to prevent hydration mismatch
-  // Server doesn't know user's theme preference from localStorage
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Grouped menu structure matching original design
+  // Menu structure for modern encyclopedia
   const menuGroups: MenuGroup[] = [
+    // Urutan: Ensiklopedia, Agenda, Destinasi Wisata, Spot Nongkrong, UMKM
     {
-      key: 'home',
-      label: t('home'),
-      type: 'single',
-      href: `/${locale}`,
+      key: 'ensiklopedia-group',
+      label: t('ensiklopedia') || 'Ensiklopedia',
+      type: 'dropdown',
+      href: `/${locale}/encyclopedia`,
+      items: [
+        { key: 'semua-ensiklopedia', label: t('semua') || 'Semua', href: `/${locale}/encyclopedia` },
+        { key: 'warisan-benda', label: t('warisanBenda') || 'Warisan Budaya Benda', href: `/${locale}/encyclopedia?category=warisan-benda` },
+        { key: 'warisan-takbenda', label: t('warisanTakBenda') || 'Warisan Budaya Tak Benda', href: `/${locale}/encyclopedia?category=warisan-takbenda` },
+        { key: 'tokoh', label: t('tokoh') || 'Tokoh / Sejarah', href: `/${locale}/encyclopedia?category=tokoh` },
+        { key: 'istilah', label: t('istilah') || 'Istilah', href: `/${locale}/encyclopedia?category=istilah` },
+        { key: 'peta-interaktif', label: t('petaInteraktif') || 'Peta Interaktif', href: `/${locale}/map` },
+      ],
     },
     {
-      key: 'kawasan-group',
-      label: t('kawasanGroup'),
+      key: 'agenda-group',
+      label: t('agenda') || 'Agenda',
       type: 'dropdown',
+      href: `/${locale}/agenda-event`,
       items: [
-        { key: 'kawasan', label: t('kawasan'), href: `/${locale}/kawasan-sumbu-filosofi` },
-        { key: 'sejarah', label: t('sejarah'), href: `/${locale}/sejarah-dan-riset` },
-        { key: 'wisata', label: t('wisata'), href: `/${locale}/potensi-wisata` },
+        { key: 'semua-agenda', label: t('semua') || 'Semua', href: `/${locale}/agenda-event` },
+        { key: 'budaya', label: t('budayaUpacara') || 'Budaya & Upacara', href: `/${locale}/agenda-event?category=budaya` },
+        { key: 'festival', label: t('festivalHiburan') || 'Festival & Hiburan', href: `/${locale}/agenda-event?category=festival` },
+        { key: 'workshop', label: t('komunitasWorkshop') || 'Komunitas & Workshop', href: `/${locale}/agenda-event?category=komunitas` },
       ],
+    },
+    {
+      key: 'destinasi-group',
+      label: t('destinasiWisata') || 'Destinasi Wisata',
+      type: 'dropdown',
+      href: `/${locale}/destinasi-wisata`,
+      items: [
+        { key: 'semua-destinasi', label: t('semua') || 'Semua', href: `/${locale}/destinasi-wisata` },
+        { key: 'titik-sumbu', label: t('titikSumbu') || 'Titik Sumbu', href: `/${locale}/destinasi-wisata?category=titik-sumbu` },
+        { key: 'cagar-budaya', label: t('cagarBudaya') || 'Cagar Budaya', href: `/${locale}/destinasi-wisata?category=cagar-budaya` },
+        { key: 'museum', label: t('museumGaleri') || 'Museum & Galeri', href: `/${locale}/destinasi-wisata?category=museum` },
+      ],
+    },
+    {
+      key: 'spot-nongkrong',
+      label: t('spotNongkrong') || 'Spot Nongkrong',
+      type: 'single',
+      href: `/${locale}/spot-nongkrong`,
     },
     {
       key: 'umkm-group',
-      label: t('umkmGroup'),
+      label: t('umkm') || 'UMKM',
       type: 'dropdown',
+      href: `/${locale}/umkm-lokal`,
       items: [
-        { key: 'umkm', label: t('umkm'), href: `/${locale}/potensi-umkm` },
-        { key: 'katalog', label: t('katalog'), href: `/${locale}/potensi-umkm/katalog` },
+        { key: 'semua-umkm', label: t('semua') || 'Semua', href: `/${locale}/umkm-lokal` },
+        { key: 'kuliner', label: t('kuliner') || 'Kuliner', href: `/${locale}/umkm-lokal?category=kuliner` },
+        { key: 'busana', label: t('busana') || 'Busana', href: `/${locale}/umkm-lokal?category=busana` },
+        { key: 'craft', label: t('produkKreatif') || 'Produk Kreatif', href: `/${locale}/umkm-lokal?category=craft` },
       ],
     },
-    {
-      key: 'media-group',
-      label: t('mediaGroup'),
-      type: 'dropdown',
-      items: [
-        { key: 'galeri', label: t('galeri'), href: `/${locale}/galeri-foto` },
-        { key: 'agenda', label: t('agenda'), href: `/${locale}/agenda-seni-budaya` },
-      ],
-    },
-    {
-      key: 'tentang',
-      label: t('tentang'),
-      type: 'single',
-      href: `/${locale}/tentang`,
-    },
-    {
-      key: 'peta-interaktif',
-      label: t('petaInteraktif'),
-      type: 'single',
-      href: `/${locale}/peta-interaktif`,
-      badge: true,
-    },
+    // COMMENTED OUT - Menu yang tidak digunakan
+    // {
+    //   key: 'home',
+    //   label: t('home'),
+    //   type: 'single',
+    //   href: `/${locale}`,
+    // },
+    // {
+    //   key: 'peta-interaktif',
+    //   label: t('petaInteraktif') || 'Map Interaktif',
+    //   type: 'single',
+    //   href: `/${locale}/peta-interaktif`,
+    //   badge: true,
+    // },
   ];
 
   // Scroll behavior for hiding/showing navbar
@@ -97,15 +118,12 @@ export function Navigation() {
       const currentScrollY = window.scrollY;
 
       if (currentScrollY < 10) {
-        // Always show at top
         setIsVisible(true);
       } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Scrolling down - hide
         setIsVisible(false);
         setOpenDropdown(null);
-        setMobileMenuOpen(false); // Close mobile menu when scrolling down
+        setMobileMenuOpen(false);
       } else if (currentScrollY < lastScrollY) {
-        // Scrolling up - show
         setIsVisible(true);
       }
 
@@ -122,9 +140,7 @@ export function Navigation() {
 
   const toggleLanguage = () => {
     const newLocale = locale === 'id' ? 'en' : 'id';
-    // Get current path without locale prefix
     const pathWithoutLocale = pathname.replace(`/${locale}`, '');
-    // Redirect to same path with new locale
     router.push(`/${newLocale}${pathWithoutLocale || ''}`);
   };
 
@@ -145,29 +161,19 @@ export function Navigation() {
     if (group.type === 'single') {
       return pathname === group.href;
     }
-    return group.items?.some((item) => pathname === item.href);
+    return group.items?.some((item) => pathname.startsWith(item.href.split('?')[0]));
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 bg-background border-b border-border shadow-sm transition-transform duration-300 ${
+    <nav className={`fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border-b border-gray-200 dark:border-slate-800 shadow-sm transition-transform duration-300 ${
       isVisible ? 'translate-y-0' : '-translate-y-full'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href={`/${locale}`} className="flex items-center gap-3 group">
-            {/* Logo Image - Commented for now */}
-            {/* <div className="w-12 h-12 rounded-full overflow-hidden shadow-md group-hover:shadow-lg transition-shadow">
-              <Image
-                src="/assets/fcbd9c1adc4e5f7b378480e7e255d48862891047.png"
-                alt="Filosofi Jogja Logo"
-                width={48}
-                height={48}
-                className="w-full h-full object-cover"
-              />
-            </div> */}
+          <Link href={`/${locale}`} className="flex items-center gap-2 group">
             <div className="block">
-              <div className="font-serif font-bold text-lg text-foreground">
+              <div className="font-serif font-bold text-lg text-slate-900 dark:text-slate-50 transition-colors">
                 Filosofi
               </div>
               <div className="text-xs text-muted-foreground">Jogja</div>
@@ -175,22 +181,22 @@ export function Navigation() {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-1">
             {menuGroups.map((group) => {
               if (group.type === 'single') {
                 return (
                   <Link
                     key={group.key}
                     href={group.href!}
-                    className={`relative px-4 py-2 rounded-lg transition-all ${
+                    className={`relative px-4 py-2 rounded-md text-sm transition-colors ${
                       isActiveGroup(group)
-                        ? 'bg-[var(--javanese-brown-bg)] text-javanese-ivory shadow-sm'
-                        : 'text-[var(--javanese-brown-text)] hover:bg-gold-100'
+                        ? 'text-slate-900 dark:text-slate-50 font-medium'
+                        : 'text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400'
                     }`}
                   >
                     {group.label}
                     {group.badge && (
-                      <span className="absolute -top-1 -right-1 px-1.5 py-0.5 text-[10px] font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-full shadow-md animate-pulse">
+                      <span className="absolute -top-1 -right-1 px-1.5 py-0.5 text-[10px] font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full shadow-md animate-pulse">
                         ★
                       </span>
                     )}
@@ -198,7 +204,6 @@ export function Navigation() {
                 );
               }
 
-              // Dropdown menu
               return (
                 <div
                   key={group.key}
@@ -207,10 +212,12 @@ export function Navigation() {
                   onMouseLeave={handleMouseLeave}
                 >
                   <button
-                    className={`flex items-center gap-1 px-4 py-2 rounded-lg transition-all ${
+                    className={`flex items-center gap-1 px-4 py-2 rounded-md text-sm transition-colors ${
                       isActiveGroup(group)
-                        ? 'bg-[var(--javanese-brown-bg)] text-javanese-ivory shadow-sm'
-                        : 'text-[var(--javanese-brown-text)] hover:bg-gold-100'
+                        ? 'text-slate-900 dark:text-slate-50 font-medium'
+                        : openDropdown === group.key
+                        ? 'bg-orange-50 dark:bg-orange-950/20 text-orange-600 dark:text-orange-400'
+                        : 'text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400'
                     }`}
                   >
                     {group.label}
@@ -221,18 +228,17 @@ export function Navigation() {
                     />
                   </button>
 
-                  {/* Dropdown content */}
                   {openDropdown === group.key && (
-                    <div className="absolute top-full left-0 mt-1 min-w-[200px] bg-card rounded-lg shadow-xl border border-border py-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="absolute top-full left-0 mt-1 min-w-[200px] bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-gray-200 dark:border-slate-700 py-2 animate-in fade-in slide-in-from-top-2 duration-200">
                       {group.items?.map((item) => (
                         <Link
                           key={item.key}
                           href={item.href}
                           onClick={() => setOpenDropdown(null)}
-                          className={`block w-full text-left px-4 py-2.5 transition-colors ${
-                            pathname === item.href
-                              ? 'bg-gold-100 text-[var(--javanese-brown-text)]'
-                              : 'text-[var(--javanese-brown-text)] hover:bg-gold-50'
+                          className={`block w-full text-left px-4 py-2.5 text-sm transition-colors ${
+                            pathname.startsWith(item.href.split('?')[0])
+                              ? 'text-slate-900 dark:text-slate-50 font-medium'
+                              : 'text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400'
                           }`}
                         >
                           {item.label}
@@ -247,23 +253,11 @@ export function Navigation() {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            {/* Language Toggle with Active Language Display */}
-            <button
-              onClick={toggleLanguage}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg bg-gold-100 text-[var(--javanese-brown-text)] hover:bg-gold-200 transition-all hover:scale-105"
-              aria-label="Toggle language"
-            >
-              <Globe className="h-5 w-5 hidden sm:inline" />
-              <span className="text-sm font-medium uppercase">
-                {locale}
-              </span>
-            </button>
-
             {/* Theme Toggle */}
             {mounted && (
               <button
                 onClick={toggleTheme}
-                className="flex items-center justify-center p-2 rounded-lg bg-gold-100 text-[var(--javanese-brown-text)] hover:bg-gold-200 transition-all hover:scale-105"
+                className="flex items-center justify-center p-2 rounded-full text-slate-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? (
@@ -274,30 +268,25 @@ export function Navigation() {
               </button>
             )}
 
-            {/* Admin Login Button */}
-            <Link
-              href={`/${locale}/admin/login`}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all border ${
-                pathname.startsWith(`/${locale}/admin`)
-                  ? 'bg-[var(--javanese-brown-bg)] text-javanese-ivory border-[var(--javanese-brown-bg)] shadow-md'
-                  : 'border-javanese-brown/20 text-[var(--javanese-brown-text)] hover:border-[var(--javanese-brown-text)] hover:bg-gold-100'
-              }`}
-              title={t('admin')}
+            {/* Language Toggle */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center justify-center p-2 rounded-full text-slate-600 dark:text-slate-400 hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
+              aria-label="Toggle language"
             >
-              <LogIn className="h-5 w-5" />
-              <span className="hidden lg:inline text-sm">{t('admin')}</span>
-            </Link>
+              <Globe className="h-5 w-5" />
+            </button>
 
             {/* Mobile menu button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-lg hover:bg-accent transition-colors"
+              className="lg:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? (
-                <X className="h-6 w-6" />
+                <X className="h-5 w-5" />
               ) : (
-                <Menu className="h-6 w-6" />
+                <Menu className="h-5 w-5" />
               )}
             </button>
           </div>
@@ -305,7 +294,7 @@ export function Navigation() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-javanese-brown/10 max-h-[calc(100vh-5rem)] overflow-y-auto">
+          <div className="lg:hidden py-4 border-t border-gray-200 dark:border-slate-700 max-h-[calc(100vh-4rem)] overflow-y-auto">
             <div className="flex flex-col gap-1">
               {menuGroups.map((group) => {
                 if (group.type === 'single') {
@@ -314,15 +303,15 @@ export function Navigation() {
                       key={group.key}
                       href={group.href!}
                       onClick={() => setMobileMenuOpen(false)}
-                      className={`relative flex items-center gap-2 px-4 py-3 rounded-lg text-left transition-all ${
+                      className={`relative flex items-center gap-2 px-4 py-2.5 rounded-md text-left transition-colors ${
                         isActiveGroup(group)
-                          ? 'bg-[var(--javanese-brown-bg)] text-javanese-ivory shadow-sm'
-                          : 'text-[var(--javanese-brown-text)] hover:bg-gold-100'
+                          ? 'text-slate-900 dark:text-slate-50 font-medium'
+                          : 'text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400'
                       }`}
                     >
                       {group.label}
                       {group.badge && (
-                        <span className="px-1.5 py-0.5 text-[10px] font-bold bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-full shadow-md">
+                        <span className="px-1.5 py-0.5 text-[10px] font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full shadow-md">
                           ★
                         </span>
                       )}
@@ -330,17 +319,16 @@ export function Navigation() {
                   );
                 }
 
-                // Mobile dropdown
                 return (
                   <div key={group.key} className="space-y-1">
                     <button
                       onClick={() =>
                         setOpenDropdown(openDropdown === group.key ? null : group.key)
                       }
-                      className={`w-full flex items-center justify-between px-4 py-3 rounded-lg text-left transition-all ${
+                      className={`w-full flex items-center justify-between px-4 py-2.5 rounded-md text-left transition-colors ${
                         isActiveGroup(group)
-                          ? 'bg-[var(--javanese-brown-bg)] text-javanese-ivory shadow-sm'
-                          : 'text-[var(--javanese-brown-text)] hover:bg-gold-100'
+                          ? 'text-slate-900 dark:text-slate-50 font-medium'
+                          : 'text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400'
                       }`}
                     >
                       {group.label}
@@ -361,10 +349,10 @@ export function Navigation() {
                               setMobileMenuOpen(false);
                               setOpenDropdown(null);
                             }}
-                            className={`block w-full text-left px-4 py-2.5 rounded-lg transition-all ${
-                              pathname === item.href
-                                ? 'bg-gold-200 text-[var(--javanese-brown-text)]'
-                                : 'text-[var(--javanese-brown-text)] hover:bg-gold-50'
+                            className={`block w-full text-left px-4 py-2 rounded-md text-sm transition-colors ${
+                              pathname.startsWith(item.href.split('?')[0])
+                                ? 'text-slate-900 dark:text-slate-50 font-medium'
+                                : 'text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400'
                             }`}
                           >
                             {item.label}

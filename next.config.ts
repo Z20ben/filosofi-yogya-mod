@@ -9,6 +9,14 @@ const nextConfig: NextConfig = {
     // We use the new flat config (eslint.config.mjs) which Vercel doesn't support yet
     ignoreDuringBuilds: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
+  },
 
   async headers() {
     return [

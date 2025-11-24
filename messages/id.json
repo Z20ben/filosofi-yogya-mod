@@ -13,7 +13,24 @@
     "admin": "Admin",
     "kawasanGroup": "Kawasan",
     "umkmGroup": "UMKM",
-    "mediaGroup": "Media"
+    "mediaGroup": "Media",
+    "ensiklopedia": "Ensiklopedia",
+    "warisanBenda": "Warisan Budaya Benda",
+    "warisanTakBenda": "Warisan Budaya Tak Benda",
+    "tokoh": "Tokoh / Sejarah",
+    "istilah": "Istilah",
+    "destinasiWisata": "Destinasi Wisata",
+    "titikSumbu": "Titik Sumbu Filosofi",
+    "cagarBudaya": "Cagar Budaya",
+    "museumGaleri": "Museum & Galeri",
+    "spotNongkrong": "Spot Nongkrong",
+    "kuliner": "Kuliner",
+    "busana": "Busana",
+    "produkKreatif": "Produk Kreatif",
+    "semua": "Semua",
+    "budayaUpacara": "Budaya & Upacara",
+    "festivalHiburan": "Festival & Hiburan",
+    "komunitasWorkshop": "Komunitas & Workshop"
   },
   "home": {
     "title": "Ensiklopedia Sumbu Filosofi Yogyakarta",
@@ -75,12 +92,25 @@
   "common": {
     "learnMore": "Pelajari Selengkapnya"
   },
+  "hero": {
+    "title": "Jelajah Jogja Versimu",
+    "subtitle": "Temukan spot nongkrong, UMKM lokal, dan tren terbaru di kawasan Sumbu Filosofi Yogyakarta",
+    "placeholder": "Cari cafe, UMKM, atau destinasi...",
+    "search": "Cari"
+  },
   "footer": {
     "aboutTitle": "Tentang Kami",
     "aboutDescription": "Ensiklopedia digital yang merayakan warisan budaya dan filosofi Jawa di koridor Sumbu Filosofi Yogyakarta.",
     "quickLinksTitle": "Tautan Cepat",
     "contactTitle": "Kontak",
-    "copyright": "Hak Cipta Dilindungi."
+    "copyright": "Hak Cipta Dilindungi.",
+    "about": "Tentang",
+    "contact": "Kontak",
+    "privacy": "Kebijakan Privasi",
+    "terms": "Syarat & Ketentuan",
+    "followUs": "Ikuti Kami",
+    "exploreTitle": "Jelajahi",
+    "aboutUsTitle": "Tentang Kami"
   },
   "kawasan": {
     "badge": "Kawasan",
@@ -667,5 +697,55 @@
       "showing": "Menampilkan",
       "of": "dari"
     }
+  },
+  "destinasiWisata": {
+    "title": "Destinasi Wisata Sumbu Filosofi",
+    "subtitle": "Jelajahi kekayaan warisan budaya dan landmark ikonik di sepanjang Sumbu Filosofi Yogyakarta",
+    "categories": {
+      "kawasan": "Kawasan",
+      "titikSumbu": "Titik Sumbu Filosofi",
+      "cagarBudaya": "Cagar Budaya",
+      "museum": "Museum & Galeri",
+      "landmark": "Landmark"
+    },
+    "openHours": "Jam Buka",
+    "viewOnMap": "Lihat di Peta"
+  },
+  "spotNongkrong": {
+    "title": "Spot Nongkrong Hits",
+    "subtitle": "Tempat-tempat keren yang lagi viral di kalangan anak muda Jogja",
+    "filters": {
+      "all": "Semua",
+      "cheap": "Murah Meriah",
+      "instagramable": "Instagramable",
+      "night": "Buka Malam",
+      "music": "Live Music"
+    },
+    "viewOnMap": "Lihat di Map",
+    "open": "Buka",
+    "budget": "Budget"
+  },
+  "umkmLokal": {
+    "title": "UMKM Lokal Pilihan",
+    "subtitle": "Dukung produk lokal Jogja yang keren dan berkualitas! Temukan berbagai produk dari pengusaha lokal.",
+    "categories": {
+      "all": "Semua",
+      "culinary": "Kuliner",
+      "craft": "Kerajinan",
+      "fashion": "Fashion",
+      "creative": "Kreatif"
+    },
+    "startingFrom": "Mulai dari",
+    "viewOnMap": "Lihat di Map",
+    "priceRange": "Range Harga",
+    "contact": "Kontak",
+    "products": "Produk",
+    "noResults": "Tidak ada UMKM ditemukan"
+  },
+  "notFound": {
+    "title": "Halaman Tidak Ditemukan",
+    "message": "Halaman yang anda cari tidak ditemukan",
+    "description": "Mungkin halaman telah dipindahkan atau URL yang Anda masukkan salah.",
+    "btnHome": "Kembali ke Beranda"
   }
 }
