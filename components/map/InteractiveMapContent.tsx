@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Loader2 } from 'lucide-react';
 import { mapLocations, type SiteLocation } from '@/lib/data/mapLocations';
@@ -21,10 +22,26 @@ const LeafletMap = dynamic(
 );
 
 export function InteractiveMapContent() {
+  const searchParams = useSearchParams();
   const [selectedLocation, setSelectedLocation] = useState<SiteLocation | null>(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [sidebarKey, setSidebarKey] = useState(0);
+  const [initialLocationId, setInitialLocationId] = useState<string | null>(null);
+
+  // Handle initial location from URL query param
+  useEffect(() => {
+    const locationId = searchParams.get('location');
+    if (locationId) {
+      const location = mapLocations.find(loc => loc.id === locationId);
+      if (location) {
+        setInitialLocationId(locationId);
+        setSelectedLocation(location);
+        setIsSidebarOpen(true);
+        setSidebarKey(prev => prev + 1);
+      }
+    }
+  }, [searchParams]);
 
   const handleLocationSelect = useCallback((location: SiteLocation) => {
     setSelectedLocation(location);
@@ -58,6 +75,7 @@ export function InteractiveMapContent() {
           isSearchOpen={isSearchOpen}
           onSearchOpenChange={handleSearchOpenChange}
           selectedLocation={selectedLocation}
+          initialLocationId={initialLocationId}
           searchSidebar={
             <SearchSidebar
               locations={mapLocations}

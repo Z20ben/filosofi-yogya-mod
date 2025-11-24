@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "Home",
-    "kawasan": "Philosophical Axis Area",
+    "kawasan": "Philosophical Axis",
     "sejarah": "History & Research",
     "wisata": "Tourism Potential",
     "umkm": "MSME Potential",
@@ -13,7 +13,24 @@
     "admin": "Admin",
     "kawasanGroup": "Area",
     "umkmGroup": "MSME",
-    "mediaGroup": "Media"
+    "mediaGroup": "Media",
+    "ensiklopedia": "Encyclopedia",
+    "warisanBenda": "Tangible Cultural Heritage",
+    "warisanTakBenda": "Intangible Cultural Heritage",
+    "tokoh": "Figures / History",
+    "istilah": "Terms",
+    "destinasiWisata": "Tourist Destinations",
+    "titikSumbu": "Axis Points",
+    "cagarBudaya": "Cultural Heritage",
+    "museumGaleri": "Museums & Galleries",
+    "spotNongkrong": "Hangout Spots",
+    "kuliner": "Culinary",
+    "busana": "Fashion",
+    "produkKreatif": "Creative Products",
+    "semua": "All",
+    "budayaUpacara": "Culture & Ceremonies",
+    "festivalHiburan": "Festivals & Entertainment",
+    "komunitasWorkshop": "Community & Workshops"
   },
   "home": {
     "title": "Yogyakarta Philosophical Axis Encyclopedia",
@@ -75,12 +92,25 @@
   "common": {
     "learnMore": "Learn More"
   },
+  "hero": {
+    "title": "Explore Your Own Jogja",
+    "subtitle": "Discover hangout spots, local SMEs, and latest trends in the Yogyakarta Philosophical Axis area",
+    "placeholder": "Search cafes, SMEs, or destinations...",
+    "search": "Search"
+  },
   "footer": {
     "aboutTitle": "About Us",
     "aboutDescription": "A digital encyclopedia celebrating Javanese cultural and philosophical heritage along the Yogyakarta Philosophical Axis corridor.",
     "quickLinksTitle": "Quick Links",
     "contactTitle": "Contact",
-    "copyright": "All Rights Reserved."
+    "copyright": "All Rights Reserved.",
+    "about": "About",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions",
+    "followUs": "Follow Us",
+    "exploreTitle": "Explore",
+    "aboutUsTitle": "About Us"
   },
   "kawasan": {
     "badge": "Area",
@@ -191,7 +221,10 @@
       "cultural": "Cultural Tourism",
       "historical": "Historical Tourism",
       "shopping": "Shopping Tourism",
-      "religious": "Religious Tourism"
+      "religious": "Religious Tourism",
+      "adventure": "Adventure Tourism",
+      "culinary": "Culinary Tourism",
+      "other": "Other"
     },
     "results": {
       "showing": "Showing",
@@ -596,6 +629,89 @@
     "delete": "Delete",
     "edit": "Edit"
   },
+  "search": {
+    "placeholder": "Search areas, tourism, MSME, history...",
+    "ariaLabel": "Search encyclopedia",
+    "clear": "Clear",
+    "submit": "Search",
+    "title": "Search Results",
+    "subtitle": "Showing results for",
+    "noResults": "No results found",
+    "noResultsDesc": "Try using different keywords or check your spelling",
+    "results": "results",
+    "filterAll": "All",
+    "types": {
+      "kawasan": "Area",
+      "wisata": "Tourism",
+      "umkm": "MSME",
+      "sejarah": "History",
+      "agenda": "Events",
+      "galeri": "Gallery",
+      "lokasi": "Location"
+    }
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "destinasiWisata": {
+    "title": "Tourist Destinations of the Philosophical Axis",
+    "subtitle": "Explore the rich cultural heritage of Yogyakarta along the Philosophical Axis corridor",
+    "searchPlaceholder": "Search destinations...",
+    "categories": {
+      "all": "All",
+      "kawasan": "Area",
+      "titikSumbu": "Axis Points",
+      "cagarBudaya": "Cultural Heritage",
+      "museum": "Museums & Galleries",
+      "landmark": "Landmarks"
+    },
+    "openHours": "Opening Hours",
+    "viewOnMap": "View on Map",
+    "getDirections": "Get Directions",
+    "entryFee": "Entry Fee",
+    "facilities": "Facilities",
+    "noResults": "No destinations found"
+  },
+  "spotNongkrong": {
+    "title": "Trending Hangout Spots",
+    "subtitle": "Cool places that are going viral among Jogja youngsters",
+    "searchPlaceholder": "Search hangout spots...",
+    "filters": {
+      "all": "All",
+      "cheap": "Budget Friendly",
+      "instagramable": "Instagramable",
+      "night": "Night Vibes",
+      "music": "Live Music"
+    },
+    "openHours": "Opening Hours",
+    "priceRange": "Price Range",
+    "viewOnMap": "View on Map",
+    "getDirections": "Get Directions",
+    "facilities": "Facilities",
+    "noResults": "No hangout spots found",
+    "open": "Open",
+    "budget": "Budget"
+  },
+  "umkmLokal": {
+    "title": "Featured Local SMEs",
+    "subtitle": "Support cool and quality local Jogja products! Find various products from local entrepreneurs.",
+    "searchPlaceholder": "Search MSMEs...",
+    "categories": {
+      "all": "All",
+      "culinary": "Culinary",
+      "craft": "Craft",
+      "fashion": "Fashion",
+      "creative": "Creative"
+    },
+    "products": "Products",
+    "priceRange": "Price Range",
+    "contact": "Contact",
+    "viewOnMap": "View on Map",
+    "getDirections": "Get Directions",
+    "noResults": "No MSMEs found",
+    "startingFrom": "Starting from"
+  },
   "interactiveMap": {
     "title": "Philosophical Axis Interactive Map",
     "subtitle": "Explore historical sites, tourism destinations, and local businesses along the Yogyakarta Philosophical Axis corridor",
@@ -640,5 +756,11 @@
       "showing": "Showing",
       "of": "of"
     }
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "message": "The page you are looking for could not be found",
+    "description": "The page may have been moved or the URL you entered is incorrect.",
+    "btnHome": "Back to Home"
   }
 }

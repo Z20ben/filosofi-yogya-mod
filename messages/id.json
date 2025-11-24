@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "Beranda",
-    "kawasan": "Kawasan Sumbu Filosofi",
+    "kawasan": "Sumbu Filosofi",
     "sejarah": "Sejarah & Riset",
     "wisata": "Potensi Wisata",
     "umkm": "Potensi UMKM",
@@ -13,7 +13,24 @@
     "admin": "Admin",
     "kawasanGroup": "Kawasan",
     "umkmGroup": "UMKM",
-    "mediaGroup": "Media"
+    "mediaGroup": "Media",
+    "ensiklopedia": "Ensiklopedia",
+    "warisanBenda": "Warisan Budaya Benda",
+    "warisanTakBenda": "Warisan Budaya Tak Benda",
+    "tokoh": "Tokoh / Sejarah",
+    "istilah": "Istilah",
+    "destinasiWisata": "Destinasi Wisata",
+    "titikSumbu": "Titik Sumbu Filosofi",
+    "cagarBudaya": "Cagar Budaya",
+    "museumGaleri": "Museum & Galeri",
+    "spotNongkrong": "Spot Nongkrong",
+    "kuliner": "Kuliner",
+    "busana": "Busana",
+    "produkKreatif": "Produk Kreatif",
+    "semua": "Semua",
+    "budayaUpacara": "Budaya & Upacara",
+    "festivalHiburan": "Festival & Hiburan",
+    "komunitasWorkshop": "Komunitas & Workshop"
   },
   "home": {
     "title": "Ensiklopedia Sumbu Filosofi Yogyakarta",
@@ -75,12 +92,25 @@
   "common": {
     "learnMore": "Pelajari Selengkapnya"
   },
+  "hero": {
+    "title": "Jelajah Jogja Versimu",
+    "subtitle": "Temukan spot nongkrong, UMKM lokal, dan tren terbaru di kawasan Sumbu Filosofi Yogyakarta",
+    "placeholder": "Cari cafe, UMKM, atau destinasi...",
+    "search": "Cari"
+  },
   "footer": {
     "aboutTitle": "Tentang Kami",
     "aboutDescription": "Ensiklopedia digital yang merayakan warisan budaya dan filosofi Jawa di koridor Sumbu Filosofi Yogyakarta.",
     "quickLinksTitle": "Tautan Cepat",
     "contactTitle": "Kontak",
-    "copyright": "Hak Cipta Dilindungi."
+    "copyright": "Hak Cipta Dilindungi.",
+    "about": "Tentang",
+    "contact": "Kontak",
+    "privacy": "Kebijakan Privasi",
+    "terms": "Syarat & Ketentuan",
+    "followUs": "Ikuti Kami",
+    "exploreTitle": "Jelajahi",
+    "aboutUsTitle": "Tentang Kami"
   },
   "kawasan": {
     "badge": "Kawasan",
@@ -191,7 +221,10 @@
       "cultural": "Wisata Budaya",
       "historical": "Wisata Sejarah",
       "shopping": "Wisata Belanja",
-      "religious": "Wisata Religi"
+      "religious": "Wisata Religi",
+      "adventure": "Wisata Petualangan",
+      "culinary": "Wisata Kuliner",
+      "other": "Lainnya"
     },
     "results": {
       "showing": "Menampilkan",
@@ -595,6 +628,31 @@
     "delete": "Hapus",
     "edit": "Edit"
   },
+  "search": {
+    "placeholder": "Cari kawasan, wisata, UMKM, sejarah...",
+    "ariaLabel": "Cari di ensiklopedia",
+    "clear": "Hapus",
+    "submit": "Cari",
+    "title": "Hasil Pencarian",
+    "subtitle": "Menampilkan hasil pencarian untuk",
+    "noResults": "Tidak ada hasil ditemukan",
+    "noResultsDesc": "Coba gunakan kata kunci yang berbeda atau periksa ejaan Anda",
+    "results": "hasil",
+    "filterAll": "Semua",
+    "types": {
+      "kawasan": "Kawasan",
+      "wisata": "Wisata",
+      "umkm": "UMKM",
+      "sejarah": "Sejarah",
+      "agenda": "Agenda",
+      "galeri": "Galeri",
+      "lokasi": "Lokasi"
+    }
+  },
+  "pagination": {
+    "previous": "Sebelumnya",
+    "next": "Selanjutnya"
+  },
   "interactiveMap": {
     "title": "Peta Interaktif Sumbu Filosofi",
     "subtitle": "Jelajahi lokasi bersejarah, wisata, dan UMKM di sepanjang koridor Sumbu Filosofi Yogyakarta",
@@ -639,5 +697,55 @@
       "showing": "Menampilkan",
       "of": "dari"
     }
+  },
+  "destinasiWisata": {
+    "title": "Destinasi Wisata Sumbu Filosofi",
+    "subtitle": "Jelajahi kekayaan warisan budaya dan landmark ikonik di sepanjang Sumbu Filosofi Yogyakarta",
+    "categories": {
+      "kawasan": "Kawasan",
+      "titikSumbu": "Titik Sumbu Filosofi",
+      "cagarBudaya": "Cagar Budaya",
+      "museum": "Museum & Galeri",
+      "landmark": "Landmark"
+    },
+    "openHours": "Jam Buka",
+    "viewOnMap": "Lihat di Peta"
+  },
+  "spotNongkrong": {
+    "title": "Spot Nongkrong Hits",
+    "subtitle": "Tempat-tempat keren yang lagi viral di kalangan anak muda Jogja",
+    "filters": {
+      "all": "Semua",
+      "cheap": "Murah Meriah",
+      "instagramable": "Instagramable",
+      "night": "Buka Malam",
+      "music": "Live Music"
+    },
+    "viewOnMap": "Lihat di Map",
+    "open": "Buka",
+    "budget": "Budget"
+  },
+  "umkmLokal": {
+    "title": "UMKM Lokal Pilihan",
+    "subtitle": "Dukung produk lokal Jogja yang keren dan berkualitas! Temukan berbagai produk dari pengusaha lokal.",
+    "categories": {
+      "all": "Semua",
+      "culinary": "Kuliner",
+      "craft": "Kerajinan",
+      "fashion": "Fashion",
+      "creative": "Kreatif"
+    },
+    "startingFrom": "Mulai dari",
+    "viewOnMap": "Lihat di Map",
+    "priceRange": "Range Harga",
+    "contact": "Kontak",
+    "products": "Produk",
+    "noResults": "Tidak ada UMKM ditemukan"
+  },
+  "notFound": {
+    "title": "Halaman Tidak Ditemukan",
+    "message": "Halaman yang anda cari tidak ditemukan",
+    "description": "Mungkin halaman telah dipindahkan atau URL yang Anda masukkan salah.",
+    "btnHome": "Kembali ke Beranda"
   }
 }

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
+import { HeroSearch } from './HeroSearch';
 
 interface HeroSlideshowProps {
   title: string;
@@ -41,9 +42,9 @@ export function HeroSlideshow({ title, subtitle, welcomeText, exploreText }: Her
   }, [heroImages.length]);
 
   return (
-    <section className="relative h-[600px] flex items-center justify-center overflow-hidden pt-20">
+    <section className="relative h-[600px] flex items-center justify-center pt-20">
       {/* Slideshow Background Images */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 overflow-hidden">
         {heroImages.map((image, index) => (
           <div
             key={index}
@@ -63,7 +64,7 @@ export function HeroSlideshow({ title, subtitle, welcomeText, exploreText }: Her
       </div>
 
       {/* Slide indicators - hidden on mobile to avoid overlapping button */}
-      <div className="hidden sm:flex absolute bottom-8 left-1/2 transform -translate-x-1/2 gap-2 z-20">
+      <div className="hidden sm:flex absolute bottom-8 left-1/2 transform -translate-x-1/2 gap-2 z-10">
         {heroImages.map((_, index) => (
           <button
             key={index}
@@ -84,23 +85,29 @@ export function HeroSlideshow({ title, subtitle, welcomeText, exploreText }: Her
         </div>
 
         <h1
-          className="text-javanese-ivory mb-6"
-          style={{ fontFamily: "'Playfair Display', serif", fontSize: '3.5rem', lineHeight: '1.2' }}
+          className="text-javanese-ivory mb-4 md:mb-6 text-2xl sm:text-3xl md:text-4xl lg:text-5xl"
+          style={{ fontFamily: "'Playfair Display', serif", lineHeight: '1.2' }}
         >
           {title}
         </h1>
 
-        <p className="text-javanese-ivory opacity-90 text-xl mb-8 max-w-2xl mx-auto">
+        <p className="text-javanese-ivory opacity-90 text-base sm:text-lg md:text-xl mb-6 md:mb-8 max-w-2xl mx-auto">
           {subtitle}
         </p>
 
-        <Link
+        {/* Hero Search */}
+        <div className="mb-8">
+          <HeroSearch />
+        </div>
+
+        {/* Explore Button - temporarily hidden for cleaner layout with search */}
+        {/* <Link
           href="/kawasan-sumbu-filosofi"
           className="inline-flex items-center gap-2 px-8 py-4 bg-[var(--javanese-gold)] text-[#4A2C2A] dark:text-[#1A1412] hover:opacity-90 rounded-lg transition-all shadow-lg hover:shadow-xl"
         >
           {exploreText}
           <ArrowRight className="w-5 h-5" />
-        </Link>
+        </Link> */}
       </div>
 
       {/* Decorative pattern */}

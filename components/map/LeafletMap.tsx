@@ -40,9 +40,10 @@ interface LeafletMapProps {
   selectedLocation: SiteLocation | null;
   searchSidebar: React.ReactNode;
   locationSidebar: React.ReactNode;
+  initialLocationId?: string | null;
 }
 
-export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearchOpenChange, selectedLocation, searchSidebar, locationSidebar }: LeafletMapProps) {
+export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearchOpenChange, selectedLocation, searchSidebar, locationSidebar, initialLocationId }: LeafletMapProps) {
   const locale = useLocale();
   const t = useTranslations('interactiveMap');
   const { theme } = useTheme();
@@ -104,6 +105,27 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
       }
     };
   }, []);
+
+  // Handle initial location from URL - fly to marker
+  useEffect(() => {
+    if (!mapRef.current || !initialLocationId) return;
+
+    const location = locations.find(loc => loc.id === initialLocationId);
+    if (location) {
+      // Delay to ensure map is fully loaded
+      const timer = setTimeout(() => {
+        if (mapRef.current) {
+          mapRef.current.flyTo(
+            [location.coordinates.lat, location.coordinates.lng],
+            17,
+            { duration: 1.5 }
+          );
+        }
+      }, 500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [initialLocationId, locations]);
 
   // Handle theme changes and switch tile layer
   useEffect(() => {
@@ -178,7 +200,7 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
 
         return L.divIcon({
           html: `<div style="
-            background: linear-gradient(135deg, var(--javanese-brown-bg), var(--javanese-terracotta));
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
             color: white;
             border-radius: 50%;
             width: ${diameter}px;

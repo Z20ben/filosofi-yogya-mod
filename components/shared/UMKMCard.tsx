@@ -21,11 +21,11 @@ export interface UMKMData {
   priceRange_en?: string;
   contact?: {
     phone: string;
-    email: string;
+    email?: string;
   };
   social_links?: {
-    instagram: string;
-    facebook: string;
+    instagram?: string;
+    facebook?: string;
   };
 }
 

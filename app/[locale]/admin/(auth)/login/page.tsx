@@ -31,44 +31,44 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-card rounded-2xl shadow-xl p-8 border border-border">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50 dark:from-slate-900 dark:via-slate-950 dark:to-indigo-950 flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-8 border border-slate-200 dark:border-slate-700">
         <div className="text-center mb-8">
-          <div className="w-20 h-20 bg-gradient-to-br from-[var(--javanese-brown-bg)] to-[var(--javanese-terracotta)] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-            <LogIn className="w-10 h-10 text-[var(--javanese-gold)]" />
+          <div className="w-20 h-20 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
+            <LogIn className="w-10 h-10 text-white" />
           </div>
-          <h1 className="text-[var(--javanese-brown-text)] text-3xl mb-3 font-serif font-bold">
+          <h1 className="text-slate-900 dark:text-white text-3xl mb-3 font-bold">
             {t('title')}
           </h1>
-          <p className="text-[var(--javanese-brown-text)]/60">
+          <p className="text-slate-600 dark:text-slate-400">
             {locale === 'id' ? 'Ensiklopedia Sumbu Filosofi Yogyakarta' : 'Yogyakarta Philosophical Axis Encyclopedia'}
           </p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-5">
           <div>
-            <label className="block text-[var(--javanese-brown-text)] mb-2 font-medium">
+            <label className="block text-slate-700 dark:text-slate-300 mb-2 font-medium">
               {t('email')}
             </label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--javanese-gold)] transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
               placeholder="admin@example.com"
               required
             />
           </div>
 
           <div>
-            <label className="block text-[var(--javanese-brown-text)] mb-2 font-medium">
+            <label className="block text-slate-700 dark:text-slate-300 mb-2 font-medium">
               {t('password')}
             </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-border bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--javanese-gold)] transition-all"
+              className="w-full px-4 py-3 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
               placeholder="••••••••"
               required
             />
@@ -77,7 +77,7 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full px-6 py-3.5 bg-gradient-to-r from-[var(--javanese-brown-bg)] to-[var(--javanese-terracotta)] text-[var(--javanese-ivory)] rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group disabled:opacity-50"
+            className="w-full px-6 py-3.5 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white rounded-xl hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2 group disabled:opacity-50"
           >
             {loading ? (
               <>
@@ -93,8 +93,8 @@ export default function AdminLoginPage() {
           </button>
         </form>
 
-        <div className="mt-6 p-4 bg-[var(--javanese-gold)]/10 dark:bg-[var(--javanese-gold)]/5 border border-[var(--javanese-gold)]/30 rounded-xl">
-          <p className="text-sm text-[var(--javanese-brown-text)]/70">
+        <div className="mt-6 p-4 bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 rounded-xl">
+          <p className="text-sm text-slate-600 dark:text-slate-400">
             {t('loginNote')}
           </p>
         </div>
