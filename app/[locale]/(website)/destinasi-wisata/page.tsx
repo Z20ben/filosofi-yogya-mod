@@ -9,6 +9,7 @@ import { MapPin, Clock } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
+import { getInternalCategoryId } from '@/config/categoryParams';
 
 // Generate URL-friendly slug from name
 function generateSlug(name: string): string {
@@ -35,13 +36,7 @@ export default function DestinasiWisataPage() {
   const locale = useLocale();
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get('category');
-  const [activeCategory, setActiveCategory] = useState(categoryParam || 'kawasan');
-
-  useEffect(() => {
-    if (categoryParam) {
-      setActiveCategory(categoryParam);
-    }
-  }, [categoryParam]);
+  const [activeCategory, setActiveCategory] = useState('kawasan');
 
   const categories = [
     { id: 'kawasan', label: t('categories.kawasan') },
@@ -50,6 +45,18 @@ export default function DestinasiWisataPage() {
     { id: 'museum', label: t('categories.museum') },
     { id: 'landmark', label: t('categories.landmark') }
   ];
+
+  useEffect(() => {
+    if (categoryParam) {
+      const mappedCategory = getInternalCategoryId('destinasiWisata', categoryParam, locale as 'id' | 'en');
+      if (categories.some(cat => cat.id === mappedCategory)) {
+        setActiveCategory(mappedCategory);
+      }
+    } else {
+      // Default to 'kawasan' when no category param
+      setActiveCategory('kawasan');
+    }
+  }, [categoryParam, locale]);
 
   // Data destinations (locale-specific)
   const destinations = locale === 'id' ? [
@@ -182,20 +189,29 @@ export default function DestinasiWisataPage() {
       {/* Sticky Category Tabs */}
       <div className="sticky top-0 z-30 bg-white/80 dark:bg-slate-950/80 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800">
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="flex gap-2 overflow-x-auto py-4 scrollbar-hide">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                className={`px-4 py-2 rounded-full whitespace-nowrap transition-all text-sm font-medium ${
-                  activeCategory === cat.id
-                    ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg'
-                    : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700'
-                }`}
-              >
-                {cat.label}
-              </button>
-            ))}
+          <div className="relative py-4 overflow-hidden">
+            {/* Scrollable container */}
+            <div className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory pl-4 pr-8 mx-8">
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveCategory(cat.id)}
+                  className={`px-4 py-2 rounded-full whitespace-nowrap transition-all text-sm font-medium snap-start flex-shrink-0 ${
+                    activeCategory === cat.id
+                      ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg'
+                      : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700'
+                  }`}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+
+            {/* Left fade gradient */}
+            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-white/80 via-white/60 dark:from-slate-950/80 dark:via-slate-950/60 to-transparent pointer-events-none" />
+
+            {/* Right fade gradient */}
+            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white/80 via-white/60 dark:from-slate-950/80 dark:via-slate-950/60 to-transparent pointer-events-none" />
           </div>
         </div>
       </div>

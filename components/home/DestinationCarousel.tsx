@@ -7,8 +7,10 @@ import { motion } from 'framer-motion';
 import { MapPin, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Destination {
+  id: string;
   name: string;
   location: string;
   description: string;
@@ -55,6 +57,7 @@ export function DestinationCarousel() {
   const destinations: Record<string, Destination[]> = {
     id: [
       {
+        id: 'tugu-yogyakarta',
         name: 'Tugu Yogyakarta',
         location: 'Jl. Jenderal Sudirman, Yogyakarta',
         description: 'Monumen ikonik yang menjadi simbol persatuan dan titik awal sumbu filosofis.',
@@ -62,6 +65,7 @@ export function DestinationCarousel() {
         hours: '24 Jam'
       },
       {
+        id: 'keraton-yogyakarta',
         name: 'Keraton Yogyakarta',
         location: 'Jl. Rotowijayan, Yogyakarta',
         description: 'Istana resmi Kesultanan Yogyakarta yang masih berfungsi hingga kini.',
@@ -69,6 +73,7 @@ export function DestinationCarousel() {
         hours: '08:00 - 14:00'
       },
       {
+        id: 'panggung-krapyak',
         name: 'Panggung Krapyak',
         location: 'Krapyak, Bantul, Yogyakarta',
         description: 'Situs spiritual di ujung selatan sumbu filosofis Yogyakarta.',
@@ -76,6 +81,7 @@ export function DestinationCarousel() {
         hours: '24 Jam'
       },
       {
+        id: 'makam-raja-raja-imogiri',
         name: 'Makam Raja-Raja Imogiri',
         location: 'Imogiri, Bantul, Yogyakarta',
         description: 'Kompleks makam di perbukitan selatan sebagai tempat peristirahatan para Sultan.',
@@ -83,6 +89,7 @@ export function DestinationCarousel() {
         hours: '08:00 - 16:00'
       },
       {
+        id: 'museum-sonobudoyo',
         name: 'Museum Sonobudoyo',
         location: 'Jl. Trikora No.6, Yogyakarta',
         description: 'Museum budaya Jawa dengan koleksi artefak sejarah yang komprehensif.',
@@ -92,6 +99,7 @@ export function DestinationCarousel() {
     ],
     en: [
       {
+        id: 'tugu-yogyakarta',
         name: 'Tugu Yogyakarta',
         location: 'Jl. Jenderal Sudirman, Yogyakarta',
         description: 'Iconic monument symbolizing unity and starting point of philosophical axis.',
@@ -99,6 +107,7 @@ export function DestinationCarousel() {
         hours: '24 Hours'
       },
       {
+        id: 'keraton-yogyakarta',
         name: 'Yogyakarta Palace',
         location: 'Jl. Rotowijayan, Yogyakarta',
         description: 'Official palace of Yogyakarta Sultanate still functioning today.',
@@ -106,6 +115,7 @@ export function DestinationCarousel() {
         hours: '08:00 - 14:00'
       },
       {
+        id: 'panggung-krapyak',
         name: 'Panggung Krapyak',
         location: 'Krapyak, Bantul, Yogyakarta',
         description: 'Spiritual site at southern end of Yogyakarta\'s philosophical axis.',
@@ -113,6 +123,7 @@ export function DestinationCarousel() {
         hours: '24 Hours'
       },
       {
+        id: 'makam-raja-raja-imogiri',
         name: 'Imogiri Royal Cemetery',
         location: 'Imogiri, Bantul, Yogyakarta',
         description: 'Royal cemetery complex in southern hills as resting place for Sultans.',
@@ -120,6 +131,7 @@ export function DestinationCarousel() {
         hours: '08:00 - 16:00'
       },
       {
+        id: 'museum-sonobudoyo',
         name: 'Sonobudoyo Museum',
         location: 'Jl. Trikora No.6, Yogyakarta',
         description: 'Javanese cultural museum with comprehensive historical artifact collection.',
@@ -188,37 +200,39 @@ export function DestinationCarousel() {
                   className="flex-shrink-0"
                   style={{ width: `calc(${100 / itemsPerView}% - ${(itemsPerView - 1) * (itemsPerView === 1 ? 0 : 16) / itemsPerView}px)` }}
                 >
-                  <Card className="group overflow-hidden border-slate-200 dark:border-slate-800 hover:shadow-xl transition-shadow h-full">
-                    <div className="relative h-48 overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30">
-                      <Image
-                        src={destination.image}
-                        alt={destination.name}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
-                      <div className="absolute bottom-3 left-3 right-3">
-                        <h3 className="text-white text-lg font-semibold">{destination.name}</h3>
-                      </div>
-                    </div>
-                    <CardContent className="p-5">
-                      <div className="flex items-start gap-2 mb-3">
-                        <MapPin className="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
-                        <p className="text-sm text-slate-600 dark:text-slate-400">
-                          {destination.location}
-                        </p>
-                      </div>
-                      <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                        {destination.description}
-                      </p>
-                      <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-slate-800">
-                        <div className="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400">
-                          <Clock className="w-4 h-4" />
-                          <span>{destination.hours}</span>
+                  <Link href={`/${locale}/destinasi-wisata/${destination.id}`}>
+                    <Card className="group overflow-hidden border-slate-200 dark:border-slate-800 hover:shadow-xl transition-shadow h-full cursor-pointer">
+                      <div className="relative h-48 overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30">
+                        <Image
+                          src={destination.image}
+                          alt={destination.name}
+                          fill
+                          className="object-cover group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
+                        <div className="absolute bottom-3 left-3 right-3">
+                          <h3 className="text-white text-lg font-semibold">{destination.name}</h3>
                         </div>
                       </div>
-                    </CardContent>
-                  </Card>
+                      <CardContent className="p-5">
+                        <div className="flex items-start gap-2 mb-3">
+                          <MapPin className="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+                          <p className="text-sm text-slate-600 dark:text-slate-400">
+                            {destination.location}
+                          </p>
+                        </div>
+                        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
+                          {destination.description}
+                        </p>
+                        <div className="flex items-center justify-between pt-3 border-t border-slate-200 dark:border-slate-800">
+                          <div className="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400">
+                            <Clock className="w-4 h-4" />
+                            <span>{destination.hours}</span>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 </div>
               ))}
             </motion.div>

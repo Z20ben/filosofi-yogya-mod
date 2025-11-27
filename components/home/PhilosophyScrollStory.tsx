@@ -2,10 +2,11 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useLocale } from 'next-intl';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { ChevronDown, Sparkles } from 'lucide-react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { ChevronDown, Sparkles, X } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
 
 interface Section {
   title: string;
@@ -21,6 +22,7 @@ export function PhilosophyScrollStory() {
   const containerRef = useRef<HTMLDivElement>(null);
   const storySectionsRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState(0);
+  const [selectedImage, setSelectedImage] = useState<Section | null>(null);
 
   const { scrollYProgress } = useScroll({
     target: storySectionsRef,
@@ -201,6 +203,18 @@ export function PhilosophyScrollStory() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (selectedImage) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedImage]);
+
   return (
     <section ref={containerRef} className="relative bg-slate-950">
       {/* Header */}
@@ -316,14 +330,24 @@ export function PhilosophyScrollStory() {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className={isLeft ? 'md:col-start-2' : 'md:col-start-1'}
                   >
-                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-indigo-900/50 to-purple-900/50">
+                    <div
+                      className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-indigo-900/50 to-purple-900/50 cursor-pointer group"
+                      onClick={() => setSelectedImage(section)}
+                    >
                       <Image
                         src={section.image}
                         alt={section.title}
                         fill
-                        className="object-cover"
+                        className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 border-4 border-amber-500/30 rounded-2xl" />
+
+                      {/* Hover overlay */}
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
+                        <span className="text-white text-lg font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          {locale === 'id' ? 'Klik untuk memperbesar' : 'Click to enlarge'}
+                        </span>
+                      </div>
                     </div>
                   </motion.div>
                 </div>
@@ -369,7 +393,7 @@ export function PhilosophyScrollStory() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
-              href={`/${locale}/encyclopedia`}
+              href={`/${locale}/map`}
               className="px-8 py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white rounded-xl text-lg hover:shadow-2xl transition-all hover:scale-105"
             >
               {locale === 'id' ? 'Mulai Eksplorasi' : 'Start Exploring'}
@@ -386,6 +410,91 @@ export function PhilosophyScrollStory() {
           </div>
         </motion.div>
       </div>
+
+      {/* Fullscreen Image Modal */}
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4"
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.button
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.8 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 z-[10000] p-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full transition-colors"
+              aria-label="Close"
+            >
+              <X className="w-6 h-6 text-white" />
+            </motion.button>
+
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              transition={{ duration: 0.3 }}
+              className="relative max-w-6xl w-full max-h-[90vh] overflow-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-amber-500/30">
+                {/* Image Section */}
+                <div className="relative w-full h-[50vh] md:h-[60vh]">
+                  <Image
+                    src={selectedImage.image}
+                    alt={selectedImage.title}
+                    fill
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
+                </div>
+
+                {/* Content Section */}
+                <div className="p-6 md:p-8">
+                  {/* Badge */}
+                  <div className="mb-4">
+                    <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white border-0 px-4 py-1.5 text-sm">
+                      {selectedImage.highlight}
+                    </Badge>
+                  </div>
+
+                  {/* Title */}
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                    {selectedImage.title}
+                  </h2>
+
+                  {/* Subtitle (if exists) */}
+                  {selectedImage.subtitle && (
+                    <h3 className="text-xl md:text-2xl text-amber-400 mb-4">
+                      {selectedImage.subtitle}
+                    </h3>
+                  )}
+
+                  {/* Description */}
+                  <p className="text-lg text-slate-300 leading-relaxed">
+                    {selectedImage.description}
+                  </p>
+
+                  {/* Close button at bottom for mobile */}
+                  <div className="mt-8 flex justify-center md:hidden">
+                    <button
+                      onClick={() => setSelectedImage(null)}
+                      className="px-6 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl hover:shadow-xl transition-all"
+                    >
+                      {locale === 'id' ? 'Tutup' : 'Close'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

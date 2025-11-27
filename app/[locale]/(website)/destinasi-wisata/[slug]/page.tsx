@@ -25,6 +25,7 @@ interface Destination {
   website: string;
   highlights: string[];
   tips: string[];
+  coordinates: { lat: number; lng: number };
 }
 
 // Helper function to generate slug
@@ -88,7 +89,8 @@ Tugu juga menjadi saksi bisu berbagai peristiwa bersejarah, termasuk kemerdekaan
         'Berhati-hati saat menyeberang jalan karena lalu lintas ramai',
         'Kombinasikan dengan jalan-jalan di Malioboro yang dekat',
         'Waktu terbaik untuk foto: sore atau malam hari'
-      ]
+      ],
+      coordinates: { lat: -7.782872, lng: 110.367082 }
     },
     {
       id: 2,
@@ -125,7 +127,8 @@ Sebagai bagian dari Sumbu Filosofi, Keraton terletak di titik pusat yang melamba
         'Gunakan pakaian sopan (tidak boleh celana pendek)',
         'Sewa pemandu untuk penjelasan lengkap',
         'Cek jadwal pertunjukan seni sebelum berkunjung'
-      ]
+      ],
+      coordinates: { lat: -7.8053034, lng: 110.364347 }
     },
     {
       id: 3,
@@ -162,7 +165,8 @@ Meskipun tidak sepopuler Tugu atau Keraton, Panggung Krapyak memiliki nilai hist
         'Kombinasikan dengan perjalanan ke Parangtritis',
         'Bawa kamera untuk foto arsitektur unik',
         'Kunjungi sore hari untuk cahaya terbaik'
-      ]
+      ],
+      coordinates: { lat: -7.827522, lng: 110.3605941 }
     },
     {
       id: 4,
@@ -199,7 +203,8 @@ Kompleks ini masih aktif digunakan untuk ziarah dan upacara kerajaan. Setiap Sen
         'Siapkan fisik untuk menaiki 345 tangga',
         'Bawa air minum yang cukup',
         'Hanya buka untuk umum Senin dan Jumat'
-      ]
+      ],
+      coordinates: { lat: -7.919444, lng: 110.391667 }
     },
     {
       id: 5,
@@ -236,7 +241,8 @@ Museum ini juga rutin mengadakan pertunjukan wayang kulit setiap malam (kecuali 
         'Sewa audio guide untuk informasi lengkap',
         'Alokasikan 2-3 jam untuk melihat semua koleksi',
         'Kombinasikan dengan kunjungan ke Keraton'
-      ]
+      ],
+      coordinates: { lat: -7.80221, lng: 110.3639514 }
     }
   ] : [
     {
@@ -274,11 +280,12 @@ Tugu has also witnessed various historical events, including Indonesian independ
         'Be careful crossing the busy street',
         'Combine with walking along nearby Malioboro',
         'Best photo time: evening or night'
-      ]
+      ],
+      coordinates: { lat: -7.782872, lng: 110.367082 }
     },
     {
       id: 2,
-      slug: 'yogyakarta-palace',
+      slug: 'keraton-yogyakarta',
       name: 'Yogyakarta Palace',
       category: 'cagar-budaya',
       image: '/assets/71d525189b0fc80e4a5deee30dbc34fba5301eed.png',
@@ -311,7 +318,8 @@ As part of the Philosophical Axis, the Palace is located at the center point sym
         'Wear modest clothing (no shorts allowed)',
         'Hire a guide for complete explanation',
         'Check performance schedule before visiting'
-      ]
+      ],
+      coordinates: { lat: -7.8053034, lng: 110.364347 }
     },
     {
       id: 3,
@@ -348,11 +356,12 @@ Although not as popular as Tugu or the Palace, Panggung Krapyak holds great hist
         'Combine with trip to Parangtritis beach',
         'Bring camera for unique architecture photos',
         'Visit in afternoon for best lighting'
-      ]
+      ],
+      coordinates: { lat: -7.827522, lng: 110.3605941 }
     },
     {
       id: 4,
-      slug: 'imogiri-royal-cemetery',
+      slug: 'makam-raja-raja-imogiri',
       name: 'Imogiri Royal Cemetery',
       category: 'cagar-budaya',
       image: '/assets/4bbe2eea291c6a19141c048bb0edf54b19883a9a.png',
@@ -385,11 +394,12 @@ The complex remains actively used for pilgrimages and royal ceremonies. Every Mo
         'Prepare physically for climbing 345 stairs',
         'Bring enough drinking water',
         'Only open to public on Mondays and Fridays'
-      ]
+      ],
+      coordinates: { lat: -7.919444, lng: 110.391667 }
     },
     {
       id: 5,
-      slug: 'sonobudoyo-museum',
+      slug: 'museum-sonobudoyo',
       name: 'Sonobudoyo Museum',
       category: 'museum',
       image: '/assets/65ea2f8f990e2839c96ae7dcf40b612be8859a9e.png',
@@ -422,7 +432,8 @@ The museum also regularly holds shadow puppet performances every night (except S
         'Rent audio guide for complete information',
         'Allow 2-3 hours to see all collections',
         'Combine with visit to the Palace'
-      ]
+      ],
+      coordinates: { lat: -7.80221, lng: 110.3639514 }
     }
   ];
 
@@ -632,7 +643,7 @@ The museum also regularly holds shadow puppet performances every night (except S
                 <div className="mt-6 space-y-3">
                   <Button
                     className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700"
-                    onClick={() => router.push(`/${locale}/map?destination=${destination.id}&name=${encodeURIComponent(destination.name)}`)}
+                    onClick={() => router.push(`/${locale}/map?lat=${destination.coordinates.lat}&lng=${destination.coordinates.lng}&location=${encodeURIComponent(destination.slug)}`)}
                   >
                     <Navigation className="w-4 h-4 mr-2" />
                     {locale === 'id' ? 'Lihat di Peta' : 'View on Map'}

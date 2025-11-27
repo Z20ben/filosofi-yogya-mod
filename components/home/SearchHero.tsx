@@ -1,31 +1,109 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
-import { motion } from 'framer-motion';
-import { Search, Sparkles } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, Sparkles, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AgendaCarousel } from './AgendaCarousel';
+import { getSearchSuggestions } from '@/lib/search';
 
 export function SearchHero() {
   const locale = useLocale();
   const t = useTranslations('hero');
   const router = useRouter();
   const [searchQuery, setSearchQuery] = useState('');
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const suggestionsRef = useRef<HTMLDivElement>(null);
 
-  const handleSearch = () => {
-    if (searchQuery.trim()) {
-      router.push(`/${locale}/encyclopedia?search=${encodeURIComponent(searchQuery.trim())}`);
+  // Update suggestions when query changes
+  useEffect(() => {
+    if (searchQuery.length >= 2) {
+      const results = getSearchSuggestions(searchQuery, locale as 'id' | 'en', 5);
+      setSuggestions(results);
+      setShowSuggestions(results.length > 0);
+    } else {
+      setSuggestions([]);
+      setShowSuggestions(false);
+    }
+    setSelectedIndex(-1);
+  }, [searchQuery, locale]);
+
+  // Close suggestions when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        suggestionsRef.current &&
+        !suggestionsRef.current.contains(e.target as Node) &&
+        inputRef.current &&
+        !inputRef.current.contains(e.target as Node)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleSearch = (query?: string) => {
+    const searchTerm = query || searchQuery;
+    if (searchTerm.trim()) {
+      router.push(`/${locale}/search?q=${encodeURIComponent(searchTerm.trim())}`);
+      setShowSuggestions(false);
     } else {
       router.push(`/${locale}/encyclopedia`);
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSearch();
+    if (!showSuggestions) {
+      if (e.key === 'Enter') {
+        handleSearch();
+      }
+      return;
     }
+
+    switch (e.key) {
+      case 'ArrowDown':
+        e.preventDefault();
+        setSelectedIndex((prev) =>
+          prev < suggestions.length - 1 ? prev + 1 : prev
+        );
+        break;
+      case 'ArrowUp':
+        e.preventDefault();
+        setSelectedIndex((prev) => (prev > 0 ? prev - 1 : -1));
+        break;
+      case 'Enter':
+        e.preventDefault();
+        if (selectedIndex >= 0 && suggestions[selectedIndex]) {
+          handleSearch(suggestions[selectedIndex]);
+        } else {
+          handleSearch();
+        }
+        break;
+      case 'Escape':
+        setShowSuggestions(false);
+        setSelectedIndex(-1);
+        break;
+    }
+  };
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setSearchQuery(suggestion);
+    handleSearch(suggestion);
+  };
+
+  const clearQuery = () => {
+    setSearchQuery('');
+    setSuggestions([]);
+    setShowSuggestions(false);
+    inputRef.current?.focus();
   };
 
   return (
@@ -87,22 +165,72 @@ export function SearchHero() {
                     <Search className="w-5 h-5 md:w-6 md:h-6 text-slate-400" />
                   </div>
                   <input
+                    ref={inputRef}
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    onKeyPress={handleKeyPress}
+                    onKeyDown={handleKeyPress}
+                    onFocus={() => searchQuery.length >= 2 && suggestions.length > 0 && setShowSuggestions(true)}
                     placeholder={t('placeholder') || 'Cari cafe, UMKM, atau destinasi...'}
                     className="flex-1 py-4 md:py-5 pr-4 bg-transparent outline-none text-base md:text-lg placeholder:text-slate-400"
+                    aria-label="Search"
+                    aria-autocomplete="list"
+                    aria-controls="search-suggestions"
+                    aria-expanded={showSuggestions}
                   />
+                  {searchQuery && (
+                    <button
+                      type="button"
+                      onClick={clearQuery}
+                      className="px-3 py-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                      aria-label="Clear search"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  )}
                 </div>
                 <Button
-                  onClick={handleSearch}
+                  onClick={() => handleSearch()}
                   size="lg"
                   className="m-2 px-6 md:px-8 py-3 md:py-0 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white rounded-xl text-sm md:text-base"
                 >
                   {t('search') || 'Cari'}
                 </Button>
               </div>
+
+              {/* Suggestions Dropdown */}
+              <AnimatePresence>
+                {showSuggestions && suggestions.length > 0 && (
+                  <motion.div
+                    ref={suggestionsRef}
+                    id="search-suggestions"
+                    role="listbox"
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-gray-100 dark:border-slate-700 overflow-hidden z-50"
+                  >
+                    {suggestions.map((suggestion, index) => (
+                      <button
+                        key={suggestion}
+                        type="button"
+                        role="option"
+                        aria-selected={index === selectedIndex}
+                        onClick={() => handleSuggestionClick(suggestion)}
+                        className={`w-full px-4 md:px-6 py-3 text-left flex items-center gap-3 transition-colors ${
+                          index === selectedIndex
+                            ? 'bg-amber-50 dark:bg-amber-950/20 text-amber-900 dark:text-amber-100'
+                            : 'text-slate-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700/50'
+                        }`}
+                      >
+                        <Search className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                        <span className="truncate text-sm md:text-base">{suggestion}</span>
+                      </button>
+                    ))}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           </div>
 

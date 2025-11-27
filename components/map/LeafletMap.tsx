@@ -41,9 +41,10 @@ interface LeafletMapProps {
   searchSidebar: React.ReactNode;
   locationSidebar: React.ReactNode;
   initialLocationId?: string | null;
+  onUserLocationChange?: (location: {lat: number, lng: number} | null) => void;
 }
 
-export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearchOpenChange, selectedLocation, searchSidebar, locationSidebar, initialLocationId }: LeafletMapProps) {
+export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearchOpenChange, selectedLocation, searchSidebar, locationSidebar, initialLocationId, onUserLocationChange }: LeafletMapProps) {
   const locale = useLocale();
   const t = useTranslations('interactiveMap');
   const { theme } = useTheme();
@@ -240,6 +241,7 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
             justifyContent: 'center',
             border: '3px solid white',
             boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+            boxSizing: 'border-box',
           }}
         >
           <IconComponent size={20} color="white" strokeWidth={2.5} />
@@ -251,6 +253,7 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
         html: iconHtml,
         iconSize: [36, 36],
         iconAnchor: [18, 18],
+        popupAnchor: [0, -18],
       });
 
       const marker = L.marker([location.coordinates.lat, location.coordinates.lng], {
@@ -260,6 +263,33 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
       // Add click event to open sidebar
       marker.on('click', () => {
         onLocationSelect(location);
+
+        // Auto-focus marker on mobile when drawer opens
+        // On mobile (< md breakpoint), offset the map so marker is visible above the bottom sheet (50% of container)
+        if (mapRef.current && window.innerWidth < 768) {
+          const map = mapRef.current;
+          const containerHeight = map.getSize().y;
+
+          // Get current map center and marker position in pixels
+          const currentCenter = map.getCenter();
+          const currentCenterPoint = map.latLngToContainerPoint(currentCenter);
+          const markerLatLng = marker.getLatLng();
+          const markerPoint = map.latLngToContainerPoint(markerLatLng);
+
+          // Calculate where we want the marker to appear (20% from top)
+          const targetY = containerHeight * 0.20;
+
+          // Calculate how much to move the map center
+          // If marker is below target, we move center down (which moves marker up visually)
+          const deltaY = markerPoint.y - targetY;
+
+          // Calculate new center position
+          const newCenterPoint = L.point(currentCenterPoint.x, currentCenterPoint.y + deltaY);
+          const newCenterLatLng = map.containerPointToLatLng(newCenterPoint);
+
+          // Pan to new position with animation
+          map.panTo(newCenterLatLng, { animate: true, duration: 0.5 });
+        }
       });
 
       // Add marker to cluster group
@@ -339,6 +369,11 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
         setUserLocation(coords);
         setIsLocating(false);
 
+        // Notify parent component about user location
+        if (onUserLocationChange) {
+          onUserLocationChange(coords);
+        }
+
         // Pan to user location
         if (mapRef.current) {
           mapRef.current.panTo([coords.lat, coords.lng], {
@@ -364,9 +399,11 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
               border: 3px solid white;
               border-radius: 50%;
               box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+              box-sizing: border-box;
             "></div>`,
             iconSize: [20, 20],
             iconAnchor: [10, 10],
+            popupAnchor: [0, -10],
           });
 
           // Add user marker

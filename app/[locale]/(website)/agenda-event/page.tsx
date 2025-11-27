@@ -10,6 +10,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
+import { getInternalCategoryId } from '@/config/categoryParams';
 
 // Generate URL-friendly slug from name
 function generateSlug(name: string): string {
@@ -48,12 +49,6 @@ export default function AgendaEventPage() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState<'upcoming' | 'past'>('upcoming');
 
-  useEffect(() => {
-    if (categoryParam) {
-      setActiveFilter(categoryParam);
-    }
-  }, [categoryParam]);
-
   const filters: Filter[] = locale === 'id' ? [
     { id: 'all', label: 'Semua Event' },
     { id: 'budaya', label: 'Budaya & Upacara' },
@@ -69,6 +64,18 @@ export default function AgendaEventPage() {
     { id: 'pameran', label: 'Creative Exhibition' },
     { id: 'umkm', label: 'MSME Events' }
   ];
+
+  useEffect(() => {
+    if (categoryParam) {
+      const mappedCategory = getInternalCategoryId('agendaEvent', categoryParam, locale as 'id' | 'en');
+      if (filters.some(f => f.id === mappedCategory)) {
+        setActiveFilter(mappedCategory);
+      }
+    } else {
+      // Reset to 'all' when no category param (navigating to parent page)
+      setActiveFilter('all');
+    }
+  }, [categoryParam, locale]);
 
   const events: Event[] = locale === 'id' ? [
     {
@@ -303,21 +310,30 @@ export default function AgendaEventPage() {
               {/* Divider - hidden on mobile */}
               <div className="hidden sm:block w-px h-8 bg-slate-200 dark:bg-slate-700" />
 
-              {/* Category Filter Pills */}
-              <div className="flex gap-2 overflow-x-auto scrollbar-hide">
-                {filters.map((filter) => (
-                  <button
-                    key={filter.id}
-                    onClick={() => setActiveFilter(filter.id)}
-                    className={`px-4 py-2 rounded-full whitespace-nowrap text-sm transition-all ${
-                      activeFilter === filter.id
-                        ? 'bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow-lg'
-                        : 'bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700'
-                    }`}
-                  >
-                    {filter.label}
-                  </button>
-                ))}
+              {/* Category Filter Pills with Gradient Fade */}
+              <div className="relative flex-1 overflow-hidden">
+                {/* Scrollable container */}
+                <div className="flex gap-2 overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory pl-4 pr-8 mx-8">
+                  {filters.map((filter) => (
+                    <button
+                      key={filter.id}
+                      onClick={() => setActiveFilter(filter.id)}
+                      className={`px-4 py-2 rounded-full whitespace-nowrap text-sm transition-all snap-start flex-shrink-0 ${
+                        activeFilter === filter.id
+                          ? 'bg-gradient-to-r from-rose-500 to-orange-500 text-white shadow-lg'
+                          : 'bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700'
+                      }`}
+                    >
+                      {filter.label}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Left fade gradient */}
+                <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-pink-50 via-pink-50/80 dark:from-slate-950 dark:via-slate-950/80 to-transparent pointer-events-none" />
+
+                {/* Right fade gradient */}
+                <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-pink-50 via-pink-50/80 dark:from-slate-950 dark:via-slate-950/80 to-transparent pointer-events-none" />
               </div>
             </div>
           </div>

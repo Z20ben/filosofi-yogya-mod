@@ -7,9 +7,11 @@ import { Card, CardContent } from '@/components/ui/card';
 import { MapPin, Clock, DollarSign, Heart, Instagram, Music, Moon } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface Spot {
   id: number;
+  slug: string;
   name: string;
   category: string;
   image: string;
@@ -21,6 +23,7 @@ interface Spot {
   tags: string[];
   badges: string[];
   description: string;
+  coordinates: { lat: number; lng: number };
 }
 
 export function SpotNongkrongPreview() {
@@ -59,6 +62,7 @@ export function SpotNongkrongPreview() {
     id: [
       {
         id: 1,
+        slug: 'kopi-klotok-heritage',
         name: 'Kopi Klotok Heritage',
         category: 'Cafe',
         image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80',
@@ -69,10 +73,12 @@ export function SpotNongkrongPreview() {
         hours: '07:00 - 22:00',
         tags: ['instagramable', 'cheap'],
         badges: ['Instagramable', 'Budget Friendly'],
-        description: 'Cafe di alam terbuka dengan view pegunungan yang epic!'
+        description: 'Cafe di alam terbuka dengan view pegunungan yang epic!',
+        coordinates: { lat: -7.67013, lng: 110.42128 }
       },
       {
         id: 2,
+        slug: 'the-westlake-resto-cafe',
         name: 'The Westlake Resto & Cafe',
         category: 'Cafe & Restaurant',
         image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80',
@@ -83,52 +89,60 @@ export function SpotNongkrongPreview() {
         hours: '10:00 - 22:00',
         tags: ['instagramable', 'night'],
         badges: ['Sunset View', 'Date Spot'],
-        description: 'Cafe tepi danau dengan sunset view yang bikin feed IG kamu makin kece!'
+        description: 'Cafe tepi danau dengan sunset view yang bikin feed IG kamu makin kece!',
+        coordinates: { lat: -7.74727, lng: 110.33835 }
       },
       {
         id: 3,
+        slug: 'roaster-and-bear',
         name: 'Roaster & Bear',
         category: 'Coffee Shop',
         image: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80',
-        location: 'Jl. Prawirotaman',
+        location: 'Jl. Margo Utomo',
         rating: 4.9,
         reviews: 2100,
         budget: 'Rp 20-60k',
         hours: '08:00 - 23:00',
         tags: ['instagramable', 'night', 'music'],
         badges: ['Live Music', 'Cozy Vibes'],
-        description: 'Hidden gem dengan vibe industrial aesthetic. Sering ada live music weekend!'
+        description: 'Hidden gem dengan vibe industrial aesthetic. Sering ada live music weekend!',
+        coordinates: { lat: -7.78442, lng: 110.36704 }
       },
       {
         id: 4,
+        slug: 'warung-bu-ageng',
         name: 'Warung Bu Ageng',
         category: 'Traditional Food',
         image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80',
-        location: 'Tugu Station Area',
+        location: 'Jl. Tirtodipuran No.13, Mantrijeron',
         rating: 4.6,
         reviews: 850,
         budget: 'Rp 10-30k',
         hours: '10:00 - 21:00',
         tags: ['cheap'],
         badges: ['Super Murah', 'Authentic'],
-        description: 'Makan tradisional enak dengan harga mahasiswa banget.'
+        description: 'Makan tradisional enak dengan harga mahasiswa banget.',
+        coordinates: { lat: -7.818075026450364, lng: 110.3641136935998 }
       },
       {
         id: 5,
-        name: 'Abhayagiri Restaurant',
+        slug: 'pendopo-lawas',
+        name: 'Pendopo Lawas',
         category: 'Resto & Lounge',
         image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80',
-        location: 'Jl. Gejayan',
+        location: 'Jl. Alun-Alun Utara',
         rating: 4.8,
         reviews: 1450,
-        budget: 'Rp 50-150k',
-        hours: '11:00 - 23:00',
+        budget: 'Rp 25-100k',
+        hours: '10:00 - 22:00',
         tags: ['instagramable', 'night', 'music'],
-        badges: ['Rooftop', 'Party Vibes'],
-        description: 'Rooftop venue dengan city view keren!'
+        badges: ['Traditional', 'Live Music'],
+        description: 'Restoran dengan konsep pendopo Jawa klasik yang autentik!',
+        coordinates: { lat: -7.80413, lng: 110.36567 }
       },
       {
         id: 6,
+        slug: 'taman-lampion-kaliurang',
         name: 'Taman Lampion Kaliurang',
         category: 'Outdoor',
         image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80',
@@ -139,12 +153,14 @@ export function SpotNongkrongPreview() {
         hours: '17:00 - 22:00',
         tags: ['instagramable', 'night', 'cheap'],
         badges: ['Night Spot', 'TikTok Viral'],
-        description: 'Taman dengan ribuan lampion warna-warni! Viral di TikTok.'
+        description: 'Taman dengan ribuan lampion warna-warni! Viral di TikTok.',
+        coordinates: { lat: -7.67013, lng: 110.42128 }
       }
     ],
     en: [
       {
         id: 1,
+        slug: 'kopi-klotok-heritage',
         name: 'Kopi Klotok Heritage',
         category: 'Cafe',
         image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80',
@@ -155,10 +171,12 @@ export function SpotNongkrongPreview() {
         hours: '07:00 - 22:00',
         tags: ['instagramable', 'cheap'],
         badges: ['Instagramable', 'Budget Friendly'],
-        description: 'Open-air cafe with epic mountain views!'
+        description: 'Open-air cafe with epic mountain views!',
+        coordinates: { lat: -7.67013, lng: 110.42128 }
       },
       {
         id: 2,
+        slug: 'the-westlake-resto-cafe',
         name: 'The Westlake Resto & Cafe',
         category: 'Cafe & Restaurant',
         image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80',
@@ -169,52 +187,60 @@ export function SpotNongkrongPreview() {
         hours: '10:00 - 22:00',
         tags: ['instagramable', 'night'],
         badges: ['Sunset View', 'Date Spot'],
-        description: 'Lakeside cafe with sunset views that will level up your IG feed!'
+        description: 'Lakeside cafe with sunset views that will level up your IG feed!',
+        coordinates: { lat: -7.74727, lng: 110.33835 }
       },
       {
         id: 3,
+        slug: 'roaster-and-bear',
         name: 'Roaster & Bear',
         category: 'Coffee Shop',
         image: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80',
-        location: 'Jl. Prawirotaman',
+        location: 'Jl. Margo Utomo',
         rating: 4.9,
         reviews: 2100,
         budget: 'IDR 20-60k',
         hours: '08:00 - 23:00',
         tags: ['instagramable', 'night', 'music'],
         badges: ['Live Music', 'Cozy Vibes'],
-        description: 'Hidden gem with industrial aesthetic vibes. Live music on weekends!'
+        description: 'Hidden gem with industrial aesthetic vibes. Live music on weekends!',
+        coordinates: { lat: -7.78442, lng: 110.36704 }
       },
       {
         id: 4,
+        slug: 'warung-bu-ageng',
         name: 'Warung Bu Ageng',
         category: 'Traditional Food',
         image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80',
-        location: 'Tugu Station Area',
+        location: 'Jl. Tirtodipuran No.13, Mantrijeron',
         rating: 4.6,
         reviews: 850,
         budget: 'IDR 10-30k',
         hours: '10:00 - 21:00',
         tags: ['cheap'],
         badges: ['Super Cheap', 'Authentic'],
-        description: 'Delicious traditional food at student prices.'
+        description: 'Delicious traditional food at student prices.',
+        coordinates: { lat: -7.818075026450364, lng: 110.3641136935998 }
       },
       {
         id: 5,
-        name: 'Abhayagiri Restaurant',
+        slug: 'pendopo-lawas',
+        name: 'Pendopo Lawas',
         category: 'Resto & Lounge',
         image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80',
-        location: 'Jl. Gejayan',
+        location: 'Jl. Alun-Alun Utara',
         rating: 4.8,
         reviews: 1450,
-        budget: 'IDR 50-150k',
-        hours: '11:00 - 23:00',
+        budget: 'IDR 25-100k',
+        hours: '10:00 - 22:00',
         tags: ['instagramable', 'night', 'music'],
-        badges: ['Rooftop', 'Party Vibes'],
-        description: 'Rooftop venue with cool city views!'
+        badges: ['Traditional', 'Live Music'],
+        description: 'Restaurant with classic Javanese pendopo concept, authentic atmosphere!',
+        coordinates: { lat: -7.80413, lng: 110.36567 }
       },
       {
         id: 6,
+        slug: 'taman-lampion-kaliurang',
         name: 'Taman Lampion Kaliurang',
         category: 'Outdoor',
         image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80',
@@ -225,7 +251,8 @@ export function SpotNongkrongPreview() {
         hours: '17:00 - 22:00',
         tags: ['instagramable', 'night', 'cheap'],
         badges: ['Night Spot', 'TikTok Viral'],
-        description: 'Park with thousands of colorful lanterns! Viral on TikTok.'
+        description: 'Park with thousands of colorful lanterns! Viral on TikTok.',
+        coordinates: { lat: -7.67013, lng: 110.42128 }
       }
     ]
   };
@@ -297,21 +324,26 @@ export function SpotNongkrongPreview() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="group overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-300 h-full">
-                <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30">
-                  {/* Image placeholder */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-amber-400/50 text-xs">{spot.name}</span>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
+              <Link href={`/${locale}/spot-nongkrong/${spot.slug}`}>
+                <Card className="group overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-300 h-full cursor-pointer">
+                  <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30">
+                    {/* Image placeholder */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-amber-400/50 text-xs">{spot.name}</span>
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent" />
 
-                  {/* Like Button */}
-                  <button
-                    onClick={() => toggleLike(spot.id)}
-                    className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform"
-                  >
-                    <Heart className={`w-5 h-5 ${likedSpots.has(spot.id) ? 'fill-red-500 text-red-500' : 'text-white'}`} />
-                  </button>
+                    {/* Like Button */}
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleLike(spot.id);
+                      }}
+                      className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform"
+                    >
+                      <Heart className={`w-5 h-5 ${likedSpots.has(spot.id) ? 'fill-red-500 text-red-500' : 'text-white'}`} />
+                    </button>
 
                   {/* Badges */}
                   <div className="absolute top-4 left-4 flex flex-wrap gap-2">
@@ -353,6 +385,7 @@ export function SpotNongkrongPreview() {
                   </div>
                 </CardContent>
               </Card>
+              </Link>
             </motion.div>
           ))}
         </div>

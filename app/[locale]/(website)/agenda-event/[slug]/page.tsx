@@ -439,6 +439,83 @@ Thousands of residents gather along the streets to witness the procession and sc
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const handleAddToCalendar = () => {
+    if (!event) return;
+
+    // Parse date and time to create start and end datetime
+    // Format: YYYYMMDDTHHMMSS
+    const parseDateTime = (dateStr: string, timeStr: string) => {
+      // Extract date parts (handle both formats: "25 November 2024" and "November 25, 2024")
+      const months: Record<string, string> = {
+        'january': '01', 'januari': '01',
+        'february': '02', 'februari': '02',
+        'march': '03', 'maret': '03',
+        'april': '04',
+        'may': '05', 'mei': '05',
+        'june': '06', 'juni': '06',
+        'july': '07', 'juli': '07',
+        'august': '08', 'agustus': '08',
+        'september': '09',
+        'october': '10', 'oktober': '10',
+        'november': '11',
+        'december': '12', 'desember': '12'
+      };
+
+      const dateParts = dateStr.toLowerCase().replace(',', '').split(/[\s-]+/);
+      let day = '';
+      let month = '';
+      let year = '';
+
+      // Find day, month, and year from parts
+      dateParts.forEach(part => {
+        if (part.match(/^\d{4}$/)) {
+          year = part;
+        } else if (part.match(/^\d{1,2}$/)) {
+          day = part.padStart(2, '0');
+        } else if (months[part]) {
+          month = months[part];
+        }
+      });
+
+      // Extract start time (format: "18:00 - 23:00" or "18:00")
+      const startTime = timeStr.split('-')[0].trim().replace(':', '');
+
+      return `${year}${month}${day}T${startTime}00`;
+    };
+
+    const startDateTime = parseDateTime(event.date, event.time);
+
+    // Calculate end time (add 1 hour if single time, use end time if range)
+    let endDateTime = startDateTime;
+    if (event.time.includes('-')) {
+      const endTime = event.time.split('-')[1].trim().replace(':', '').replace(/\s+/g, '');
+      const dateParts = startDateTime.split('T')[0];
+      endDateTime = `${dateParts}T${endTime}00`;
+    } else {
+      // Add 1 hour if no end time specified
+      const date = new Date(
+        parseInt(startDateTime.substring(0, 4)),
+        parseInt(startDateTime.substring(4, 6)) - 1,
+        parseInt(startDateTime.substring(6, 8)),
+        parseInt(startDateTime.substring(9, 11)),
+        parseInt(startDateTime.substring(11, 13))
+      );
+      date.setHours(date.getHours() + 1);
+      endDateTime = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, '0')}${String(date.getDate()).padStart(2, '0')}T${String(date.getHours()).padStart(2, '0')}${String(date.getMinutes()).padStart(2, '0')}00`;
+    }
+
+    // Create Google Calendar URL
+    const googleCalendarUrl = new URL('https://calendar.google.com/calendar/render');
+    googleCalendarUrl.searchParams.append('action', 'TEMPLATE');
+    googleCalendarUrl.searchParams.append('text', event.name);
+    googleCalendarUrl.searchParams.append('details', event.shortDesc + '\n\n' + window.location.href);
+    googleCalendarUrl.searchParams.append('location', event.location);
+    googleCalendarUrl.searchParams.append('dates', `${startDateTime}/${endDateTime}`);
+
+    // Open in new tab
+    window.open(googleCalendarUrl.toString(), '_blank');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-rose-50 to-orange-50 dark:from-slate-950 dark:via-rose-950/20 dark:to-orange-950/20">
       {/* Hero Image */}
@@ -661,9 +738,12 @@ Thousands of residents gather along the streets to witness the procession and sc
 
                 {/* CTA Button */}
                 {event.status === 'upcoming' && (
-                  <Button className="w-full mt-6 bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white">
+                  <Button
+                    onClick={handleAddToCalendar}
+                    className="w-full mt-6 bg-gradient-to-r from-rose-500 to-orange-500 hover:from-rose-600 hover:to-orange-600 text-white"
+                  >
                     <Calendar className="w-4 h-4 mr-2" />
-                    {locale === 'id' ? 'Tambah ke Kalender' : 'Add to Calendar'}
+                    {locale === 'id' ? 'Tandai Kalender Saya' : 'Mark on My Calendar'}
                   </Button>
                 )}
               </motion.div>

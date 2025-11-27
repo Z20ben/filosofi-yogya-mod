@@ -9,6 +9,7 @@ import { Search, Book, Landmark, Users, BookOpen, ChevronRight, TrendingUp, Ligh
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { getInternalCategoryId } from '@/config/categoryParams';
 
 // Generate URL-friendly slug from title
 function generateSlug(title: string): string {
@@ -45,19 +46,7 @@ export default function EncyclopediaPage() {
   const categoryParam = searchParams.get('category');
   const searchParam = searchParams.get('search');
   const [searchQuery, setSearchQuery] = useState(searchParam || '');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryParam);
-
-  useEffect(() => {
-    if (categoryParam) {
-      setSelectedCategory(categoryParam);
-    }
-  }, [categoryParam]);
-
-  useEffect(() => {
-    if (searchParam) {
-      setSearchQuery(searchParam);
-    }
-  }, [searchParam]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const categories: Category[] = [
     {
@@ -103,6 +92,24 @@ export default function EncyclopediaPage() {
       count: 12
     }
   ];
+
+  useEffect(() => {
+    if (categoryParam) {
+      const mappedCategory = getInternalCategoryId('encyclopedia', categoryParam, locale as 'id' | 'en');
+      if (categories.some(cat => cat.id === mappedCategory)) {
+        setSelectedCategory(mappedCategory);
+      }
+    } else {
+      // Reset to null to show all entries (navigating to parent page)
+      setSelectedCategory(null);
+    }
+  }, [categoryParam, locale]);
+
+  useEffect(() => {
+    if (searchParam) {
+      setSearchQuery(searchParam);
+    }
+  }, [searchParam]);
 
   const entries: Entry[] = locale === 'id' ? [
     {

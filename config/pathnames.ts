@@ -49,6 +49,67 @@ export const pathnames = {
     en: '/interactive-map',
   },
 
+  // Map
+  '/map': {
+    id: '/map',
+    en: '/map',
+  },
+
+  // Encyclopedia
+  '/encyclopedia': {
+    id: '/encyclopedia',
+    en: '/encyclopedia',
+  },
+
+  '/encyclopedia/[slug]': {
+    id: '/encyclopedia/[slug]',
+    en: '/encyclopedia/[slug]',
+  },
+
+  // Destinasi Wisata
+  '/destinasi-wisata': {
+    id: '/destinasi-wisata',
+    en: '/tourist-destinations',
+  },
+
+  '/destinasi-wisata/[slug]': {
+    id: '/destinasi-wisata/[slug]',
+    en: '/tourist-destinations/[slug]',
+  },
+
+  // Spot Nongkrong
+  '/spot-nongkrong': {
+    id: '/spot-nongkrong',
+    en: '/hangout-spots',
+  },
+
+  '/spot-nongkrong/[slug]': {
+    id: '/spot-nongkrong/[slug]',
+    en: '/hangout-spots/[slug]',
+  },
+
+  // UMKM Lokal
+  '/umkm-lokal': {
+    id: '/umkm-lokal',
+    en: '/local-msme',
+  },
+
+  '/umkm-lokal/[slug]': {
+    id: '/umkm-lokal/[slug]',
+    en: '/local-msme/[slug]',
+  },
+
+  // Agenda Event
+  '/agenda-event': {
+    id: '/agenda-event',
+    en: '/events',
+  },
+
+  '/agenda-event/[slug]': {
+    id: '/agenda-event/[slug]',
+    en: '/events/[slug]',
+  },
+
   // Tentang
   '/tentang': {
     id: '/tentang',

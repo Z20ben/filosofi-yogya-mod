@@ -1,11 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
+import { useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { MapPin, ExternalLink, Heart, Tag, Sparkles } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { getInternalCategoryId } from '@/config/categoryParams';
 
 interface UMKMItem {
   id: number;
@@ -23,6 +25,7 @@ interface UMKMItem {
 export default function UMKMLokalPage() {
   const t = useTranslations('umkmLokal');
   const locale = useLocale();
+  const searchParams = useSearchParams();
   const [activeCategory, setActiveCategory] = useState('all');
   const [likedUMKM, setLikedUMKM] = useState<Set<number>>(new Set());
 
@@ -33,6 +36,20 @@ export default function UMKMLokalPage() {
     { id: 'fashion', label: t('categories.fashion') },
     { id: 'creative', label: t('categories.creative') }
   ];
+
+  // Read category from URL params
+  useEffect(() => {
+    const categoryParam = searchParams.get('category');
+    if (categoryParam) {
+      const mappedCategory = getInternalCategoryId('umkmLokal', categoryParam, locale as 'id' | 'en');
+      if (categories.some(cat => cat.id === mappedCategory)) {
+        setActiveCategory(mappedCategory);
+      }
+    } else {
+      // Reset to 'all' when no category param (navigating to parent page)
+      setActiveCategory('all');
+    }
+  }, [searchParams, locale]);
 
   // UMKM data berdasarkan locale
   const umkmData = locale === 'id' ? [
@@ -231,22 +248,31 @@ export default function UMKMLokalPage() {
       {/* Category Filters */}
       <section className="sticky top-0 z-30 bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800 py-4">
         <div className="container mx-auto px-4 max-w-7xl">
-          <div className="flex flex-wrap justify-center gap-3">
-            {categories.map((category) => (
-              <motion.button
-                key={category.id}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setActiveCategory(category.id)}
-                className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
-                  activeCategory === category.id
-                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-lg'
-                    : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:shadow-md'
-                }`}
-              >
-                {category.label}
-              </motion.button>
-            ))}
+          <div className="relative overflow-hidden">
+            {/* Scrollable container */}
+            <div className="flex gap-3 overflow-x-auto scrollbar-hide scroll-smooth snap-x snap-mandatory pl-4 pr-8 mx-8">
+              {categories.map((category) => (
+                <motion.button
+                  key={category.id}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setActiveCategory(category.id)}
+                  className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all snap-start flex-shrink-0 ${
+                    activeCategory === category.id
+                      ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-lg'
+                      : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:shadow-md'
+                  }`}
+                >
+                  {category.label}
+                </motion.button>
+              ))}
+            </div>
+
+            {/* Left fade gradient */}
+            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-white/90 via-white/70 dark:from-slate-950/90 dark:via-slate-950/70 to-transparent pointer-events-none" />
+
+            {/* Right fade gradient */}
+            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white/90 via-white/70 dark:from-slate-950/90 dark:via-slate-950/70 to-transparent pointer-events-none" />
           </div>
         </div>
       </section>

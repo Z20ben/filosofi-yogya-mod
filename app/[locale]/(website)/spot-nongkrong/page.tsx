@@ -2,11 +2,22 @@
 
 import { useState } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
-import { MapPin, Star, Music, Moon, DollarSign, Clock } from 'lucide-react';
+import { MapPin, Music, Moon, DollarSign, Clock } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import Link from 'next/link';
+import Image from 'next/image';
+
+// Helper function to generate slug
+function generateSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim();
+}
 
 interface Spot {
   id: number;
@@ -14,8 +25,6 @@ interface Spot {
   category: string;
   image: string;
   location: string;
-  rating: number;
-  reviews: number;
   budget: string;
   hours: string;
   tags: string[];
@@ -26,27 +35,24 @@ interface Spot {
 export default function SpotNongkrongPage() {
   const t = useTranslations('spotNongkrong');
   const locale = useLocale();
-  const router = useRouter();
   const [activeFilter, setActiveFilter] = useState('all');
 
   const filters = [
     { id: 'all', label: t('filters.all'), icon: null },
     { id: 'cheap', label: t('filters.cheap'), icon: DollarSign },
-    { id: 'instagramable', label: t('filters.instagramable'), icon: Star },
+    { id: 'instagramable', label: t('filters.instagramable'), icon: null },
     { id: 'night', label: t('filters.night'), icon: Moon },
     { id: 'music', label: t('filters.music'), icon: Music }
   ];
 
   // Spots data berdasarkan locale
-  const spots = locale === 'id' ? [
+  const spots: Spot[] = locale === 'id' ? [
     {
       id: 1,
       name: 'Kopi Klotok Heritage',
       category: 'Cafe',
       image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80',
       location: 'Pakem, Sleman',
-      rating: 4.8,
-      reviews: 1250,
       budget: 'Rp 15-50k',
       hours: '07:00 - 22:00',
       tags: ['instagramable', 'cheap'],
@@ -59,8 +65,6 @@ export default function SpotNongkrongPage() {
       category: 'Cafe & Restaurant',
       image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80',
       location: 'Sleman',
-      rating: 4.7,
-      reviews: 980,
       budget: 'Rp 30-80k',
       hours: '10:00 - 22:00',
       tags: ['instagramable', 'night'],
@@ -73,8 +77,6 @@ export default function SpotNongkrongPage() {
       category: 'Coffee Shop',
       image: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80',
       location: 'Jl. Prawirotaman',
-      rating: 4.9,
-      reviews: 2100,
       budget: 'Rp 20-60k',
       hours: '08:00 - 23:00',
       tags: ['instagramable', 'night', 'music'],
@@ -87,8 +89,6 @@ export default function SpotNongkrongPage() {
       category: 'Traditional Food',
       image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80',
       location: 'Tugu Station Area',
-      rating: 4.6,
-      reviews: 850,
       budget: 'Rp 10-30k',
       hours: '10:00 - 21:00',
       tags: ['cheap'],
@@ -101,8 +101,6 @@ export default function SpotNongkrongPage() {
       category: 'Resto & Lounge',
       image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80',
       location: 'Jl. Gejayan',
-      rating: 4.8,
-      reviews: 1450,
       budget: 'Rp 50-150k',
       hours: '11:00 - 23:00',
       tags: ['instagramable', 'night', 'music'],
@@ -115,8 +113,6 @@ export default function SpotNongkrongPage() {
       category: 'Outdoor',
       image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80',
       location: 'Kaliurang, Sleman',
-      rating: 4.5,
-      reviews: 3200,
       budget: 'Rp 25k',
       hours: '17:00 - 22:00',
       tags: ['instagramable', 'night', 'cheap'],
@@ -130,8 +126,6 @@ export default function SpotNongkrongPage() {
       category: 'Cafe',
       image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80',
       location: 'Pakem, Sleman',
-      rating: 4.8,
-      reviews: 1250,
       budget: 'IDR 15-50k',
       hours: '07:00 - 22:00',
       tags: ['instagramable', 'cheap'],
@@ -144,8 +138,6 @@ export default function SpotNongkrongPage() {
       category: 'Cafe & Restaurant',
       image: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80',
       location: 'Sleman',
-      rating: 4.7,
-      reviews: 980,
       budget: 'IDR 30-80k',
       hours: '10:00 - 22:00',
       tags: ['instagramable', 'night'],
@@ -158,8 +150,6 @@ export default function SpotNongkrongPage() {
       category: 'Coffee Shop',
       image: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80',
       location: 'Jl. Prawirotaman',
-      rating: 4.9,
-      reviews: 2100,
       budget: 'IDR 20-60k',
       hours: '08:00 - 23:00',
       tags: ['instagramable', 'night', 'music'],
@@ -172,8 +162,6 @@ export default function SpotNongkrongPage() {
       category: 'Traditional Food',
       image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80',
       location: 'Tugu Station Area',
-      rating: 4.6,
-      reviews: 850,
       budget: 'IDR 10-30k',
       hours: '10:00 - 21:00',
       tags: ['cheap'],
@@ -186,8 +174,6 @@ export default function SpotNongkrongPage() {
       category: 'Resto & Lounge',
       image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80',
       location: 'Jl. Gejayan',
-      rating: 4.8,
-      reviews: 1450,
       budget: 'IDR 50-150k',
       hours: '11:00 - 23:00',
       tags: ['instagramable', 'night', 'music'],
@@ -200,8 +186,6 @@ export default function SpotNongkrongPage() {
       category: 'Outdoor',
       image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80',
       location: 'Kaliurang, Sleman',
-      rating: 4.5,
-      reviews: 3200,
       budget: 'IDR 25k',
       hours: '17:00 - 22:00',
       tags: ['instagramable', 'night', 'cheap'],
@@ -219,7 +203,7 @@ export default function SpotNongkrongPage() {
       {/* Hero Banner */}
       <section className="relative h-[40vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/80 via-purple-600/70 to-pink-600/80" />
+          <div className="absolute inset-0 bg-gradient-to-br from-amber-500/80 via-orange-500/70 to-rose-500/80" />
           <div className="absolute inset-0 opacity-20">
             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=1600&q=80')] bg-cover bg-center" />
           </div>
@@ -251,7 +235,7 @@ export default function SpotNongkrongPage() {
                   onClick={() => setActiveFilter(filter.id)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-full whitespace-nowrap transition-all text-sm font-medium ${
                     activeFilter === filter.id
-                      ? 'bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white shadow-lg scale-105'
+                      ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg scale-105'
                       : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700'
                   }`}
                 >
@@ -265,7 +249,7 @@ export default function SpotNongkrongPage() {
       </section>
 
       {/* Spot Cards Grid */}
-      <section className="py-12 md:py-20 bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30 dark:from-slate-950 dark:via-indigo-950/20 dark:to-purple-950/20">
+      <section className="py-12 md:py-20 bg-gradient-to-br from-slate-50 via-amber-50/30 to-orange-50/30 dark:from-slate-950 dark:via-amber-950/20 dark:to-orange-950/20">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredSpots.map((spot: Spot, index: number) => (
@@ -275,69 +259,62 @@ export default function SpotNongkrongPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <Card
-                  onClick={() => router.push(`/${locale}/map?spot=${spot.id}&name=${encodeURIComponent(spot.name)}`)}
-                  className="overflow-hidden hover:shadow-2xl transition-all duration-300 group border-2 border-transparent hover:border-indigo-200 dark:hover:border-indigo-800 cursor-pointer"
-                >
-                  <div className="relative aspect-[4/3] overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100 dark:from-indigo-900/30 dark:to-purple-900/30">
-                    {/* Image placeholder */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-indigo-400/50 text-xs">{spot.name}</span>
-                    </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
+                <Link href={`/${locale}/spot-nongkrong/${generateSlug(spot.name)}`}>
+                  <Card className="overflow-hidden hover:shadow-2xl transition-all duration-300 group border-2 border-transparent hover:border-orange-200 dark:hover:border-orange-800 cursor-pointer h-full">
+                    <div className="relative aspect-[4/3] overflow-hidden">
+                      <Image
+                        src={spot.image}
+                        alt={spot.name}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent" />
 
-                    {/* Category Badge */}
-                    <div className="absolute top-4 left-4">
-                      <Badge className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white border-0">
-                        {spot.category}
-                      </Badge>
-                    </div>
-
-                    {/* Rating */}
-                    <div className="absolute top-4 right-4">
-                      <Badge className="bg-white/90 text-slate-900 border-0">
-                        <Star className="w-3 h-3 mr-1 fill-amber-500 text-amber-500" />
-                        {spot.rating}
-                      </Badge>
-                    </div>
-                  </div>
-
-                  <CardContent className="p-5">
-                    <h3 className="text-xl font-semibold mb-2">{spot.name}</h3>
-                    <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                      {spot.description}
-                    </p>
-
-                    <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-3">
-                      <MapPin className="w-4 h-4 text-indigo-600" />
-                      <span>{spot.location}</span>
-                    </div>
-
-                    <div className="flex items-center justify-between text-sm text-slate-600 dark:text-slate-400 mb-4">
-                      <div className="flex items-center gap-2">
-                        <DollarSign className="w-4 h-4 text-emerald-600" />
-                        <span>{spot.budget}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Clock className="w-4 h-4 text-amber-600" />
-                        <span>{spot.hours}</span>
-                      </div>
-                    </div>
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2">
-                      {spot.badges.map((badge, idx) => (
-                        <Badge
-                          key={idx}
-                          variant="outline"
-                          className="text-xs bg-indigo-50 dark:bg-indigo-950/30 border-indigo-200 dark:border-indigo-800"
-                        >
-                          {badge}
+                      {/* Category Badge */}
+                      <div className="absolute top-4 left-4">
+                        <Badge className="bg-gradient-to-r from-amber-500 to-orange-600 text-white border-0">
+                          {spot.category}
                         </Badge>
-                      ))}
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
+
+                    <CardContent className="p-5">
+                      <h3 className="text-xl font-semibold mb-2">{spot.name}</h3>
+                      <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-2">
+                        {spot.description}
+                      </p>
+
+                      <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400 mb-3">
+                        <MapPin className="w-4 h-4 text-orange-600" />
+                        <span>{spot.location}</span>
+                      </div>
+
+                      <div className="flex items-center justify-between text-sm text-slate-600 dark:text-slate-400 mb-4">
+                        <div className="flex items-center gap-2">
+                          <DollarSign className="w-4 h-4 text-emerald-600" />
+                          <span>{spot.budget}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Clock className="w-4 h-4 text-amber-600" />
+                          <span>{spot.hours}</span>
+                        </div>
+                      </div>
+
+                      {/* Tags */}
+                      <div className="flex flex-wrap gap-2">
+                        {spot.badges.map((badge, idx) => (
+                          <Badge
+                            key={idx}
+                            variant="outline"
+                            className="text-xs bg-orange-50 dark:bg-orange-950/30 border-orange-200 dark:border-orange-800"
+                          >
+                            {badge}
+                          </Badge>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </Link>
               </motion.div>
             ))}
           </div>

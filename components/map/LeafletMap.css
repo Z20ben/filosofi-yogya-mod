@@ -75,13 +75,27 @@ div[style*="background: linear-gradient"] {
   visibility: visible !important;
   opacity: 1 !important;
   z-index: 1000 !important;
-  position: relative !important;
 }
 
 .leaflet-marker-icon.custom-marker > div {
   display: flex !important;
   visibility: visible !important;
   pointer-events: auto !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Ensure user location marker has correct box-sizing */
+.leaflet-marker-icon.user-location-marker {
+  background: none !important;
+  border: none !important;
+}
+
+.leaflet-marker-icon.user-location-marker > div {
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* Ensure cluster icons are visible */

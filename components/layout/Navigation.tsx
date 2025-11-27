@@ -2,10 +2,11 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTheme } from 'next-themes';
 import { useTranslations, useLocale } from 'next-intl';
 import { Menu, X, Globe, Moon, Sun, ChevronDown, LogIn } from 'lucide-react';
+import { getCategoryParam, translateCategoryParam } from '@/config/categoryParams';
 
 type MenuGroup = {
   key: string;
@@ -23,6 +24,7 @@ type MenuGroup = {
 export function Navigation() {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { theme, setTheme } = useTheme();
   const t = useTranslations('nav');
   const locale = useLocale();
@@ -32,6 +34,8 @@ export function Navigation() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [mounted, setMounted] = useState(false);
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  const currentLocale = locale as 'id' | 'en';
 
   useEffect(() => {
     setMounted(true);
@@ -46,11 +50,10 @@ export function Navigation() {
       type: 'dropdown',
       href: `/${locale}/encyclopedia`,
       items: [
-        { key: 'semua-ensiklopedia', label: t('semua') || 'Semua', href: `/${locale}/encyclopedia` },
-        { key: 'warisan-benda', label: t('warisanBenda') || 'Warisan Budaya Benda', href: `/${locale}/encyclopedia?category=warisan-benda` },
-        { key: 'warisan-takbenda', label: t('warisanTakBenda') || 'Warisan Budaya Tak Benda', href: `/${locale}/encyclopedia?category=warisan-takbenda` },
-        { key: 'tokoh', label: t('tokoh') || 'Tokoh / Sejarah', href: `/${locale}/encyclopedia?category=tokoh` },
-        { key: 'istilah', label: t('istilah') || 'Istilah', href: `/${locale}/encyclopedia?category=istilah` },
+        { key: 'warisan-benda', label: t('warisanBenda') || 'Warisan Budaya Benda', href: `/${locale}/encyclopedia?category=${getCategoryParam('encyclopedia', 'warisan-benda', currentLocale)}` },
+        { key: 'warisan-takbenda', label: t('warisanTakBenda') || 'Warisan Budaya Tak Benda', href: `/${locale}/encyclopedia?category=${getCategoryParam('encyclopedia', 'warisan-takbenda', currentLocale)}` },
+        { key: 'tokoh', label: t('tokoh') || 'Tokoh / Sejarah', href: `/${locale}/encyclopedia?category=${getCategoryParam('encyclopedia', 'tokoh', currentLocale)}` },
+        { key: 'istilah', label: t('istilah') || 'Istilah', href: `/${locale}/encyclopedia?category=${getCategoryParam('encyclopedia', 'istilah', currentLocale)}` },
         { key: 'peta-interaktif', label: t('petaInteraktif') || 'Peta Interaktif', href: `/${locale}/map` },
       ],
     },
@@ -60,10 +63,9 @@ export function Navigation() {
       type: 'dropdown',
       href: `/${locale}/agenda-event`,
       items: [
-        { key: 'semua-agenda', label: t('semua') || 'Semua', href: `/${locale}/agenda-event` },
-        { key: 'budaya', label: t('budayaUpacara') || 'Budaya & Upacara', href: `/${locale}/agenda-event?category=budaya` },
-        { key: 'festival', label: t('festivalHiburan') || 'Festival & Hiburan', href: `/${locale}/agenda-event?category=festival` },
-        { key: 'workshop', label: t('komunitasWorkshop') || 'Komunitas & Workshop', href: `/${locale}/agenda-event?category=komunitas` },
+        { key: 'budaya', label: t('budayaUpacara') || 'Budaya & Upacara', href: `/${locale}/agenda-event?category=${getCategoryParam('agendaEvent', 'budaya', currentLocale)}` },
+        { key: 'festival', label: t('festivalHiburan') || 'Festival & Hiburan', href: `/${locale}/agenda-event?category=${getCategoryParam('agendaEvent', 'festival', currentLocale)}` },
+        { key: 'workshop', label: t('komunitasWorkshop') || 'Komunitas & Workshop', href: `/${locale}/agenda-event?category=${getCategoryParam('agendaEvent', 'komunitas', currentLocale)}` },
       ],
     },
     {
@@ -72,17 +74,19 @@ export function Navigation() {
       type: 'dropdown',
       href: `/${locale}/destinasi-wisata`,
       items: [
-        { key: 'semua-destinasi', label: t('semua') || 'Semua', href: `/${locale}/destinasi-wisata` },
-        { key: 'titik-sumbu', label: t('titikSumbu') || 'Titik Sumbu', href: `/${locale}/destinasi-wisata?category=titik-sumbu` },
-        { key: 'cagar-budaya', label: t('cagarBudaya') || 'Cagar Budaya', href: `/${locale}/destinasi-wisata?category=cagar-budaya` },
-        { key: 'museum', label: t('museumGaleri') || 'Museum & Galeri', href: `/${locale}/destinasi-wisata?category=museum` },
+        { key: 'titik-sumbu', label: t('titikSumbu') || 'Titik Sumbu', href: `/${locale}/destinasi-wisata?category=${getCategoryParam('destinasiWisata', 'titik-sumbu', currentLocale)}` },
+        { key: 'cagar-budaya', label: t('cagarBudaya') || 'Cagar Budaya', href: `/${locale}/destinasi-wisata?category=${getCategoryParam('destinasiWisata', 'cagar-budaya', currentLocale)}` },
+        { key: 'museum', label: t('museumGaleri') || 'Museum & Galeri', href: `/${locale}/destinasi-wisata?category=${getCategoryParam('destinasiWisata', 'museum', currentLocale)}` },
       ],
     },
     {
-      key: 'spot-nongkrong',
+      key: 'spot-nongkrong-group',
       label: t('spotNongkrong') || 'Spot Nongkrong',
-      type: 'single',
+      type: 'dropdown',
       href: `/${locale}/spot-nongkrong`,
+      items: [
+        { key: 'trending-now', label: t('trendingNow') || 'Trending Now', href: `/${locale}/trending` },
+      ],
     },
     {
       key: 'umkm-group',
@@ -90,10 +94,9 @@ export function Navigation() {
       type: 'dropdown',
       href: `/${locale}/umkm-lokal`,
       items: [
-        { key: 'semua-umkm', label: t('semua') || 'Semua', href: `/${locale}/umkm-lokal` },
-        { key: 'kuliner', label: t('kuliner') || 'Kuliner', href: `/${locale}/umkm-lokal?category=kuliner` },
-        { key: 'busana', label: t('busana') || 'Busana', href: `/${locale}/umkm-lokal?category=busana` },
-        { key: 'craft', label: t('produkKreatif') || 'Produk Kreatif', href: `/${locale}/umkm-lokal?category=craft` },
+        { key: 'kuliner', label: t('kuliner') || 'Kuliner', href: `/${locale}/umkm-lokal?category=${getCategoryParam('umkmLokal', 'culinary', currentLocale)}` },
+        { key: 'busana', label: t('busana') || 'Busana', href: `/${locale}/umkm-lokal?category=${getCategoryParam('umkmLokal', 'fashion', currentLocale)}` },
+        { key: 'craft', label: t('produkKreatif') || 'Produk Kreatif', href: `/${locale}/umkm-lokal?category=${getCategoryParam('umkmLokal', 'craft', currentLocale)}` },
       ],
     },
     // COMMENTED OUT - Menu yang tidak digunakan
@@ -141,7 +144,22 @@ export function Navigation() {
   const toggleLanguage = () => {
     const newLocale = locale === 'id' ? 'en' : 'id';
     const pathWithoutLocale = pathname.replace(`/${locale}`, '');
-    router.push(`/${newLocale}${pathWithoutLocale || ''}`);
+
+    // Translate search params
+    const newSearchParams = new URLSearchParams();
+    searchParams.forEach((value, key) => {
+      if (key === 'category') {
+        // Translate category param
+        const translatedValue = translateCategoryParam(value, currentLocale, newLocale as 'id' | 'en');
+        newSearchParams.set(key, translatedValue);
+      } else {
+        newSearchParams.set(key, value);
+      }
+    });
+
+    const queryString = newSearchParams.toString();
+    const newPath = `/${newLocale}${pathWithoutLocale || ''}${queryString ? `?${queryString}` : ''}`;
+    router.push(newPath);
   };
 
   const handleMouseEnter = (key: string) => {
@@ -158,10 +176,13 @@ export function Navigation() {
   };
 
   const isActiveGroup = (group: MenuGroup) => {
+    // Only highlight parent when on exact parent page (without query params)
     if (group.type === 'single') {
       return pathname === group.href;
     }
-    return group.items?.some((item) => pathname.startsWith(item.href.split('?')[0]));
+    // For dropdown, only active if pathname exactly matches parent href (no query params)
+    const parentPath = group.href?.split('?')[0];
+    return pathname === parentPath;
   };
 
   return (
@@ -190,7 +211,7 @@ export function Navigation() {
                     href={group.href!}
                     className={`relative px-4 py-2 rounded-md text-sm transition-colors ${
                       isActiveGroup(group)
-                        ? 'text-slate-900 dark:text-slate-50 font-medium'
+                        ? 'text-orange-600 dark:text-orange-400 font-semibold'
                         : 'text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400'
                     }`}
                   >
@@ -211,10 +232,11 @@ export function Navigation() {
                   onMouseEnter={() => handleMouseEnter(group.key)}
                   onMouseLeave={handleMouseLeave}
                 >
-                  <button
+                  <Link
+                    href={group.href!}
                     className={`flex items-center gap-1 px-4 py-2 rounded-md text-sm transition-colors ${
                       isActiveGroup(group)
-                        ? 'text-slate-900 dark:text-slate-50 font-medium'
+                        ? 'text-orange-600 dark:text-orange-400 font-semibold'
                         : openDropdown === group.key
                         ? 'bg-orange-50 dark:bg-orange-950/20 text-orange-600 dark:text-orange-400'
                         : 'text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400'
@@ -226,20 +248,16 @@ export function Navigation() {
                         openDropdown === group.key ? 'rotate-180' : ''
                       }`}
                     />
-                  </button>
+                  </Link>
 
                   {openDropdown === group.key && (
-                    <div className="absolute top-full left-0 mt-1 min-w-[200px] bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-gray-200 dark:border-slate-700 py-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                    <div className="absolute top-full left-0 mt-1 min-w-[200px] bg-white dark:bg-slate-900 rounded-xl shadow-xl border border-gray-200 dark:border-slate-700 py-2 animate-in fade-in slide-in-from-top-2 duration-200 z-50">
                       {group.items?.map((item) => (
                         <Link
                           key={item.key}
                           href={item.href}
                           onClick={() => setOpenDropdown(null)}
-                          className={`block w-full text-left px-4 py-2.5 text-sm transition-colors ${
-                            pathname.startsWith(item.href.split('?')[0])
-                              ? 'text-slate-900 dark:text-slate-50 font-medium'
-                              : 'text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400'
-                          }`}
+                          className="block w-full text-left px-4 py-2.5 text-sm transition-colors text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400"
                         >
                           {item.label}
                         </Link>
@@ -305,7 +323,7 @@ export function Navigation() {
                       onClick={() => setMobileMenuOpen(false)}
                       className={`relative flex items-center gap-2 px-4 py-2.5 rounded-md text-left transition-colors ${
                         isActiveGroup(group)
-                          ? 'text-slate-900 dark:text-slate-50 font-medium'
+                          ? 'text-orange-600 dark:text-orange-400 font-semibold'
                           : 'text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400'
                       }`}
                     >
@@ -321,23 +339,37 @@ export function Navigation() {
 
                 return (
                   <div key={group.key} className="space-y-1">
-                    <button
-                      onClick={() =>
-                        setOpenDropdown(openDropdown === group.key ? null : group.key)
-                      }
-                      className={`w-full flex items-center justify-between px-4 py-2.5 rounded-md text-left transition-colors ${
-                        isActiveGroup(group)
-                          ? 'text-slate-900 dark:text-slate-50 font-medium'
-                          : 'text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400'
-                      }`}
-                    >
-                      {group.label}
-                      <ChevronDown
-                        className={`w-4 h-4 transition-transform ${
-                          openDropdown === group.key ? 'rotate-180' : ''
+                    {/* Split Button: Link (left) + Toggle (right) */}
+                    <div className="flex items-center gap-0.5">
+                      <Link
+                        href={group.href!}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`flex-1 px-4 py-2.5 rounded-l-md text-left transition-colors ${
+                          isActiveGroup(group)
+                            ? 'text-orange-600 dark:text-orange-400 font-semibold'
+                            : 'text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400'
                         }`}
-                      />
-                    </button>
+                      >
+                        {group.label}
+                      </Link>
+                      <button
+                        onClick={() =>
+                          setOpenDropdown(openDropdown === group.key ? null : group.key)
+                        }
+                        className={`px-3 py-2.5 rounded-r-md transition-colors ${
+                          openDropdown === group.key
+                            ? 'bg-orange-100 dark:bg-orange-950/40 text-orange-600 dark:text-orange-400'
+                            : 'text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400'
+                        }`}
+                        aria-label="Toggle submenu"
+                      >
+                        <ChevronDown
+                          className={`w-4 h-4 transition-transform ${
+                            openDropdown === group.key ? 'rotate-180' : ''
+                          }`}
+                        />
+                      </button>
+                    </div>
 
                     {openDropdown === group.key && (
                       <div className="ml-4 space-y-1 animate-in fade-in slide-in-from-top-1 duration-200">
@@ -349,11 +381,7 @@ export function Navigation() {
                               setMobileMenuOpen(false);
                               setOpenDropdown(null);
                             }}
-                            className={`block w-full text-left px-4 py-2 rounded-md text-sm transition-colors ${
-                              pathname.startsWith(item.href.split('?')[0])
-                                ? 'text-slate-900 dark:text-slate-50 font-medium'
-                                : 'text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400'
-                            }`}
+                            className="block w-full text-left px-4 py-2 rounded-md text-sm transition-colors text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400"
                           >
                             {item.label}
                           </Link>

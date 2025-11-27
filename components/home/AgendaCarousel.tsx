@@ -7,6 +7,17 @@ import { Calendar, MapPin, Clock, Users, ArrowRight } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+
+// Generate URL-friendly slug from event title
+function generateSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim();
+}
 
 interface Event {
   title: string;
@@ -26,62 +37,142 @@ export function AgendaCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
 
-  // Sample events data
-  const events: Event[] = [
+  // Category mapping to get labels
+  const getCategoryLabel = (categoryId: string): string => {
+    const categoryMap: Record<string, { id: string; en: string }> = {
+      'budaya': { id: 'Budaya & Upacara', en: 'Culture & Ceremony' },
+      'festival': { id: 'Festival & Hiburan', en: 'Festivals & Entertainment' },
+      'komunitas': { id: 'Komunitas & Workshop', en: 'Community & Workshop' },
+      'pameran': { id: 'Pameran Kreatif', en: 'Creative Exhibition' },
+      'umkm': { id: 'Event UMKM', en: 'MSME Events' }
+    };
+    return categoryMap[categoryId]?.[locale as 'id' | 'en'] || categoryId;
+  };
+
+  // Gradient mapping by category
+  const getCategoryGradient = (categoryId: string): { gradient: string; bgColor: string } => {
+    const gradientMap: Record<string, { gradient: string; bgColor: string }> = {
+      'budaya': { gradient: 'from-cyan-500 to-blue-500', bgColor: 'bg-cyan-50 dark:bg-cyan-950/20' },
+      'festival': { gradient: 'from-indigo-500 to-purple-500', bgColor: 'bg-indigo-50 dark:bg-indigo-950/20' },
+      'komunitas': { gradient: 'from-amber-500 to-orange-500', bgColor: 'bg-amber-50 dark:bg-amber-950/20' },
+      'pameran': { gradient: 'from-rose-500 to-red-500', bgColor: 'bg-rose-50 dark:bg-rose-950/20' },
+      'umkm': { gradient: 'from-emerald-500 to-teal-500', bgColor: 'bg-emerald-50 dark:bg-emerald-950/20' }
+    };
+    return gradientMap[categoryId] || { gradient: 'from-slate-500 to-gray-500', bgColor: 'bg-slate-50 dark:bg-slate-950/20' };
+  };
+
+  // Events data - synced with agenda-event page (upcoming only)
+  const events: Event[] = locale === 'id' ? [
     {
-      title: locale === 'id' ? 'Jogja Fashion Week 2026' : 'Jogja Fashion Week 2026',
-      category: locale === 'id' ? 'Festival & Hiburan' : 'Festivals & Entertainment',
-      date: locale === 'id' ? '22-24 Jan 2026' : 'Jan 22-24, 2026',
-      time: locale === 'id' ? '10:00 - 22:00 WIB' : '10:00 AM - 10:00 PM',
-      location: locale === 'id' ? 'Taman Budaya Yogyakarta' : 'Yogyakarta Cultural Park',
-      price: locale === 'id' ? 'Gratis' : 'Free',
-      age: locale === 'id' ? 'Semua Umur' : 'All Ages',
-      gradient: 'from-indigo-500 to-purple-500',
-      bgColor: 'bg-indigo-50 dark:bg-indigo-950/20'
+      title: 'Sekaten Festival 2024',
+      category: getCategoryLabel('budaya'),
+      date: '25 November 2024',
+      time: '18:00 - 23:00',
+      location: 'Alun-Alun Utara Keraton, Yogyakarta',
+      price: 'Gratis',
+      age: 'Semua Umur',
+      gradient: getCategoryGradient('budaya').gradient,
+      bgColor: getCategoryGradient('budaya').bgColor
     },
     {
-      title: locale === 'id' ? 'Workshop Batik Modern' : 'Modern Batik Workshop',
-      category: locale === 'id' ? 'Komunitas & Workshop' : 'Community & Workshop',
-      date: locale === 'id' ? '28 Jan 2026' : 'Jan 28, 2026',
-      time: locale === 'id' ? '13:00 - 17:00 WIB' : '1:00 PM - 5:00 PM',
-      location: 'Kotagede Heritage Center',
+      title: 'Jogja International Music Festival',
+      category: getCategoryLabel('festival'),
+      date: '15 Desember 2024',
+      time: '14:00 - 23:00',
+      location: 'Stadion Mandala Krida, Yogyakarta',
+      price: 'Rp 250.000 - 1.500.000',
+      age: '18+',
+      gradient: getCategoryGradient('festival').gradient,
+      bgColor: getCategoryGradient('festival').bgColor
+    },
+    {
+      title: 'Workshop Batik untuk Pemula',
+      category: getCategoryLabel('komunitas'),
+      date: '28 November 2024',
+      time: '09:00 - 15:00',
+      location: 'Rumah Batik Tirtodipuran, Yogyakarta',
       price: 'Rp 150.000',
-      age: locale === 'id' ? 'Semua Umur' : 'All Ages',
-      gradient: 'from-amber-500 to-orange-500',
-      bgColor: 'bg-amber-50 dark:bg-amber-950/20'
+      age: '15+',
+      gradient: getCategoryGradient('komunitas').gradient,
+      bgColor: getCategoryGradient('komunitas').bgColor
     },
     {
-      title: locale === 'id' ? 'Pasar Seni Rakyat' : 'Folk Art Market',
-      category: locale === 'id' ? 'Event UMKM' : 'MSME Events',
-      date: locale === 'id' ? '1-2 Feb 2026' : 'Feb 1-2, 2026',
-      time: locale === 'id' ? '08:00 - 20:00 WIB' : '8:00 AM - 8:00 PM',
-      location: 'Alun-alun Kidul',
-      price: locale === 'id' ? 'Gratis' : 'Free',
-      age: locale === 'id' ? 'Semua Umur' : 'All Ages',
-      gradient: 'from-emerald-500 to-teal-500',
-      bgColor: 'bg-emerald-50 dark:bg-emerald-950/20'
-    },
-    {
-      title: 'Sekaten & Grebeg Maulud',
-      category: locale === 'id' ? 'Budaya & Upacara' : 'Culture & Ceremony',
-      date: locale === 'id' ? '12 Feb 2026' : 'Feb 12, 2026',
-      time: locale === 'id' ? '08:00 - 16:00 WIB' : '8:00 AM - 4:00 PM',
-      location: locale === 'id' ? 'Keraton Yogyakarta' : 'Yogyakarta Palace',
-      price: locale === 'id' ? 'Gratis' : 'Free',
-      age: locale === 'id' ? 'Semua Umur' : 'All Ages',
-      gradient: 'from-cyan-500 to-blue-500',
-      bgColor: 'bg-cyan-50 dark:bg-cyan-950/20'
-    },
-    {
-      title: locale === 'id' ? 'Pameran Fotografi Jogja' : 'Jogja Photography Exhibition',
-      category: locale === 'id' ? 'Pameran Kreatif' : 'Creative Exhibition',
-      date: locale === 'id' ? '5-10 Feb 2026' : 'Feb 5-10, 2026',
-      time: locale === 'id' ? '10:00 - 21:00 WIB' : '10:00 AM - 9:00 PM',
-      location: 'Taman Pintar Yogyakarta',
+      title: 'Jogja Art Fair 2024',
+      category: getCategoryLabel('pameran'),
+      date: '5-10 Desember 2024',
+      time: '10:00 - 20:00',
+      location: 'Taman Budaya Yogyakarta',
       price: 'Rp 25.000',
-      age: locale === 'id' ? 'Semua Umur' : 'All Ages',
-      gradient: 'from-rose-500 to-red-500',
-      bgColor: 'bg-rose-50 dark:bg-rose-950/20'
+      age: 'Semua Umur',
+      gradient: getCategoryGradient('pameran').gradient,
+      bgColor: getCategoryGradient('pameran').bgColor
+    },
+    {
+      title: 'Pasar UMKM Kotagede',
+      category: getCategoryLabel('umkm'),
+      date: '1-3 Desember 2024',
+      time: '10:00 - 21:00',
+      location: 'Alun-Alun Kotagede, Bantul',
+      price: 'Gratis',
+      age: 'Semua Umur',
+      gradient: getCategoryGradient('umkm').gradient,
+      bgColor: getCategoryGradient('umkm').bgColor
+    }
+  ] : [
+    {
+      title: 'Sekaten Festival 2024',
+      category: getCategoryLabel('budaya'),
+      date: 'November 25, 2024',
+      time: '18:00 - 23:00',
+      location: 'North Square Keraton, Yogyakarta',
+      price: 'Free',
+      age: 'All Ages',
+      gradient: getCategoryGradient('budaya').gradient,
+      bgColor: getCategoryGradient('budaya').bgColor
+    },
+    {
+      title: 'Jogja International Music Festival',
+      category: getCategoryLabel('festival'),
+      date: 'December 15, 2024',
+      time: '14:00 - 23:00',
+      location: 'Mandala Krida Stadium, Yogyakarta',
+      price: 'IDR 250,000 - 1,500,000',
+      age: '18+',
+      gradient: getCategoryGradient('festival').gradient,
+      bgColor: getCategoryGradient('festival').bgColor
+    },
+    {
+      title: 'Batik Workshop for Beginners',
+      category: getCategoryLabel('komunitas'),
+      date: 'November 28, 2024',
+      time: '09:00 - 15:00',
+      location: 'Batik House Tirtodipuran, Yogyakarta',
+      price: 'IDR 150,000',
+      age: '15+',
+      gradient: getCategoryGradient('komunitas').gradient,
+      bgColor: getCategoryGradient('komunitas').bgColor
+    },
+    {
+      title: 'Jogja Art Fair 2024',
+      category: getCategoryLabel('pameran'),
+      date: 'December 5-10, 2024',
+      time: '10:00 - 20:00',
+      location: 'Taman Budaya Yogyakarta',
+      price: 'IDR 25,000',
+      age: 'All Ages',
+      gradient: getCategoryGradient('pameran').gradient,
+      bgColor: getCategoryGradient('pameran').bgColor
+    },
+    {
+      title: 'Kotagede MSME Market',
+      category: getCategoryLabel('umkm'),
+      date: 'December 1-3, 2024',
+      time: '10:00 - 21:00',
+      location: 'Kotagede Square, Bantul',
+      price: 'Free',
+      age: 'All Ages',
+      gradient: getCategoryGradient('umkm').gradient,
+      bgColor: getCategoryGradient('umkm').bgColor
     }
   ];
 
@@ -232,10 +323,12 @@ export function AgendaCarousel() {
                       <p className="text-xs text-slate-500 dark:text-slate-400 mb-1">{locale === 'id' ? 'Harga Tiket' : 'Price'}</p>
                       <p className="text-xl font-semibold text-slate-900 dark:text-slate-50">{events[currentIndex].price}</p>
                     </div>
-                    <Button className={`bg-gradient-to-r ${events[currentIndex].gradient} hover:opacity-90 text-white shadow-lg group`}>
-                      {locale === 'id' ? 'Lihat Detail' : 'View Details'}
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                    </Button>
+                    <Link href={`/${locale}/agenda-event/${generateSlug(events[currentIndex].title)}`}>
+                      <Button className={`bg-gradient-to-r ${events[currentIndex].gradient} hover:opacity-90 text-white shadow-lg group`}>
+                        {locale === 'id' ? 'Lihat Detail' : 'View Details'}
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               </Card>
