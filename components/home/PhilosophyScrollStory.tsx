@@ -216,7 +216,7 @@ export function PhilosophyScrollStory() {
   }, [selectedImage]);
 
   return (
-    <section ref={containerRef} className="relative bg-slate-950">
+    <section ref={containerRef} className="relative bg-slate-950 overflow-x-hidden">
       {/* Header */}
       <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-amber-950 to-slate-900">
         <div className="absolute inset-0 opacity-20">
@@ -262,14 +262,14 @@ export function PhilosophyScrollStory() {
       </div>
 
       {/* Story Sections */}
-      <div ref={storySectionsRef} className="relative">
+      <div ref={storySectionsRef} className="relative overflow-x-hidden">
         {t.sections.map((section, index) => {
           const isLeft = index % 2 === 0;
 
           return (
             <div
               key={index}
-              className="story-section relative min-h-screen flex items-center py-20"
+              className="story-section relative min-h-screen flex items-center py-20 overflow-x-hidden"
             >
               {/* Background */}
               <div className="absolute inset-0 opacity-10">
@@ -284,7 +284,7 @@ export function PhilosophyScrollStory() {
 
               {/* Content */}
               <div className="container mx-auto px-4 relative z-10 max-w-6xl">
-                <div className={`grid md:grid-cols-2 gap-12 items-center ${!isLeft ? 'md:grid-flow-dense' : ''}`}>
+                <div className={`grid md:grid-cols-2 gap-6 md:gap-12 items-center ${!isLeft ? 'md:grid-flow-dense' : ''}`}>
                   {/* Text Content */}
                   <motion.div
                     initial={{ opacity: 0, x: isLeft ? -50 : 50 }}
@@ -354,7 +354,7 @@ export function PhilosophyScrollStory() {
               </div>
 
               {/* Section Number */}
-              <div className="absolute top-8 right-8 text-8xl md:text-9xl font-bold text-white/5 pointer-events-none">
+              <div className="hidden md:block absolute top-8 right-8 text-9xl font-bold text-white/5 pointer-events-none">
                 {String(index + 1).padStart(2, '0')}
               </div>
             </div>
@@ -363,7 +363,7 @@ export function PhilosophyScrollStory() {
       </div>
 
       {/* Closing Section */}
-      <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-amber-950 to-slate-900">
+      <div className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-amber-950 to-slate-900 overflow-x-hidden">
         <div className="absolute inset-0 opacity-30">
           <Image
             src="/assets/b059b0407249c80c00c9dbb43425f433d547254d.png"
