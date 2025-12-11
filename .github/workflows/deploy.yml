@@ -1,6 +1,5 @@
 name: Deploy to Production Server
 
-# Trigger: Jalankan workflow ini setiap ada push ke branch 'main'
 on:
   push:
     branches:
@@ -8,25 +7,22 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest # Runner akan menggunakan OS Ubuntu
+    runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout kode dari repository
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Setup SSH menggunakan private key yang sudah kita simpan di secrets
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
 
-      # Step 3: Jalankan skrip deploy.sh di server jauh
-      - name: Execute remote deployment script
+      - name: Execute remote deployment commands
         run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
-        cd ~/projects/filosofi-yogya-mod
-        git pull origin main
-        docker-compose up -d --build
-        docker image prune -f
-        EOF
+          ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+          cd ~/projects/filosofi-yogya-mod
+          git pull origin main
+          docker-compose up -d --build
+          docker image prune -f
+          EOF
