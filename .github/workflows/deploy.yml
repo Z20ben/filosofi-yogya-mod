@@ -25,4 +25,4 @@ jobs:
       - name: Execute remote deployment script
         run: |
           # Disable strict host key checking untuk koneksi pertama kali
-          ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} 'bash -s' < deploy.sh
+          ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "bash ~/deploy.sh"
