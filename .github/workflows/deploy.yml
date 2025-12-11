@@ -23,6 +23,17 @@ jobs:
 
       # Step 3: Jalankan skrip deploy.sh di server jauh
       - name: Execute remote deployment script
-        run: |
-          # Disable strict host key checking untuk koneksi pertama kali
-          ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "bash ~/deploy.sh"
+        run:  |
+    ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} << 'EOF'
+    # Pindah ke direktori proyek
+    cd ~/projects/filosofi-yogya-mod
+
+    # Pull kode terbaru
+    git pull origin main
+
+    # Build dan restart container
+    docker-compose up -d --build
+
+    # Bersihkan image lama
+    docker image prune -f
+    EOF
