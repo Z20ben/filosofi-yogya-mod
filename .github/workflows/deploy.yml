@@ -1,0 +1,28 @@
+name: Deploy to Production Server
+
+# Trigger: Jalankan workflow ini setiap ada push ke branch 'main'
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest # Runner akan menggunakan OS Ubuntu
+
+    steps:
+      # Step 1: Checkout kode dari repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Setup SSH menggunakan private key yang sudah kita simpan di secrets
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      # Step 3: Jalankan skrip deploy.sh di server jauh
+      - name: Execute remote deployment script
+        run: |
+          # Disable strict host key checking untuk koneksi pertama kali
+          ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} 'bash -s' < deploy.sh
