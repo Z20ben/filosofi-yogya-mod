@@ -13,10 +13,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: copy .env from host
-        run: cp /home/fredi/projects/.env .env
-
       - name: Build and Deploy
         run: |
-          docker-compose up -d --build
+          cd /home/runner/_work/filosofi-yogya-mod
+          docker-compose -f /home/runner/_work/filosofi-yogya-mod/docker-compose.yml up -d --build
           docker image prune -f
