@@ -15,5 +15,6 @@ jobs:
 
       - name: Build and Deploy
         run: |
-          docker-compose -f /home/runner/_work/filosofi-yogya-mod/filosofi-yogya-mod/docker-compose.yml up -d --build
-          docker image prune -f
+        cd /home/runner/_work/filosofi-yogya-mod/filosofi-yogya-mod
+        docker-compose up -d --build
+        docker image prune -f
