@@ -98,35 +98,35 @@ jobs:
 #    runs-on: self-hosted  # Use self-hosted runner with kubectl access
 #    if: github.ref == 'refs/heads/main'
     
-    steps:
-      - name: Setup kubectl 
-        run: |
-          # Install kubectl if not exists
-          if ! command -v kubectl &> /dev/null; then
-            echo "Installing kubectl..."
-            curl -LO "https://dl.k8s.io/release/v1.28.0/bin/linux/amd64/kubectl"
-            chmod +x kubectl
-            sudo mv kubectl /usr/local/bin/kubectl
-          fi
+#    steps:
+#      - name: Setup kubectl 
+#        run: |
+#          # Install kubectl if not exists
+#          if ! command -v kubectl &> /dev/null; then
+#            echo "Installing kubectl..."
+#            curl -LO "https://dl.k8s.io/release/v1.28.0/bin/linux/amd64/kubectl"
+#            chmod +x kubectl
+#            sudo mv kubectl /usr/local/bin/kubectl
+#          fi
           
-          echo "kubectl version:"
-          kubectl version --client --short
+#          echo "kubectl version:"
+#          kubectl version --client --short
  
-      - name: Trigger ArgoCD sync
-        run: |
-          # ArgoCD will auto-sync, but we can force it
-          kubectl patch app filosofi-yogya -n argocd \
-            --type merge \
-            -p '{"operation": {"initiatedBy": {"username": "github-actions"}, "sync": {"revision": "${{ github.sha }}"}}}'
+#      - name: Trigger ArgoCD sync
+#        run: |
+#          # ArgoCD will auto-sync, but we can force it
+#          kubectl patch app filosofi-yogya -n argocd \
+#            --type merge \
+#            -p '{"operation": {"initiatedBy": {"username": "github-actions"}, "sync": {"revision": "${{ github.sha }}"}}}'
       
-      - name: Wait for ArgoCD sync
-        run: |
-          # Wait for sync to complete
-          timeout 300 bash -c 'until kubectl get app filosofi-yogya -n argocd -o jsonpath="{.status.sync.status}" | grep -q "Synced"; do echo "Waiting for sync..."; sleep 5; done'
+#      - name: Wait for ArgoCD sync
+#        run: |
+#          # Wait for sync to complete
+#          timeout 300 bash -c 'until kubectl get app filosofi-yogya -n argocd -o jsonpath="{.status.sync.status}" | grep -q "Synced"; do echo "Waiting for sync..."; sleep 5; done'
           
-          echo "✅ ArgoCD sync completed!"
+#          echo "✅ ArgoCD sync completed!"
       
-      - name: Check deployment health
-        run: |
-          kubectl get app filosofi-yogya -n argocd
-          kubectl get pods -n filosofi-app -l app=filosofi-yogya
+#      - name: Check deployment health
+#        run: |
+#          kubectl get app filosofi-yogya -n argocd
+#          kubectl get pods -n filosofi-app -l app=filosofi-yogya
