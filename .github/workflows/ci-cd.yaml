@@ -92,11 +92,11 @@ jobs:
           git commit -m "Update image tag to ${{ github.sha }}" || echo "No changes to commit"
           git push
   
-  notify-argocd:
-    name: Notify ArgoCD
-    needs: update-manifest
-    runs-on: self-hosted  # Use self-hosted runner with kubectl access
-    if: github.ref == 'refs/heads/main'
+#  notify-argocd:
+#    name: Notify ArgoCD
+#    needs: update-manifest
+#    runs-on: self-hosted  # Use self-hosted runner with kubectl access
+#    if: github.ref == 'refs/heads/main'
     
     steps:
       - name: Setup kubectl 
