@@ -68,7 +68,7 @@ export async function getMapLocations(locale: string = 'id'): Promise<MapLocatio
     const { data }: DirectusResponse<DirectusItem> = await res.json();
 
     return data.map(item => {
-      const trans = item.translations?.[0] || {};
+      const trans: Translation = item.translations?.[0] || { code: '' };
       return {
         id: item.slug || `id-${item.id}`,
         name: (trans.name as string) || '',
@@ -82,7 +82,7 @@ export async function getMapLocations(locale: string = 'id'): Promise<MapLocatio
         },
         openingHours: (trans.opening_hours as string) || undefined,
         ticketPrice: (trans.ticket_price as string) || undefined,
-        facilities: (trans.facilities as string[]) || (item.facilities as string[]) || [],
+        facilities: (trans.facilities as unknown as string[]) || (item.facilities as string[]) || [],
         googleMapsUrl: item.google_maps_url as string | undefined,
         image: item.image as string | undefined,
         phone: item.phone as string | undefined,
@@ -115,7 +115,7 @@ export async function getMapLocationBySlug(slug: string, locale: string = 'id'):
     if (data.length === 0) return null;
 
     const item = data[0];
-    const trans = item.translations?.[0] || {};
+    const trans: Translation = item.translations?.[0] || { code: '' };
 
     return {
       id: item.slug || `id-${item.id}`,
@@ -130,7 +130,7 @@ export async function getMapLocationBySlug(slug: string, locale: string = 'id'):
       },
       openingHours: (trans.opening_hours as string) || undefined,
       ticketPrice: (trans.ticket_price as string) || undefined,
-      facilities: (trans.facilities as string[]) || (item.facilities as string[]) || [],
+      facilities: (trans.facilities as unknown as string[]) || (item.facilities as string[]) || [],
       googleMapsUrl: item.google_maps_url as string | undefined,
       image: item.image as string | undefined,
       phone: item.phone as string | undefined,
@@ -178,7 +178,7 @@ export async function getAgendaEvents(locale: string = 'id'): Promise<AgendaEven
     const { data }: DirectusResponse<DirectusItem> = await res.json();
 
     return data.map(item => {
-      const trans = item.translations?.[0] || {};
+      const trans: Translation = item.translations?.[0] || { code: '' };
       return {
         id: item.slug || `id-${item.id}`,
         title: (trans.title as string) || '',
@@ -238,7 +238,7 @@ export async function getUMKMLokal(locale: string = 'id'): Promise<UMKMLokal[]> 
     const { data }: DirectusResponse<DirectusItem> = await res.json();
 
     return data.map(item => {
-      const trans = item.translations?.[0] || {};
+      const trans: Translation = item.translations?.[0] || { code: '' };
       return {
         id: item.slug || `id-${item.id}`,
         name: (trans.name as string) || '',
@@ -300,7 +300,7 @@ export async function getSpotNongkrong(locale: string = 'id'): Promise<SpotNongk
     const { data }: DirectusResponse<DirectusItem> = await res.json();
 
     return data.map(item => {
-      const trans = item.translations?.[0] || {};
+      const trans: Translation = item.translations?.[0] || { code: '' };
       return {
         id: item.slug || `id-${item.id}`,
         name: (trans.name as string) || '',
@@ -357,7 +357,7 @@ export async function getTrendingArticles(locale: string = 'id', limit: number =
     const { data }: DirectusResponse<DirectusItem> = await res.json();
 
     return data.map(item => {
-      const trans = item.translations?.[0] || {};
+      const trans: Translation = item.translations?.[0] || { code: '' };
       return {
         id: item.slug || `id-${item.id}`,
         title: (trans.title as string) || '',
@@ -403,7 +403,7 @@ export async function getEncyclopediaEntries(locale: string = 'id'): Promise<Enc
     const { data }: DirectusResponse<DirectusItem> = await res.json();
 
     return data.map(item => {
-      const trans = item.translations?.[0] || {};
+      const trans: Translation = item.translations?.[0] || { code: '' };
       return {
         id: item.slug || `id-${item.id}`,
         title: (trans.title as string) || '',
@@ -435,7 +435,7 @@ export async function getEncyclopediaEntryBySlug(slug: string, locale: string = 
     if (data.length === 0) return null;
 
     const item = data[0];
-    const trans = item.translations?.[0] || {};
+    const trans: Translation = item.translations?.[0] || { code: '' };
 
     return {
       id: item.slug || `id-${item.id}`,
