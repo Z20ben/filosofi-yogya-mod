@@ -1,0 +1,119 @@
+name: CI/CD with ArgoCD
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    name: Build and Push Image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+    
+    outputs:
+      image-tag: ${{ steps.meta.outputs.tags }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
+  
+  update-manifest:
+    name: Update Kubernetes Manifest
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+      
+      - name: Update image tag
+        run: |
+          # Extract short SHA
+          SHORT_SHA=$(echo ${{ github.sha }} | cut -c1-7)
+          NEW_TAG="main-${SHORT_SHA}"
+          
+          # Update kustomization.yaml
+          cd k8s/overlays/production
+          
+          # Update newTag in kustomization.yaml
+          sed -i "s/newTag: .*/newTag: ${NEW_TAG}/" kustomization.yaml
+          
+          cat kustomization.yaml
+      
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          git add k8s/overlays/production/kustomization.yaml
+          git commit -m "Update image tag to ${{ github.sha }}" || echo "No changes to commit"
+          git push
+  
+  notify-argocd:
+    name: Notify ArgoCD
+    needs: update-manifest
+    runs-on: self-hosted  # Use self-hosted runner with kubectl access
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+      - name: Trigger ArgoCD sync
+        run: |
+          # ArgoCD will auto-sync, but we can force it
+          kubectl patch app filosofi-yogya -n argocd \
+            --type merge \
+            -p '{"operation": {"initiatedBy": {"username": "github-actions"}, "sync": {"revision": "${{ github.sha }}"}}}'
+      
+      - name: Wait for ArgoCD sync
+        run: |
+          # Wait for sync to complete
+          timeout 300 bash -c 'until kubectl get app filosofi-yogya -n argocd -o jsonpath="{.status.sync.status}" | grep -q "Synced"; do echo "Waiting for sync..."; sleep 5; done'
+          
+          echo "✅ ArgoCD sync completed!"
+      
+      - name: Check deployment health
+        run: |
+          kubectl get app filosofi-yogya -n argocd
+          kubectl get pods -n filosofi-app -l app=filosofi-yogya

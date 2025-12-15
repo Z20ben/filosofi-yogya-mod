@@ -43,3 +43,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Kubernetes secret
+k8s/**/secrets.yaml
+*.secret.yaml
+
+# Cloudflare tunnel credentials
+cloudflare-tunnel.yaml
