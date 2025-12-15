@@ -99,6 +99,19 @@ jobs:
     if: github.ref == 'refs/heads/main'
     
     steps:
+      - name: Setup kubectl 
+        run: |
+          # Install kubectl if not exists
+          if ! command -v kubectl &> /dev/null; then
+            echo "Installing kubectl..."
+            curl -LO "https://dl.k8s.io/release/v1.28.0/bin/linux/amd64/kubectl"
+            chmod +x kubectl
+            sudo mv kubectl /usr/local/bin/kubectl
+          fi
+          
+          echo "kubectl version:"
+          kubectl version --client --short
+ 
       - name: Trigger ArgoCD sync
         run: |
           # ArgoCD will auto-sync, but we can force it
