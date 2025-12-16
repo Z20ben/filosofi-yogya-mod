@@ -8,7 +8,7 @@ resources:
 
 images:
   - name: ghcr.io/z20ben/filosofi-yogya-mod
-    newTag: main-8149372
+    newTag: main-97954a9
 
 replicas:
   - name: filosofi-yogya
