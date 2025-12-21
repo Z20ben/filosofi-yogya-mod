@@ -1,13 +1,22 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { SearchHero } from './SearchHero';
-import { PhilosophyScrollStory } from './PhilosophyScrollStory';
 import { DestinationCarousel } from './DestinationCarousel';
 import { SpotNongkrongPreview } from './SpotNongkrongPreview';
 import { UMKMSection } from './UMKMSection';
 import { TrendingArticles } from './TrendingArticles';
-import { InteractiveMap } from '@/components/map/InteractiveMap';
-import { FAQChatbox } from '@/components/shared/FAQChatbox';
+
+// Lazy load heavy components to reduce initial bundle
+const PhilosophyScrollStory = dynamic(
+  () => import('./PhilosophyScrollStory').then((mod) => mod.PhilosophyScrollStory),
+  { ssr: false, loading: () => <div className="h-screen" /> }
+);
+
+const InteractiveMap = dynamic(
+  () => import('@/components/map/InteractiveMap').then((mod) => mod.InteractiveMap),
+  { ssr: false, loading: () => <div className="h-96 bg-slate-100 dark:bg-slate-900 animate-pulse" /> }
+);
 
 export function HomePageContent() {
   return (
@@ -15,7 +24,7 @@ export function HomePageContent() {
       {/* Hero Section with Search & Agenda Carousel */}
       <SearchHero />
 
-      {/* Philosophy Scroll Story with Parallax */}
+      {/* Philosophy Scroll Story with Parallax - lazy loaded */}
       <PhilosophyScrollStory />
 
       {/* Destination Carousel */}
@@ -30,11 +39,10 @@ export function HomePageContent() {
       {/* Trending Articles */}
       <TrendingArticles />
 
-      {/* Interactive Map */}
+      {/* Interactive Map - lazy loaded */}
       <InteractiveMap />
 
-      {/* Floating FAQ Chatbox */}
-      <FAQChatbox />
+      {/* FAQChatbox is already in the website layout - removed duplicate */}
     </div>
   );
 }

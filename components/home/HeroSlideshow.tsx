@@ -52,10 +52,14 @@ export function HeroSlideshow({ title, subtitle, welcomeText, exploreText }: Her
               index === currentSlide ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            <img
+            <Image
               src={image.url}
               alt={image.alt}
-              className="w-full h-full object-cover"
+              fill
+              sizes="100vw"
+              className="object-cover"
+              priority={index === 0}
+              quality={75}
             />
             {/* Gradient overlay */}
             <div className="absolute inset-0 hero-overlay-gradient"></div>

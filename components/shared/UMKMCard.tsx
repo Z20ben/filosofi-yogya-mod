@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { Store, MapPin, Instagram, Facebook, Package, ShoppingBag, MessageCircle, ExternalLink } from 'lucide-react';
 
@@ -61,22 +62,30 @@ export function UMKMCard({ data, onViewDetails }: UMKMCardProps) {
             {data.gallery_images && data.gallery_images.length > 0 ? (
               data.gallery_images.map((img: string, idx: number) => (
                 <div key={idx} className="w-full flex-shrink-0 snap-center">
-                  <div className="aspect-video">
-                    <img
+                  <div className="aspect-video relative">
+                    <Image
                       src={img}
                       alt={`${name} ${idx + 1}`}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 400px"
+                      className="object-cover group-hover:scale-110 transition-transform duration-500"
+                      loading="lazy"
+                      unoptimized
                     />
                   </div>
                 </div>
               ))
             ) : data.logo_url ? (
               <div className="w-full flex-shrink-0">
-                <div className="aspect-video">
-                  <img
+                <div className="aspect-video relative">
+                  <Image
                     src={data.logo_url}
                     alt={name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    fill
+                    sizes="(max-width: 768px) 100vw, 400px"
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                    unoptimized
                   />
                 </div>
               </div>

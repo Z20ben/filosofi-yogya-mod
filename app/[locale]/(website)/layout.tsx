@@ -1,6 +1,6 @@
 import { Navigation } from "@/components/layout/Navigation";
 import { Footer } from "@/components/layout/Footer";
-import { FAQChatbox } from "@/components/shared/FAQChatbox";
+import { LazyFAQChatbox } from "@/components/shared/LazyFAQChatbox";
 import { Toaster } from "sonner";
 
 export default function WebsiteLayout({
@@ -15,7 +15,7 @@ export default function WebsiteLayout({
         {children}
       </main>
       <Footer />
-      <FAQChatbox />
+      <LazyFAQChatbox />
       <Toaster />
     </div>
   );
