@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useLocale } from 'next-intl';
-import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { MapPin, ExternalLink, Heart, Tag, Sparkles } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -227,11 +226,7 @@ export function UMKMSection() {
   return (
     <section id="umkm" className="py-20 md:py-32 bg-gradient-to-br from-emerald-50 via-white to-amber-50 dark:from-slate-900 dark:via-slate-950 dark:to-slate-900">
       <div className="container mx-auto px-4 max-w-7xl">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+        <div
           className="text-center mb-12"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-100 to-amber-100 dark:from-emerald-900/30 dark:to-amber-900/30 rounded-full mb-4">
@@ -247,32 +242,26 @@ export function UMKMSection() {
           {/* Categories */}
           <div className="flex flex-wrap justify-center gap-3">
             {t.categories.map((category) => (
-              <motion.button
+              <button
                 key={category.id}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
                 onClick={() => setActiveCategory(category.id)}
-                className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
+                className={`px-6 py-2.5 rounded-full text-sm font-medium transition-all hover:scale-105 active:scale-95 ${
                   activeCategory === category.id
                     ? 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white shadow-lg'
                     : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:shadow-md'
                 }`}
               >
                 {category.label}
-              </motion.button>
+              </button>
             ))}
           </div>
-        </motion.div>
+        </div>
 
         {/* UMKM Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredUMKM.map((item, index) => (
-            <motion.div
+            <div
               key={item.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <Card className="group overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-300 h-full bg-white dark:bg-slate-800">
                 <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-emerald-100 to-amber-100 dark:from-emerald-900/30 dark:to-amber-900/30">
@@ -295,6 +284,7 @@ export function UMKMSection() {
                   <button
                     onClick={() => toggleLike(item.id)}
                     className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform"
+                    aria-label={likedUMKM.has(item.id) ? 'Unlike UMKM' : 'Like UMKM'}
                   >
                     <Heart className={`w-5 h-5 ${likedUMKM.has(item.id) ? 'fill-red-500 text-red-500' : 'text-white'}`} />
                   </button>
@@ -305,7 +295,10 @@ export function UMKMSection() {
                       <p className="text-xs text-white/80 mb-1">{t.startingFrom}</p>
                       <p className="text-white text-xl font-semibold">{item.price}</p>
                     </div>
-                    <button className="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg">
+                    <button
+                      className="w-12 h-12 bg-white rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg"
+                      aria-label="Lihat detail UMKM"
+                    >
                       <ExternalLink className="w-5 h-5 text-slate-900" />
                     </button>
                   </div>
@@ -342,7 +335,7 @@ export function UMKMSection() {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

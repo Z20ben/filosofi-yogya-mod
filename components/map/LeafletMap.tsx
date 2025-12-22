@@ -227,6 +227,7 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
       // Get category color and icon
       const categoryColor = categoryMetadata[location.category].color;
       const IconComponent = categoryIcons[location.category];
+      const locationName = locale === 'id' ? location.name_id : location.name_en;
 
       // Create custom colored icon using Lucide icon
       const iconHtml = renderToStaticMarkup(
@@ -258,6 +259,16 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
 
       const marker = L.marker([location.coordinates.lat, location.coordinates.lng], {
         icon: customIcon,
+        title: locationName, // Add title for accessibility
+        alt: locationName, // Add alt for accessibility
+      });
+
+      // Add aria-label after marker is added to map
+      marker.on('add', function() {
+        const element = marker.getElement();
+        if (element) {
+          element.setAttribute('aria-label', locationName);
+        }
       });
 
       // Add click event to open sidebar
@@ -298,7 +309,7 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
 
     // Add cluster group to map
     map.addLayer(markerClusterGroup);
-  }, [filteredLocations, onLocationSelect]);
+  }, [filteredLocations, onLocationSelect, locale]);
 
   const handleZoomIn = () => {
     if (mapRef.current) {
@@ -537,6 +548,7 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
           onClick={handleZoomIn}
           className="p-3 rounded-lg shadow-lg transition-all duration-200 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
           title="Zoom In"
+          aria-label="Zoom In"
         >
           <Plus className="w-5 h-5" />
         </button>
@@ -546,6 +558,7 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
           onClick={handleZoomOut}
           className="p-3 rounded-lg shadow-lg transition-all duration-200 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
           title="Zoom Out"
+          aria-label="Zoom Out"
         >
           <Minus className="w-5 h-5" />
         </button>
@@ -559,6 +572,7 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
               : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
           }`}
           title={isFullscreen ? (locale === 'id' ? 'Keluar Layar Penuh' : 'Exit Fullscreen') : (locale === 'id' ? 'Layar Penuh' : 'Fullscreen')}
+          aria-label={isFullscreen ? (locale === 'id' ? 'Keluar Layar Penuh' : 'Exit Fullscreen') : (locale === 'id' ? 'Layar Penuh' : 'Fullscreen')}
         >
           {isFullscreen ? <Minimize2 className="w-5 h-5" /> : <Maximize2 className="w-5 h-5" />}
         </button>
@@ -572,6 +586,7 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
               : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
           }`}
           title={isSatelliteView ? 'Switch to Map View' : 'Switch to Satellite View'}
+          aria-label={isSatelliteView ? (locale === 'id' ? 'Tampilan Peta' : 'Map View') : (locale === 'id' ? 'Tampilan Satelit' : 'Satellite View')}
         >
           <Satellite className="w-5 h-5" />
         </button>
@@ -585,6 +600,8 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
               : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
           }`}
           title="Filter Categories"
+          aria-label={locale === 'id' ? 'Filter Kategori' : 'Filter Categories'}
+          aria-expanded={isFilterOpen}
         >
           <Layers className="w-5 h-5" />
         </button>
@@ -598,6 +615,8 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
               : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
           }`}
           title={locale === 'id' ? 'Cari Lokasi' : 'Search Location'}
+          aria-label={locale === 'id' ? 'Cari Lokasi' : 'Search Location'}
+          aria-expanded={isSearchOpen}
         >
           <Search className="w-5 h-5" />
         </button>
@@ -614,6 +633,7 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
               : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
           }`}
           title={locale === 'id' ? 'Lokasi Saya' : 'My Location'}
+          aria-label={locale === 'id' ? 'Lokasi Saya' : 'My Location'}
         >
           <Locate className={`w-5 h-5 ${isLocating ? 'animate-pulse' : ''}`} />
         </button>
@@ -650,6 +670,9 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
                   {/* Switch Toggle */}
                   <button
                     onClick={() => toggleCategory(category)}
+                    role="switch"
+                    aria-checked={isSelected}
+                    aria-label={`${locale === 'id' ? 'Tampilkan' : 'Show'} ${locale === 'id' ? categoryMetadata[category].label_id : categoryMetadata[category].label_en}`}
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 ${
                       isSelected
                         ? 'bg-primary'
@@ -679,6 +702,8 @@ export function LeafletMap({ locations, onLocationSelect, isSearchOpen, onSearch
               : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700'
           }`}
           title={locale === 'id' ? 'Legenda' : 'Legend'}
+          aria-label={locale === 'id' ? 'Legenda' : 'Legend'}
+          aria-expanded={isLegendOpen}
         >
           <HelpCircle className="w-5 h-5" />
         </button>

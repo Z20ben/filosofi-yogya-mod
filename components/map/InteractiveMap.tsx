@@ -73,6 +73,7 @@ function ModernSearchSidebar({
             <button
               onClick={onClose}
               className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              aria-label="Close search"
             >
               <X className="w-5 h-5" />
             </button>
@@ -85,6 +86,7 @@ function ModernSearchSidebar({
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-cyan-500 mb-4"
+            aria-label={locale === 'id' ? 'Cari lokasi' : 'Search location'}
           />
 
           {/* Results */}
@@ -209,6 +211,7 @@ function ModernLocationSidebar({
             <button
               onClick={onClose}
               className="w-12 h-1.5 bg-slate-300 dark:bg-slate-600 rounded-full hover:bg-slate-400 dark:hover:bg-slate-500 transition-colors"
+              aria-label="Close panel"
             />
           </div>
 
@@ -490,6 +493,7 @@ function ModernLocationSidebar({
             <button
               onClick={onClose}
               className="w-12 h-1.5 bg-slate-300 dark:bg-slate-600 rounded-full hover:bg-slate-400 dark:hover:bg-slate-500 transition-colors"
+              aria-label="Close panel"
             />
           </div>
 
@@ -497,6 +501,7 @@ function ModernLocationSidebar({
           <button
             onClick={onClose}
             className="hidden md:flex absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white dark:bg-slate-800 shadow-lg items-center justify-center hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+            aria-label="Close panel"
           >
             <X className="w-5 h-5" />
           </button>
@@ -1052,6 +1057,7 @@ export function InteractiveMap() {
                 <button
                   onClick={() => setIsNearbyDrawerOpen(true)}
                   className="lg:hidden absolute bottom-4 right-4 z-20 w-12 h-12 bg-white dark:bg-slate-800 rounded-full shadow-xl flex items-center justify-center hover:bg-slate-50 dark:hover:bg-slate-700 transition-all"
+                  aria-label={locale === 'id' ? 'Tempat Terdekat' : 'Nearby Places'}
                 >
                   <div className="relative">
                     <MapPinned className="w-5 h-5 text-slate-700 dark:text-slate-200" />
@@ -1086,6 +1092,7 @@ export function InteractiveMap() {
                           <button
                             onClick={() => setIsNearbyDrawerOpen(false)}
                             className="w-12 h-1.5 bg-slate-300 dark:bg-slate-600 rounded-full hover:bg-slate-400 dark:hover:bg-slate-500 transition-colors"
+                            aria-label={locale === 'id' ? 'Tutup panel' : 'Close panel'}
                           />
                         </div>
 

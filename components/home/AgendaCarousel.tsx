@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, MapPin, Clock, Users, ArrowRight } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -201,62 +200,21 @@ export function AgendaCarousel() {
     setCurrentIndex(index);
   };
 
-  const variants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 300 : -300,
-      opacity: 0,
-      scale: 0.8
-    }),
-    center: {
-      x: 0,
-      opacity: 1,
-      scale: 1
-    },
-    exit: (direction: number) => ({
-      x: direction > 0 ? -300 : 300,
-      opacity: 0,
-      scale: 0.8
-    })
-  };
-
   return (
     <div className="w-full">
       <div className="text-center mb-8">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-base font-normal mb-2 bg-gradient-to-r from-amber-600 via-orange-600 to-cyan-600 bg-clip-text text-transparent"
-        >
+        <h2 className="text-base font-normal mb-2 bg-gradient-to-r from-amber-600 via-orange-600 to-cyan-600 bg-clip-text text-transparent">
           {locale === 'id' ? 'Event Seru di Jogja' : 'Exciting Events in Jogja'}
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="text-slate-600 dark:text-slate-400"
-        >
+        </h2>
+        <p className="text-slate-600 dark:text-slate-400">
           {locale === 'id' ? 'Jangan lewatkan agenda menarik dibawah' : "Don't miss the exciting agenda below"}
-        </motion.p>
+        </p>
       </div>
 
       {/* Carousel Container */}
       <div className="relative overflow-hidden">
         <div className="relative h-[420px] md:h-[380px] max-w-4xl mx-auto">
-          <AnimatePresence initial={false} custom={direction}>
-            <motion.div
-              key={currentIndex}
-              custom={direction}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.3 },
-                scale: { duration: 0.3 }
-              }}
-              className="absolute inset-0"
-            >
+          <div className="absolute inset-0 transition-opacity duration-300">
               <Card className={`h-full ${events[currentIndex].bgColor} border-0 overflow-hidden`}>
                 <div className="relative h-full p-6 md:p-8 flex flex-col">
                   {/* Gradient Background Accent */}
@@ -332,23 +290,24 @@ export function AgendaCarousel() {
                   </div>
                 </div>
               </Card>
-            </motion.div>
-          </AnimatePresence>
+          </div>
         </div>
 
-        {/* Navigation Dots */}
-        <div className="flex justify-center gap-2 mt-6">
+        {/* Navigation Dots - with proper touch targets */}
+        <div className="flex justify-center gap-1 mt-6">
           {events.map((_, index) => (
             <button
               key={index}
               onClick={() => handleDotClick(index)}
-              className={`h-2 rounded-full transition-all ${
+              className="p-2 flex items-center justify-center"
+              aria-label={`Go to slide ${index + 1}`}
+            >
+              <span className={`h-2 rounded-full transition-all ${
                 index === currentIndex
                   ? 'w-8 bg-gradient-to-r from-amber-500 to-orange-600'
                   : 'w-2 bg-slate-300 dark:bg-slate-600 hover:bg-slate-400'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
+              }`} />
+            </button>
           ))}
         </div>
 

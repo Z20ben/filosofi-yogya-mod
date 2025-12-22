@@ -133,7 +133,7 @@ export function Navigation() {
       setLastScrollY(currentScrollY);
     };
 
-    window.addEventListener('scroll', controlNavbar);
+    window.addEventListener('scroll', controlNavbar, { passive: true });
     return () => window.removeEventListener('scroll', controlNavbar);
   }, [lastScrollY]);
 
@@ -300,6 +300,7 @@ export function Navigation() {
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="lg:hidden p-2 rounded-full hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors"
               aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
             >
               {mobileMenuOpen ? (
                 <X className="h-5 w-5" />
@@ -362,6 +363,7 @@ export function Navigation() {
                             : 'text-slate-600 dark:text-slate-400 hover:bg-orange-50 dark:hover:bg-orange-950/20 hover:text-orange-600 dark:hover:text-orange-400'
                         }`}
                         aria-label="Toggle submenu"
+                        aria-expanded={openDropdown === group.key}
                       >
                         <ChevronDown
                           className={`w-4 h-4 transition-transform ${

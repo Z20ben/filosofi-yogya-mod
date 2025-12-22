@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useLocale } from 'next-intl';
 import { Card, CardContent } from '@/components/ui/card';
-import { motion } from 'framer-motion';
 import { MapPin, Clock, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -166,32 +165,21 @@ export function DestinationCarousel() {
   return (
     <section id="destinations" className="py-20 md:py-32 bg-white dark:bg-slate-950">
       <div className="container mx-auto px-4 max-w-7xl">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-12"
-        >
+        <div className="text-center mb-12">
           <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-600 mx-auto mb-6 rounded-full" />
           <h2 className="mb-4 text-3xl md:text-4xl font-bold">{t.title}</h2>
           <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
             {t.subtitle}
           </p>
-        </motion.div>
+        </div>
 
         <div className="relative">
           {/* Carousel Container */}
           <div className="overflow-hidden">
-            <motion.div
-              className="flex gap-4 md:gap-6"
-              animate={{
-                x: `-${currentIndex * (100 / itemsPerView)}%`
-              }}
-              transition={{
-                type: 'spring',
-                stiffness: 300,
-                damping: 30
+            <div
+              className="flex gap-4 md:gap-6 transition-transform duration-300 ease-out"
+              style={{
+                transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`
               }}
             >
               {currentDestinations.map((destination, index) => (
@@ -235,7 +223,7 @@ export function DestinationCarousel() {
                   </Link>
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
 
           {/* Navigation Buttons */}
@@ -246,23 +234,26 @@ export function DestinationCarousel() {
               onClick={handlePrev}
               disabled={currentIndex === 0}
               className="rounded-full disabled:opacity-30"
+              aria-label="Previous slide"
             >
               <ChevronLeft className="w-5 h-5" />
             </Button>
 
-            {/* Dots Indicator */}
-            <div className="flex gap-2">
+            {/* Dots Indicator - with proper touch targets */}
+            <div className="flex gap-1">
               {Array.from({ length: maxIndex + 1 }).map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`h-2 rounded-full transition-all ${
+                  className="p-2 flex items-center justify-center"
+                  aria-label={`Go to slide ${index + 1}`}
+                >
+                  <span className={`h-2 rounded-full transition-all ${
                     index === currentIndex
                       ? 'bg-gradient-to-r from-amber-500 to-orange-600 w-8'
                       : 'bg-slate-300 dark:bg-slate-700 w-2'
-                  }`}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
+                  }`} />
+                </button>
               ))}
             </div>
 
@@ -272,6 +263,7 @@ export function DestinationCarousel() {
               onClick={handleNext}
               disabled={currentIndex === maxIndex}
               className="rounded-full disabled:opacity-30"
+              aria-label="Next slide"
             >
               <ChevronRight className="w-5 h-5" />
             </Button>

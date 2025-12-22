@@ -2,15 +2,31 @@
 
 import dynamic from 'next/dynamic';
 import { SearchHero } from './SearchHero';
-import { DestinationCarousel } from './DestinationCarousel';
-import { SpotNongkrongPreview } from './SpotNongkrongPreview';
-import { UMKMSection } from './UMKMSection';
-import { TrendingArticles } from './TrendingArticles';
 
-// Lazy load heavy components to reduce initial bundle
+// Lazy load below-the-fold components to reduce initial bundle and TBT
 const PhilosophyScrollStory = dynamic(
   () => import('./PhilosophyScrollStory').then((mod) => mod.PhilosophyScrollStory),
   { ssr: false, loading: () => <div className="h-screen" /> }
+);
+
+const DestinationCarousel = dynamic(
+  () => import('./DestinationCarousel').then((mod) => mod.DestinationCarousel),
+  { loading: () => <div className="h-96 bg-slate-50 dark:bg-slate-900/50 animate-pulse" /> }
+);
+
+const SpotNongkrongPreview = dynamic(
+  () => import('./SpotNongkrongPreview').then((mod) => mod.SpotNongkrongPreview),
+  { loading: () => <div className="h-96 bg-slate-50 dark:bg-slate-900/50 animate-pulse" /> }
+);
+
+const UMKMSection = dynamic(
+  () => import('./UMKMSection').then((mod) => mod.UMKMSection),
+  { loading: () => <div className="h-96 bg-slate-50 dark:bg-slate-900/50 animate-pulse" /> }
+);
+
+const TrendingArticles = dynamic(
+  () => import('./TrendingArticles').then((mod) => mod.TrendingArticles),
+  { loading: () => <div className="h-96 bg-slate-50 dark:bg-slate-900/50 animate-pulse" /> }
 );
 
 const InteractiveMap = dynamic(

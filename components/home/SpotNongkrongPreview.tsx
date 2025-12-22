@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useLocale } from 'next-intl';
-import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { MapPin, Clock, DollarSign, Heart, Instagram, Music, Moon } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -277,11 +276,7 @@ export function SpotNongkrongPreview() {
   return (
     <section id="spots" className="py-20 md:py-32 bg-gradient-to-br from-cyan-50 via-white to-amber-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
       <div className="container mx-auto px-4 max-w-7xl">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+        <div
           className="text-center mb-12"
         >
           <div className="w-20 h-1 bg-gradient-to-r from-cyan-500 to-amber-600 mx-auto mb-6 rounded-full" />
@@ -295,12 +290,10 @@ export function SpotNongkrongPreview() {
             {t.filters.map((filter) => {
               const Icon = filter.icon;
               return (
-                <motion.button
+                <button
                   key={filter.id}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                   onClick={() => setActiveFilter(filter.id)}
-                  className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all ${
+                  className={`flex items-center gap-2 px-5 py-2.5 rounded-full transition-all hover:scale-105 active:scale-95 ${
                     activeFilter === filter.id
                       ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg'
                       : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:shadow-md'
@@ -308,21 +301,17 @@ export function SpotNongkrongPreview() {
                 >
                   {Icon && <Icon className="w-4 h-4" />}
                   <span className="text-sm font-medium">{filter.label}</span>
-                </motion.button>
+                </button>
               );
             })}
           </div>
-        </motion.div>
+        </div>
 
         {/* Spots Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredSpots.map((spot, index) => (
-            <motion.div
+            <div
               key={spot.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <Link href={`/${locale}/spot-nongkrong/${spot.slug}`}>
                 <Card className="group overflow-hidden border-0 shadow-xl hover:shadow-2xl transition-all duration-300 h-full cursor-pointer">
@@ -341,6 +330,7 @@ export function SpotNongkrongPreview() {
                         toggleLike(spot.id);
                       }}
                       className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform"
+                      aria-label={likedSpots.has(spot.id) ? 'Unlike spot' : 'Like spot'}
                     >
                       <Heart className={`w-5 h-5 ${likedSpots.has(spot.id) ? 'fill-red-500 text-red-500' : 'text-white'}`} />
                     </button>
@@ -386,7 +376,7 @@ export function SpotNongkrongPreview() {
                 </CardContent>
               </Card>
               </Link>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

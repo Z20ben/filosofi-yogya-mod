@@ -138,6 +138,8 @@ export function FAQChatbox() {
         <Button
           onClick={() => setIsOpen(!isOpen)}
           className="w-14 h-14 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white shadow-2xl flex items-center justify-center relative group"
+          aria-label={isOpen ? 'Tutup FAQ' : 'Buka FAQ'}
+          aria-expanded={isOpen}
         >
           <AnimatePresence mode="wait">
             {!isOpen ? (
@@ -181,6 +183,7 @@ export function FAQChatbox() {
               exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
               className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 md:hidden"
+              aria-label="Tutup panel FAQ"
             />
 
             {/* Panel */}

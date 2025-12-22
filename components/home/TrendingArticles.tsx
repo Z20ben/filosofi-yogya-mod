@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useLocale } from 'next-intl';
-import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { TrendingUp, Bookmark } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -195,11 +194,7 @@ export function TrendingArticles() {
   return (
     <section id="trending" className="py-20 md:py-32 bg-white dark:bg-slate-950">
       <div className="container mx-auto px-4 max-w-7xl">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+        <div
           className="text-center mb-12"
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-red-100 to-orange-100 dark:from-red-900/30 dark:to-orange-900/30 rounded-full mb-4">
@@ -211,14 +206,10 @@ export function TrendingArticles() {
           <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
             {t.subtitle}
           </p>
-        </motion.div>
+        </div>
 
         {/* Featured Article */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+        <div
           className="mb-12"
         >
           <Card className="overflow-hidden border-0 shadow-2xl hover:shadow-3xl transition-all duration-300">
@@ -236,6 +227,7 @@ export function TrendingArticles() {
                 <button
                   onClick={() => toggleSave(featuredArticle.id)}
                   className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform"
+                  aria-label={savedArticles.has(featuredArticle.id) ? 'Unsave article' : 'Save article'}
                 >
                   <Bookmark className={`w-5 h-5 ${savedArticles.has(featuredArticle.id) ? 'fill-white text-white' : 'text-white'}`} />
                 </button>
@@ -268,17 +260,13 @@ export function TrendingArticles() {
               </CardContent>
             </div>
           </Card>
-        </motion.div>
+        </div>
 
         {/* Other Articles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {otherArticles.map((article, index) => (
-            <motion.div
+            <div
               key={article.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <Card className="group overflow-hidden border-0 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
                 <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900">
@@ -297,6 +285,7 @@ export function TrendingArticles() {
                   <button
                     onClick={() => toggleSave(article.id)}
                     className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform"
+                    aria-label={savedArticles.has(article.id) ? 'Unsave article' : 'Save article'}
                   >
                     <Bookmark className={`w-4 h-4 ${savedArticles.has(article.id) ? 'fill-white text-white' : 'text-white'}`} />
                   </button>
@@ -316,7 +305,7 @@ export function TrendingArticles() {
                   </p>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

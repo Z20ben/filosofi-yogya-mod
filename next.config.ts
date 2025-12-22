@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
     // We use the new flat config (eslint.config.mjs) which Vercel doesn't support yet
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    // Optimize package imports for better tree-shaking
+    optimizePackageImports: ['lucide-react', '@radix-ui/react-icons', 'date-fns'],
+  },
   images: {
     remotePatterns: [
       {

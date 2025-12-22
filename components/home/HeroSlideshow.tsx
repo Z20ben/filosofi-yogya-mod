@@ -68,18 +68,20 @@ export function HeroSlideshow({ title, subtitle, welcomeText, exploreText }: Her
       </div>
 
       {/* Slide indicators - hidden on mobile to avoid overlapping button */}
-      <div className="hidden sm:flex absolute bottom-8 left-1/2 transform -translate-x-1/2 gap-2 z-10">
+      <div className="hidden sm:flex absolute bottom-8 left-1/2 transform -translate-x-1/2 gap-1 z-10">
         {heroImages.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
+            className="p-2 flex items-center justify-center"
+            aria-label={`Go to slide ${index + 1}`}
+          >
+            <span className={`w-3 h-3 rounded-full transition-all ${
               index === currentSlide
                 ? 'bg-[var(--javanese-gold)] w-8'
                 : 'bg-javanese-ivory/50 hover:bg-javanese-ivory/80'
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          />
+            }`} />
+          </button>
         ))}
       </div>
 

@@ -3,11 +3,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
-import { motion, AnimatePresence } from 'framer-motion';
+import dynamic from 'next/dynamic';
 import { Search, Sparkles, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { AgendaCarousel } from './AgendaCarousel';
 import { getSearchSuggestions } from '@/lib/search';
+
+// Lazy load AgendaCarousel to reduce initial bundle
+const AgendaCarousel = dynamic(
+  () => import('./AgendaCarousel').then((mod) => mod.AgendaCarousel),
+  { loading: () => <div className="h-[420px] md:h-[380px] bg-slate-100/50 dark:bg-slate-800/50 rounded-2xl animate-pulse" /> }
+);
 
 export function SearchHero() {
   const locale = useLocale();
@@ -108,57 +113,32 @@ export function SearchHero() {
 
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-amber-50 via-orange-50 to-cyan-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-amber-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob" />
-        <div className="absolute top-40 right-10 w-72 h-72 bg-cyan-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000" />
-        <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000" />
+      {/* Background Pattern - simplified for performance */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-amber-300 rounded-full blur-[100px]" />
+        <div className="absolute top-40 right-10 w-72 h-72 bg-cyan-300 rounded-full blur-[100px]" />
+        <div className="absolute bottom-20 left-1/2 w-72 h-72 bg-emerald-300 rounded-full blur-[100px]" />
       </div>
 
       <div className="container relative z-10 px-4 py-12 md:py-20 pt-24 md:pt-20">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="max-w-5xl mx-auto"
-        >
+        <div className="max-w-5xl mx-auto">
           {/* Title Section */}
           <div className="text-center mb-8 md:mb-12">
-            <motion.div
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-full mb-4 md:mb-6 shadow-lg"
-            >
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 md:px-4 md:py-2 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm rounded-full mb-4 md:mb-6 shadow-lg">
               <Sparkles className="w-4 h-4 md:w-5 md:h-5 text-amber-500" />
               <span className="text-xs md:text-sm">Sumbu Filosofi Yogyakarta</span>
-            </motion.div>
+            </div>
 
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-base font-normal mb-3 md:mb-4 bg-gradient-to-r from-amber-600 via-orange-600 to-cyan-600 bg-clip-text text-transparent"
-            >
+            <h1 className="text-base font-normal mb-3 md:mb-4 bg-gradient-to-r from-amber-600 via-orange-600 to-cyan-600 bg-clip-text text-transparent">
               {t('title') || 'Jelajah Jogja Versimu'}
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="text-slate-600 dark:text-slate-300 mb-6 md:mb-8 text-base md:text-lg px-4"
-            >
+            <p className="text-slate-600 dark:text-slate-300 mb-6 md:mb-8 text-base md:text-lg px-4">
               {t('subtitle') || 'Temukan spot nongkrong, UMKM lokal, dan tren terbaru di kawasan Sumbu Filosofi Yogyakarta'}
-            </motion.p>
+            </p>
 
             {/* Search Bar - Responsive */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="relative max-w-3xl mx-auto mb-8 md:mb-12"
-            >
+            <div className="relative max-w-3xl mx-auto mb-8 md:mb-12">
               <div className="relative flex flex-col sm:flex-row items-stretch sm:items-center bg-white dark:bg-slate-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-100 dark:border-slate-700">
                 <div className="flex items-center flex-1">
                   <div className="pl-4 md:pl-6 pr-3 md:pr-4 py-4 sm:py-0">
@@ -199,68 +179,42 @@ export function SearchHero() {
               </div>
 
               {/* Suggestions Dropdown */}
-              <AnimatePresence>
-                {showSuggestions && suggestions.length > 0 && (
-                  <motion.div
-                    ref={suggestionsRef}
-                    id="search-suggestions"
-                    role="listbox"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-gray-100 dark:border-slate-700 overflow-hidden z-50"
-                  >
-                    {suggestions.map((suggestion, index) => (
-                      <button
-                        key={suggestion}
-                        type="button"
-                        role="option"
-                        aria-selected={index === selectedIndex}
-                        onClick={() => handleSuggestionClick(suggestion)}
-                        className={`w-full px-4 md:px-6 py-3 text-left flex items-center gap-3 transition-colors ${
-                          index === selectedIndex
-                            ? 'bg-amber-50 dark:bg-amber-950/20 text-amber-900 dark:text-amber-100'
-                            : 'text-slate-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700/50'
-                        }`}
-                      >
-                        <Search className="w-4 h-4 text-slate-400 flex-shrink-0" />
-                        <span className="truncate text-sm md:text-base">{suggestion}</span>
-                      </button>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
+              {showSuggestions && suggestions.length > 0 && (
+                <div
+                  ref={suggestionsRef}
+                  id="search-suggestions"
+                  role="listbox"
+                  className="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-800 rounded-xl shadow-2xl border border-gray-100 dark:border-slate-700 overflow-hidden z-50 animate-slide-down"
+                >
+                  {suggestions.map((suggestion, index) => (
+                    <button
+                      key={suggestion}
+                      type="button"
+                      role="option"
+                      aria-selected={index === selectedIndex}
+                      onClick={() => handleSuggestionClick(suggestion)}
+                      className={`w-full px-4 md:px-6 py-3 text-left flex items-center gap-3 transition-colors ${
+                        index === selectedIndex
+                          ? 'bg-amber-50 dark:bg-amber-950/20 text-amber-900 dark:text-amber-100'
+                          : 'text-slate-700 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700/50'
+                      }`}
+                    >
+                      <Search className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                      <span className="truncate text-sm md:text-base">{suggestion}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Agenda Carousel */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
+          <div>
             <AgendaCarousel />
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
       </div>
 
-      <style jsx>{`
-        @keyframes blob {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          33% { transform: translate(30px, -50px) scale(1.1); }
-          66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-        .animate-blob {
-          animation: blob 7s infinite;
-        }
-        .animation-delay-2000 {
-          animation-delay: 2s;
-        }
-        .animation-delay-4000 {
-          animation-delay: 4s;
-        }
-      `}</style>
     </section>
   );
 }
