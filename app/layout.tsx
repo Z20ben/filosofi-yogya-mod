@@ -4,6 +4,9 @@ import Script from "next/script";
 import "./globals.css";
 import { Providers } from "./providers";
 
+// Get site URL from environment variable, fallback to localhost for development
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -32,12 +35,12 @@ export const metadata: Metadata = {
   authors: [{ name: "Filosofi Jogja Team" }],
   creator: "Filosofi Jogja",
   publisher: "Filosofi Jogja",
-  metadataBase: new URL('http://localhost:3000'),
+  metadataBase: new URL(siteUrl),
   openGraph: {
     type: "website",
     locale: "id_ID",
     alternateLocale: ["en_US"],
-    url: "http://localhost:3000",
+    url: siteUrl,
     title: "Filosofi Jogja - Ensiklopedia Sumbu Filosofi Yogyakarta",
     description: "Explore the rich cultural heritage of Yogyakarta's Philosophical Axis (Sumbu Filosofi). Discover landmarks, UMKM, cultural events, and the philosophical meaning behind this sacred axis.",
     siteName: "Filosofi Jogja",
