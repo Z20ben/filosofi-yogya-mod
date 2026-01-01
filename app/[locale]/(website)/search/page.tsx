@@ -4,8 +4,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
-import { Search, Filter, Image as ImageIcon, MapPin, Book, Store, Calendar, Camera, X, ShoppingBag, Phone, Instagram, Facebook, MessageCircle, ExternalLink, Navigation } from 'lucide-react';
-import { useTranslations as useTranslationsIntl } from 'next-intl';
+import { Search, Filter, Image as ImageIcon, MapPin, Book, Store, Calendar, Camera, ExternalLink, Navigation } from 'lucide-react';
 import { FadeInSection } from '@/components/shared/FadeInSection';
 import { searchAllData, getAllSearchTypes, getSearchCategoryLabel } from '@/lib/search';
 import type { SearchResult, SearchResultType } from '@/lib/search';
@@ -24,94 +23,51 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
   };
 
   // UMKM Card Style
-  if (result.type === 'umkm' && result.umkmData) {
-    const products = locale === 'id' ? result.umkmData.products_id : result.umkmData.products_en;
-    const priceRange = locale === 'id' ? result.umkmData.price_range_id : result.umkmData.price_range_en;
-    const location = locale === 'id' ? result.umkmData.location_id : result.umkmData.location_en;
+  if (result.type === 'umkm') {
+    const products = result.umkmData ? (locale === 'id' ? result.umkmData.products_id : result.umkmData.products_en) : undefined;
+    const location = result.umkmData ? (locale === 'id' ? result.umkmData.location_id : result.umkmData.location_en) : undefined;
 
     return (
-      <div className="bg-card rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group block h-full flex flex-col">
+      <div className="bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group block h-full flex flex-col border border-amber-200 dark:border-slate-700">
         <div className="relative">
-          <div className="aspect-video overflow-hidden bg-muted">
+          <div className="aspect-video overflow-hidden bg-amber-50 dark:bg-slate-800">
             {hasValidThumbnail(result.thumbnail) ? (
               <img src={result.thumbnail} alt={result.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
             ) : (
-              <div className="w-full h-full relative bg-gradient-to-br from-[var(--javanese-gold)]/20 to-[var(--javanese-gold)]/10">
+              <div className="w-full h-full relative bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Store className="w-16 h-16 text-[var(--javanese-gold)]/40 opacity-50" />
+                  <Store className="w-16 h-16 text-amber-400 dark:text-amber-600 opacity-50" />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
               </div>
             )}
           </div>
           {/* Category Badge - Top Right - UMKM Gold */}
           <div className="absolute top-4 right-4 z-10">
-            <span className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--javanese-gold)] dark:bg-amber-700/80 text-[#4A2C2A] dark:text-amber-100 rounded-full text-xs font-medium shadow-lg">
-              <Store className="w-4 h-4" />
-              {result.category}
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-full text-xs font-semibold shadow-lg">
+              <Store className="w-3.5 h-3.5" />
+              UMKM
             </span>
           </div>
           {/* Type indicator line */}
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-[var(--javanese-gold)] dark:bg-amber-700/60"></div>
-          {/* Price Range Badge - Bottom Left */}
-          {priceRange && (
-            <div className="absolute bottom-4 left-4 flex items-center gap-2 px-3 py-1.5 bg-black/60 backdrop-blur-sm rounded-full">
-              <ShoppingBag className="w-4 h-4 text-[var(--javanese-gold)]" />
-              <span className="text-white text-sm font-semibold">{priceRange}</span>
-            </div>
-          )}
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 to-orange-500"></div>
         </div>
-        <div className="p-4 flex-1 flex flex-col">
-          <h3 className="text-[var(--javanese-brown-text)] font-serif text-xl mb-3">{result.title}</h3>
-          <p className="text-[var(--javanese-brown-text)]/70 mb-4 text-sm leading-relaxed line-clamp-2 flex-1">{result.excerpt}</p>
+        <div className="p-5 flex-1 flex flex-col">
+          <h3 className="text-stone-800 dark:text-white font-serif text-xl mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">{result.title}</h3>
+          <p className="text-stone-600 dark:text-slate-400 mb-4 text-sm leading-relaxed line-clamp-2 flex-1">{result.excerpt}</p>
           {location && (
-            <div className="flex items-center gap-2 text-sm text-[var(--javanese-brown-text)]/60 mb-3">
-              <MapPin className="w-4 h-4" />
+            <div className="flex items-center gap-2 text-sm text-stone-500 dark:text-slate-500 mb-3">
+              <MapPin className="w-4 h-4 text-amber-500" />
               <span className="line-clamp-1">{location}</span>
             </div>
           )}
           {products && products.length > 0 && (
-            <div className="flex flex-wrap gap-1 mb-3">
+            <div className="flex flex-wrap gap-1.5 mb-3">
               {products.slice(0, 3).map((product, idx) => (
-                <span key={idx} className="text-xs px-2 py-1 bg-[var(--javanese-gold)]/10 text-[var(--javanese-brown-text)] rounded">{product}</span>
+                <span key={idx} className="text-xs px-2.5 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-full">{product}</span>
               ))}
-              {products.length > 3 && <span className="text-xs px-2 py-1 text-[var(--javanese-brown-text)]/50">+{products.length - 3}</span>}
+              {products.length > 3 && <span className="text-xs px-2 py-1 text-stone-400">+{products.length - 3}</span>}
             </div>
           )}
-
-          {/* Social Media Icons */}
-          <div className="flex flex-wrap gap-2 mb-3">
-            {result.umkmData.contact?.phone && (
-              <a
-                href={`https://wa.me/${result.umkmData.contact.phone.replace(/[^0-9]/g, '')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 px-3 py-1.5 bg-[var(--javanese-gold)]/10 text-[var(--javanese-brown-text)] rounded-lg hover:bg-[var(--javanese-gold)] hover:text-[#4A2C2A] transition-colors text-sm"
-              >
-                <MessageCircle className="w-3.5 h-3.5" />
-              </a>
-            )}
-            {result.umkmData.social_media?.facebook && (
-              <a
-                href={`https://facebook.com/${result.umkmData.social_media.facebook}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 px-3 py-1.5 bg-[var(--javanese-gold)]/10 text-[var(--javanese-brown-text)] rounded-lg hover:bg-[var(--javanese-gold)] hover:text-[#4A2C2A] transition-colors text-sm"
-              >
-                <Facebook className="w-3.5 h-3.5" />
-              </a>
-            )}
-            {result.umkmData.social_media?.instagram && (
-              <a
-                href={`https://instagram.com/${result.umkmData.social_media.instagram.replace('@', '')}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 px-3 py-1.5 bg-[var(--javanese-gold)]/10 text-[var(--javanese-brown-text)] rounded-lg hover:bg-[var(--javanese-gold)] hover:text-[#4A2C2A] transition-colors text-sm"
-              >
-                <Instagram className="w-3.5 h-3.5" />
-              </a>
-            )}
-          </div>
 
           {/* Action Buttons */}
           <div className="flex gap-2 mt-auto">
@@ -119,13 +75,13 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(result.title + ' Yogyakarta')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-[var(--javanese-gold)] text-[#4A2C2A] rounded-lg hover:opacity-90 transition-all text-sm"
+              className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-amber-500 text-[#4A2C2A] rounded-lg hover:opacity-90 transition-all text-sm"
             >
               <Navigation className="w-4 h-4" />
             </a>
             <Link
               href={result.url}
-              className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-[var(--javanese-brown-bg)] to-[var(--javanese-terracotta)] text-white rounded-lg hover:opacity-90 transition-all text-sm"
+              className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-stone-700 to-orange-600 text-white rounded-lg hover:opacity-90 transition-all text-sm"
             >
               <ExternalLink className="w-4 h-4" />
             </Link>
@@ -136,8 +92,8 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
   }
 
   // Wisata Card Style
-  if (result.type === 'wisata' && result.wisataData) {
-    const facilities = locale === 'id' ? result.wisataData.facilities_id : result.wisataData.facilities_en;
+  if (result.type === 'wisata') {
+    const facilities = result.wisataData ? (locale === 'id' ? result.wisataData.facilities_id : result.wisataData.facilities_en) : undefined;
 
     return (
       <div className="bg-card rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group block h-full flex flex-col">
@@ -160,14 +116,14 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
           <div className="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500 dark:bg-emerald-700/60"></div>
         </div>
         <div className="p-4 flex-1 flex flex-col">
-          <h3 className="font-serif text-lg font-semibold text-[var(--javanese-brown-text)] mb-2 line-clamp-2 group-hover:text-[var(--javanese-gold)] transition-colors">{result.title}</h3>
-          <p className="text-sm text-[var(--javanese-brown-text)]/70 line-clamp-2 mb-3 flex-1">{result.excerpt}</p>
+          <h3 className="font-serif text-lg font-semibold text-stone-800 mb-2 line-clamp-2 group-hover:text-amber-500 transition-colors">{result.title}</h3>
+          <p className="text-sm text-stone-800/70 line-clamp-2 mb-3 flex-1">{result.excerpt}</p>
           {facilities && facilities.length > 0 && (
             <div className="flex flex-wrap gap-1 mb-3">
               {facilities.slice(0, 4).map((facility, idx) => (
-                <span key={idx} className="text-xs px-2 py-1 bg-[var(--javanese-gold)]/10 text-[var(--javanese-brown-text)] rounded">{facility}</span>
+                <span key={idx} className="text-xs px-2 py-1 bg-amber-500/10 text-stone-800 rounded">{facility}</span>
               ))}
-              {facilities.length > 4 && <span className="text-xs px-2 py-1 text-[var(--javanese-brown-text)]/50">+{facilities.length - 4}</span>}
+              {facilities.length > 4 && <span className="text-xs px-2 py-1 text-stone-800/50">+{facilities.length - 4}</span>}
             </div>
           )}
 
@@ -177,13 +133,13 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(result.title + ' Yogyakarta')}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-[var(--javanese-gold)] text-[#4A2C2A] rounded-lg hover:opacity-90 transition-all text-sm"
+              className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-amber-500 text-[#4A2C2A] rounded-lg hover:opacity-90 transition-all text-sm"
             >
               <Navigation className="w-4 h-4" />
             </a>
             <Link
               href={result.url}
-              className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-[var(--javanese-brown-bg)] to-[var(--javanese-terracotta)] text-white rounded-lg hover:opacity-90 transition-all text-sm"
+              className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-stone-700 to-orange-600 text-white rounded-lg hover:opacity-90 transition-all text-sm"
             >
               <ExternalLink className="w-4 h-4" />
             </Link>
@@ -194,43 +150,38 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
   }
 
   // Agenda Card Style
-  if (result.type === 'agenda' && result.agendaData) {
-    const formatDate = (date?: Date) => {
-      if (!date) return '';
-      return new Date(date).toLocaleDateString(locale === 'id' ? 'id-ID' : 'en-US', { day: 'numeric', month: 'short', year: 'numeric' });
-    };
-
+  if (result.type === 'agenda') {
     return (
       <Link href={result.url} className="bg-card rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group block h-full flex flex-col">
         <div className="relative aspect-video overflow-hidden bg-muted">
           {hasValidThumbnail(result.thumbnail) ? (
             <img src={result.thumbnail} alt={result.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[var(--javanese-terracotta)]/20 to-[var(--javanese-brown-bg)]/20">
-              <Calendar className="w-12 h-12 text-[var(--javanese-terracotta)]/40" />
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-600/20 to-stone-700/20">
+              <Calendar className="w-12 h-12 text-orange-600/40" />
             </div>
           )}
           {/* Category Badge - Top Right - Agenda Terracotta */}
           <div className="absolute top-4 right-4 z-10">
-            <span className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--javanese-terracotta)] dark:bg-orange-800/80 text-white dark:text-orange-100 rounded-full text-xs font-medium shadow-lg">
+            <span className="inline-flex items-center gap-2 px-3 py-1 bg-orange-600 dark:bg-orange-800/80 text-white dark:text-orange-100 rounded-full text-xs font-medium shadow-lg">
               <Calendar className="w-4 h-4" />
               {result.category}
             </span>
           </div>
           {/* Type indicator line */}
-          <div className="absolute bottom-0 left-0 right-0 h-1 bg-[var(--javanese-terracotta)] dark:bg-orange-800/60"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-orange-600 dark:bg-orange-800/60"></div>
         </div>
         <div className="p-4 flex-1 flex flex-col">
-          <h3 className="font-serif text-lg font-semibold text-[var(--javanese-brown-text)] mb-2 line-clamp-2 group-hover:text-[var(--javanese-gold)] transition-colors">{result.title}</h3>
-          <p className="text-sm text-[var(--javanese-brown-text)]/70 line-clamp-2 mb-3 flex-1">{result.excerpt}</p>
-          <div className="space-y-2 text-sm text-[var(--javanese-brown-text)]/60">
-            {result.agendaData.date_start && (
+          <h3 className="font-serif text-lg font-semibold text-stone-800 dark:text-white mb-2 line-clamp-2 group-hover:text-amber-500 transition-colors">{result.title}</h3>
+          <p className="text-sm text-stone-600 dark:text-slate-400 line-clamp-2 mb-3 flex-1">{result.excerpt}</p>
+          <div className="space-y-2 text-sm text-stone-500 dark:text-slate-500">
+            {result.agendaData?.time_start && (
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
-                <span>{formatDate(result.agendaData.date_start)}</span>
+                <span>{result.agendaData.time_start}{result.agendaData.time_end ? ` - ${result.agendaData.time_end}` : ''}</span>
               </div>
             )}
-            {result.agendaData.location && (
+            {result.agendaData?.location && (
               <div className="flex items-center gap-2">
                 <MapPin className="w-4 h-4" />
                 <span className="line-clamp-1">{result.agendaData.location}</span>
@@ -245,7 +196,7 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
   // Galeri Card Style
   if (result.type === 'galeri') {
     return (
-      <Link href={result.url} className="bg-card rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group block h-full">
+      <Link href={result.url} className="bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group block h-full border border-stone-200 dark:border-slate-700">
         <div className="relative aspect-video overflow-hidden bg-muted">
           {hasValidThumbnail(result.thumbnail) ? (
             <img src={result.thumbnail} alt={result.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
@@ -258,53 +209,78 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
           <div className="absolute top-4 right-4 z-10">
             <span className="inline-flex items-center gap-2 px-3 py-1 bg-violet-500 dark:bg-violet-700/80 text-white dark:text-violet-100 rounded-full text-xs font-medium shadow-lg">
               <Camera className="w-4 h-4" />
-              {result.category}
+              {result.category || (locale === 'id' ? 'Galeri' : 'Gallery')}
             </span>
           </div>
           {/* Type indicator line */}
           <div className="absolute bottom-0 left-0 right-0 h-1 bg-violet-500 dark:bg-violet-700/60"></div>
         </div>
         <div className="p-4">
-          <h3 className="font-serif text-lg font-semibold text-[var(--javanese-brown-text)] mb-2 line-clamp-2 group-hover:text-[var(--javanese-gold)] transition-colors">{result.title}</h3>
-          {result.galeriData?.tags && result.galeriData.tags.length > 0 && (
-            <div className="flex flex-wrap gap-1">
-              {result.galeriData.tags.slice(0, 3).map((tag, idx) => (
-                <span key={idx} className="text-xs px-2 py-1 bg-[var(--javanese-gold)]/10 text-[var(--javanese-brown-text)] rounded">#{tag}</span>
-              ))}
-            </div>
-          )}
+          <h3 className="font-serif text-lg font-semibold text-stone-800 dark:text-white mb-2 line-clamp-2 group-hover:text-amber-500 transition-colors">{result.title}</h3>
+          <p className="text-sm text-stone-600 dark:text-slate-400 line-clamp-2">{result.excerpt}</p>
         </div>
       </Link>
     );
   }
 
   // Default Card Style (kawasan, sejarah, lokasi)
+  // Type-specific gradient colors
+  const typeGradients: Record<SearchResultType, string> = {
+    sejarah: 'from-indigo-500/20 to-purple-600/20',
+    kawasan: 'from-cyan-500/20 to-blue-600/20',
+    lokasi: 'from-green-500/20 to-emerald-600/20',
+    wisata: 'from-emerald-500/20 to-teal-600/20',
+    umkm: 'from-amber-500/20 to-orange-600/20',
+    agenda: 'from-rose-500/20 to-pink-600/20',
+    galeri: 'from-violet-500/20 to-purple-600/20',
+  };
+
+  const typeBadgeColors: Record<SearchResultType, string> = {
+    sejarah: 'bg-indigo-600 dark:bg-indigo-700/80',
+    kawasan: 'bg-cyan-600 dark:bg-cyan-700/80',
+    lokasi: 'bg-green-600 dark:bg-green-700/80',
+    wisata: 'bg-emerald-600 dark:bg-emerald-700/80',
+    umkm: 'bg-amber-600 dark:bg-amber-700/80',
+    agenda: 'bg-rose-600 dark:bg-rose-700/80',
+    galeri: 'bg-violet-600 dark:bg-violet-700/80',
+  };
+
+  const typeLineColors: Record<SearchResultType, string> = {
+    sejarah: 'bg-indigo-600 dark:bg-indigo-700/60',
+    kawasan: 'bg-cyan-600 dark:bg-cyan-700/60',
+    lokasi: 'bg-green-600 dark:bg-green-700/60',
+    wisata: 'bg-emerald-600 dark:bg-emerald-700/60',
+    umkm: 'bg-amber-600 dark:bg-amber-700/60',
+    agenda: 'bg-rose-600 dark:bg-rose-700/60',
+    galeri: 'bg-violet-600 dark:bg-violet-700/60',
+  };
+
   return (
-    <Link href={result.url} className="bg-card rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group block h-full">
+    <Link href={result.url} className="bg-white dark:bg-slate-900 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group block h-full border border-stone-200 dark:border-slate-700">
       <div className="aspect-video relative overflow-hidden bg-muted">
         {hasValidThumbnail(result.thumbnail) ? (
           <img src={result.thumbnail} alt={result.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
         ) : (
-          <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-[var(--javanese-brown-bg)]/20 to-[var(--javanese-terracotta)]/20">
-            <ImageIcon className="w-12 h-12 text-[var(--javanese-brown-bg)]/40" />
+          <div className={`w-full h-full flex items-center justify-center bg-gradient-to-br ${typeGradients[result.type]}`}>
+            {result.type === 'sejarah' ? <Book className="w-12 h-12 text-indigo-600/40" /> : <MapPin className="w-12 h-12 text-stone-600/40" />}
           </div>
         )}
-        {/* Category Badge - Top Right - Default Brown */}
+        {/* Category Badge - Top Right */}
         <div className="absolute top-4 right-4 z-10">
-          <span className="inline-flex items-center gap-2 px-3 py-1 bg-[var(--javanese-brown-bg)] dark:bg-stone-700/80 text-white dark:text-stone-100 rounded-full text-xs font-medium shadow-lg">
+          <span className={`inline-flex items-center gap-2 px-3 py-1 ${typeBadgeColors[result.type]} text-white rounded-full text-xs font-medium shadow-lg`}>
             {getTypeIcon(result.type)}
             {getSearchCategoryLabel(result.type, locale)}
           </span>
         </div>
         {/* Type indicator line */}
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-[var(--javanese-brown-bg)] dark:bg-stone-700/60"></div>
+        <div className={`absolute bottom-0 left-0 right-0 h-1 ${typeLineColors[result.type]}`}></div>
       </div>
       <div className="p-4">
-        <h3 className="font-serif text-lg font-semibold text-[var(--javanese-brown-text)] mb-2 line-clamp-2 group-hover:text-[var(--javanese-gold)] transition-colors">{result.title}</h3>
-        <p className="text-sm text-[var(--javanese-brown-text)]/70 line-clamp-3">{result.excerpt}</p>
+        <h3 className="font-serif text-lg font-semibold text-stone-800 dark:text-white mb-2 line-clamp-2 group-hover:text-amber-500 transition-colors">{result.title}</h3>
+        <p className="text-sm text-stone-600 dark:text-slate-400 line-clamp-3">{result.excerpt}</p>
         {result.category && (
           <div className="mt-3">
-            <span className="text-xs px-2 py-1 bg-[var(--javanese-gold)]/10 text-[var(--javanese-brown-text)] rounded">{result.category}</span>
+            <span className="text-xs px-2.5 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-full">{result.category}</span>
           </div>
         )}
       </div>
@@ -374,65 +350,90 @@ function SearchPageContent() {
   };
 
   return (
-    <div className="min-h-screen bg-background pt-20">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50/50 to-rose-50/30 dark:from-slate-950 dark:via-stone-950/50 dark:to-amber-950/30 pt-20">
+      {/* Decorative Background Pattern */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+        <div className="absolute top-20 -left-20 w-72 h-72 bg-amber-400/15 rounded-full blur-[100px]" />
+        <div className="absolute top-1/3 -right-20 w-96 h-96 bg-orange-400/15 rounded-full blur-[120px]" />
+        <div className="absolute bottom-20 left-1/4 w-80 h-80 bg-amber-300/15 rounded-full blur-[100px]" />
+      </div>
+
       {/* Header */}
-      <section className="wayang-border bg-gradient-to-r from-[var(--javanese-brown-bg)] to-[var(--javanese-terracotta)] text-[var(--javanese-ivory)] py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-[var(--javanese-gold)]/20 backdrop-blur-sm rounded-full mb-4 border border-[var(--javanese-gold)]/30">
-            <Search className="w-5 h-5 text-[var(--javanese-gold)]" />
-            <span className="text-[var(--javanese-gold)]">{t('title')}</span>
+      <section className="relative bg-gradient-to-r from-stone-800 via-orange-700 to-stone-800 text-white py-16">
+        {/* Batik Pattern Overlay */}
+        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 0L60 30L30 60L0 30L30 0z\' fill=\'%23ffffff\' fill-opacity=\'0.4\'/%3E%3C/svg%3E")', backgroundSize: '30px 30px' }} />
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-500/30 backdrop-blur-sm rounded-full mb-6 border border-amber-400/50 shadow-lg">
+            <Search className="w-5 h-5 text-amber-300" />
+            <span className="text-amber-200 font-medium">{t('title')}</span>
           </div>
 
           {query && (
-            <h1 className="font-serif text-3xl md:text-4xl font-bold mb-2">
-              {t('subtitle')} &quot;{query}&quot;
+            <h1 className="font-serif text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">
+              {t('subtitle')} <span className="text-amber-400">&quot;{query}&quot;</span>
             </h1>
           )}
 
-          <p className="text-[var(--javanese-ivory)]/80">
-            {filteredResults.length} {t('results')}
+          <p className="text-amber-100 text-lg">
+            <span className="font-semibold text-amber-300">{filteredResults.length}</span> {t('results')}
           </p>
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Filters */}
         {results.length > 0 && (
-          <div className="mb-8">
-            <div className="flex items-center gap-4 flex-wrap">
-              <div className="flex items-center gap-2 text-[var(--javanese-brown-text)]">
-                <Filter className="w-5 h-5" />
-                <span className="font-medium">{t('filterAll')}:</span>
+          <div className="mb-10">
+            <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-2xl shadow-lg border border-amber-200 dark:border-amber-800/30 p-6">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-md">
+                  <Filter className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="font-semibold text-stone-800 dark:text-white text-lg">
+                  {locale === 'id' ? 'Filter Hasil' : 'Filter Results'}
+                </h3>
               </div>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 <button
                   onClick={() => setSelectedType('all')}
-                  className={`px-4 py-2 rounded-lg transition-all font-medium ${
+                  className={`px-5 py-2.5 rounded-xl transition-all font-medium shadow-sm ${
                     selectedType === 'all'
-                      ? 'bg-gradient-to-r from-[var(--javanese-brown-bg)] to-[var(--javanese-terracotta)] text-[var(--javanese-ivory)] shadow-md'
-                      : 'bg-card text-[var(--javanese-brown-text)] hover:bg-[var(--javanese-gold)]/10 border border-[var(--javanese-brown-text)]/20'
+                      ? 'bg-gradient-to-r from-stone-700 to-stone-800 text-white shadow-lg ring-2 ring-amber-400'
+                      : 'bg-white dark:bg-slate-800 text-stone-700 dark:text-slate-200 hover:bg-amber-50 dark:hover:bg-slate-700 border border-stone-300 dark:border-slate-600'
                   }`}
                 >
-                  {t('filterAll')} ({results.length})
+                  {t('filterAll')} <span className="ml-1 opacity-70">({results.length})</span>
                 </button>
 
                 {allTypes.map((type) => {
                   const count = getTypeCount(type);
                   if (count === 0) return null;
 
+                  // Type-specific colors
+                  const typeColors: Record<SearchResultType, string> = {
+                    sejarah: 'from-indigo-500 to-purple-600',
+                    wisata: 'from-emerald-500 to-teal-600',
+                    umkm: 'from-amber-500 to-orange-600',
+                    agenda: 'from-rose-500 to-pink-600',
+                    galeri: 'from-violet-500 to-purple-600',
+                    kawasan: 'from-cyan-500 to-blue-600',
+                    lokasi: 'from-green-500 to-emerald-600',
+                  };
+
                   return (
                     <button
                       key={type}
                       onClick={() => setSelectedType(type)}
-                      className={`px-4 py-2 rounded-lg transition-all font-medium flex items-center gap-2 ${
+                      className={`px-5 py-2.5 rounded-xl transition-all font-medium flex items-center gap-2 shadow-sm ${
                         selectedType === type
-                          ? 'bg-gradient-to-r from-[var(--javanese-brown-bg)] to-[var(--javanese-terracotta)] text-[var(--javanese-ivory)] shadow-md'
-                          : 'bg-card text-[var(--javanese-brown-text)] hover:bg-[var(--javanese-gold)]/10 border border-[var(--javanese-brown-text)]/20'
+                          ? `bg-gradient-to-r ${typeColors[type]} text-white shadow-lg ring-2 ring-white/50`
+                          : 'bg-white dark:bg-slate-800 text-stone-700 dark:text-slate-200 hover:bg-amber-50 dark:hover:bg-slate-700 border border-stone-300 dark:border-slate-600'
                       }`}
                     >
                       {getTypeIcon(type)}
-                      {getSearchCategoryLabel(type, locale)} ({count})
+                      {getSearchCategoryLabel(type, locale)} <span className="opacity-70">({count})</span>
                     </button>
                   );
                 })}
@@ -454,65 +455,80 @@ function SearchPageContent() {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="mt-12 flex justify-center gap-2">
-                <button
-                  onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
-                  disabled={currentPage === 1}
-                  className={`px-4 py-2 rounded-lg transition-all ${
-                    currentPage === 1
-                      ? 'opacity-50 cursor-not-allowed bg-muted'
-                      : 'bg-card hover:bg-[var(--javanese-gold)]/20 text-[var(--javanese-brown-text)]'
-                  }`}
-                >
-                  {tPagination('previous')}
-                </button>
-
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+              <div className="mt-12 flex justify-center">
+                <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-2xl shadow-lg border border-amber-200 dark:border-slate-700 p-2 flex gap-2">
                   <button
-                    key={page}
-                    onClick={() => setCurrentPage(page)}
-                    className={`w-10 h-10 rounded-lg transition-all ${
-                      currentPage === page
-                        ? 'bg-[var(--javanese-gold)] text-[#4A2C2A] shadow-lg font-semibold'
-                        : 'bg-card text-[var(--javanese-brown-text)] hover:bg-[var(--javanese-gold)]/20'
+                    onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
+                    disabled={currentPage === 1}
+                    className={`px-5 py-2.5 rounded-xl transition-all font-medium ${
+                      currentPage === 1
+                        ? 'opacity-40 cursor-not-allowed text-slate-400'
+                        : 'text-stone-700 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-slate-700'
                     }`}
                   >
-                    {page}
+                    {tPagination('previous')}
                   </button>
-                ))}
 
-                <button
-                  onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
-                  disabled={currentPage === totalPages}
-                  className={`px-4 py-2 rounded-lg transition-all ${
-                    currentPage === totalPages
-                      ? 'opacity-50 cursor-not-allowed bg-muted'
-                      : 'bg-card hover:bg-[var(--javanese-gold)]/20 text-[var(--javanese-brown-text)]'
-                  }`}
-                >
-                  {tPagination('next')}
-                </button>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <button
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`w-11 h-11 rounded-xl transition-all font-medium ${
+                        currentPage === page
+                          ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg'
+                          : 'text-stone-700 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-slate-700'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  ))}
+
+                  <button
+                    onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
+                    disabled={currentPage === totalPages}
+                    className={`px-5 py-2.5 rounded-xl transition-all font-medium ${
+                      currentPage === totalPages
+                        ? 'opacity-40 cursor-not-allowed text-slate-400'
+                        : 'text-stone-700 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-slate-700'
+                    }`}
+                  >
+                    {tPagination('next')}
+                  </button>
+                </div>
               </div>
             )}
           </>
         ) : query ? (
           /* No Results */
           <div className="text-center py-20">
-            <Search className="w-16 h-16 mx-auto text-[var(--javanese-brown-text)]/30 mb-4" />
-            <h2 className="font-serif text-2xl text-[var(--javanese-brown-text)] mb-2">
-              {t('noResults')}
-            </h2>
-            <p className="text-[var(--javanese-brown-text)]/60">
-              {t('noResultsDesc')}
-            </p>
+            <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-3xl shadow-xl border border-amber-200 dark:border-slate-700 p-12 max-w-md mx-auto">
+              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 flex items-center justify-center">
+                <Search className="w-10 h-10 text-orange-500" />
+              </div>
+              <h2 className="font-serif text-2xl text-stone-800 dark:text-white mb-3">
+                {t('noResults')}
+              </h2>
+              <p className="text-stone-600 dark:text-slate-400">
+                {t('noResultsDesc')}
+              </p>
+            </div>
           </div>
         ) : (
           /* Empty State */
           <div className="text-center py-20">
-            <Search className="w-16 h-16 mx-auto text-[var(--javanese-brown-text)]/30 mb-4" />
-            <h2 className="font-serif text-2xl text-[var(--javanese-brown-text)]">
-              {t('placeholder')}
-            </h2>
+            <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-3xl shadow-xl border border-amber-200 dark:border-slate-700 p-12 max-w-lg mx-auto">
+              <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-amber-200 to-orange-200 dark:from-amber-900/40 dark:to-orange-900/40 flex items-center justify-center">
+                <Search className="w-12 h-12 text-amber-600 dark:text-amber-400" />
+              </div>
+              <h2 className="font-serif text-2xl text-stone-800 dark:text-white mb-3">
+                {t('placeholder')}
+              </h2>
+              <p className="text-stone-600 dark:text-slate-400">
+                {locale === 'id'
+                  ? 'Gunakan kolom pencarian di atas untuk menemukan destinasi, UMKM, artikel, dan agenda menarik di Yogyakarta'
+                  : 'Use the search bar above to find destinations, local businesses, articles, and events in Yogyakarta'}
+              </p>
+            </div>
           </div>
         )}
       </div>
@@ -524,7 +540,7 @@ export default function SearchPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-background pt-20 flex items-center justify-center">
-        <div className="inline-block w-12 h-12 border-4 border-[var(--javanese-brown-text)]/20 border-t-[var(--javanese-brown-bg)] rounded-full animate-spin"></div>
+        <div className="inline-block w-12 h-12 border-4 border-stone-800/20 border-t-stone-700 rounded-full animate-spin"></div>
       </div>
     }>
       <SearchPageContent />

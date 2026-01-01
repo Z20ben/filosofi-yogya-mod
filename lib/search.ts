@@ -1,4 +1,4 @@
-// Mock data imports removed - now using hardcoded data matching actual pages
+// Search module with bilingual support and consistent results
 
 export type SearchResultType =
   | 'kawasan'
@@ -64,9 +64,442 @@ export interface SearchOptions {
   types?: SearchResultType[];
 }
 
+// Bilingual item structure for consistent search
+interface BilingualItem {
+  id: string;
+  slug: string;
+  title_id: string;
+  title_en: string;
+  excerpt_id: string;
+  excerpt_en: string;
+  category_id: string;
+  category_en: string;
+  thumbnail?: string;
+  tags_id: string[];
+  tags_en: string[];
+  type: SearchResultType;
+  urlPath: string; // e.g., 'encyclopedia', 'destinasi-wisata'
+  // Extended data
+  extendedData?: {
+    location_id?: string;
+    location_en?: string;
+    facilities_id?: string[];
+    facilities_en?: string[];
+    products_id?: string[];
+    products_en?: string[];
+    time?: string;
+    eventLocation?: string;
+  };
+}
+
+// Unified bilingual data - same items for both languages
+const encyclopediaItems: BilingualItem[] = [
+  {
+    id: 'enc-1',
+    slug: 'tugu-yogyakarta',
+    title_id: 'Tugu Yogyakarta',
+    title_en: 'Tugu Yogyakarta',
+    excerpt_id: 'Monumen ikonik yang menjadi titik awal Sumbu Filosofi di ujung utara. Tugu ini dibangun tahun 1755 oleh Sultan Hamengku Buwono I sebagai simbol persatuan antara Sultan dengan rakyatnya.',
+    excerpt_en: 'Iconic monument marking the northern starting point of the Philosophical Axis. Built in 1755 by Sultan Hamengku Buwono I as a symbol of unity between Sultan and his people.',
+    category_id: 'Warisan Budaya Benda',
+    category_en: 'Tangible Heritage',
+    tags_id: ['Monumen', 'Sumbu Utama', 'Sejarah Jogja'],
+    tags_en: ['Monument', 'Main Axis', 'Jogja History'],
+    type: 'sejarah',
+    urlPath: 'encyclopedia',
+  },
+  {
+    id: 'enc-2',
+    slug: 'sekaten',
+    title_id: 'Sekaten',
+    title_en: 'Sekaten',
+    excerpt_id: 'Upacara tradisional memperingati Maulid Nabi Muhammad SAW yang diselenggarakan di Alun-Alun Utara Keraton. Tradisi ini telah berlangsung sejak zaman Sultan Hamengku Buwono I.',
+    excerpt_en: "Traditional ceremony commemorating Prophet Muhammad's birthday held at North Square of the Palace.",
+    category_id: 'Warisan Budaya Tak Benda',
+    category_en: 'Intangible Heritage',
+    tags_id: ['Upacara Adat', 'Keraton', 'Tradisi Islam'],
+    tags_en: ['Traditional Ceremony', 'Palace', 'Islamic Tradition'],
+    type: 'sejarah',
+    urlPath: 'encyclopedia',
+  },
+  {
+    id: 'enc-3',
+    slug: 'sultan-hamengku-buwono-i',
+    title_id: 'Sultan Hamengku Buwono I',
+    title_en: 'Sultan Hamengku Buwono I',
+    excerpt_id: 'Pendiri Kesultanan Yogyakarta dan perancang Sumbu Filosofi. Beliau menetapkan tata ruang kota berdasarkan kosmologi Jawa yang menghubungkan Tugu, Keraton, dan Panggung Krapyak.',
+    excerpt_en: 'Founder of Yogyakarta Sultanate and designer of the Philosophical Axis.',
+    category_id: 'Tokoh & Sejarah',
+    category_en: 'Figures & History',
+    tags_id: ['Sultan', 'Pendiri', 'Arsitektur Kota'],
+    tags_en: ['Sultan', 'Founder', 'City Architecture'],
+    type: 'sejarah',
+    urlPath: 'encyclopedia',
+  },
+  {
+    id: 'enc-4',
+    slug: 'manunggaling-kawula-gusti',
+    title_id: 'Manunggaling Kawula Gusti',
+    title_en: 'Manunggaling Kawula Gusti',
+    excerpt_id: 'Konsep filosofis Jawa tentang kesatuan antara rakyat (kawula) dengan raja (gusti). Filosofi ini tercermin dalam tata ruang Sumbu Filosofi yang menempatkan Keraton di pusat.',
+    excerpt_en: 'Javanese philosophical concept about unity between people (kawula) and ruler (gusti).',
+    category_id: 'Istilah & Konsep',
+    category_en: 'Terms & Concepts',
+    tags_id: ['Filosofi Jawa', 'Kosmologi', 'Kepemimpinan'],
+    tags_en: ['Javanese Philosophy', 'Cosmology', 'Leadership'],
+    type: 'sejarah',
+    urlPath: 'encyclopedia',
+  },
+  {
+    id: 'enc-5',
+    slug: 'revitalisasi-taman-sari',
+    title_id: 'Revitalisasi Taman Sari',
+    title_en: 'Taman Sari Revitalization',
+    excerpt_id: 'Proyek pemugaran dan revitalisasi kompleks Taman Sari yang sedang menjadi perhatian. Upaya melestarikan warisan budaya sambil membuka akses wisata yang berkelanjutan.',
+    excerpt_en: 'Major restoration and revitalization project of Taman Sari complex currently underway.',
+    category_id: 'Sedang Tren',
+    category_en: 'Trending',
+    tags_id: ['Revitalisasi', 'Taman Sari', 'Pelestarian'],
+    tags_en: ['Revitalization', 'Taman Sari', 'Preservation'],
+    type: 'sejarah',
+    urlPath: 'encyclopedia',
+  },
+  {
+    id: 'enc-6',
+    slug: 'menyusuri-sumbu-filosofi-rute-tips',
+    title_id: 'Menyusuri Sumbu Filosofi: Rute & Tips',
+    title_en: 'Exploring the Philosophical Axis: Routes & Tips',
+    excerpt_id: 'Panduan lengkap menyusuri jalur Sumbu Filosofi dari Tugu hingga Panggung Krapyak. Termasuk rekomendasi waktu kunjungan dan spot foto terbaik.',
+    excerpt_en: 'Complete guide to exploring the Philosophical Axis route from Tugu to Panggung Krapyak.',
+    category_id: 'Tips Wisata',
+    category_en: 'Travel Tips',
+    tags_id: ['Panduan Wisata', 'Rute', 'Tips Perjalanan'],
+    tags_en: ['Travel Guide', 'Route', 'Travel Tips'],
+    type: 'sejarah',
+    urlPath: 'encyclopedia',
+  },
+];
+
+const destinasiWisataItems: BilingualItem[] = [
+  {
+    id: 'wisata-1',
+    slug: 'tugu-yogyakarta',
+    title_id: 'Tugu Yogyakarta',
+    title_en: 'Tugu Yogyakarta',
+    excerpt_id: 'Monumen ikonik yang menjadi simbol persatuan dan titik awal sumbu filosofis.',
+    excerpt_en: 'Iconic monument symbolizing unity and starting point of philosophical axis.',
+    category_id: 'Titik Sumbu Filosofi',
+    category_en: 'Philosophical Axis Point',
+    thumbnail: '/assets/ef2f909a8e4736aac7086ac0f00afcd53f6c080d.png',
+    tags_id: ['Monumen', 'Sumbu Utama', 'Sejarah'],
+    tags_en: ['Monument', 'Main Axis', 'History'],
+    type: 'wisata',
+    urlPath: 'destinasi-wisata',
+    extendedData: {
+      location_id: 'Jl. Jenderal Sudirman, Yogyakarta',
+      location_en: 'Jl. Jend. Sudirman, Yogyakarta',
+    }
+  },
+  {
+    id: 'wisata-2',
+    slug: 'keraton-yogyakarta',
+    title_id: 'Keraton Yogyakarta',
+    title_en: 'Yogyakarta Palace',
+    excerpt_id: 'Istana resmi Kesultanan Yogyakarta yang masih berfungsi hingga kini.',
+    excerpt_en: 'Official palace of Yogyakarta Sultanate still functioning today.',
+    category_id: 'Cagar Budaya',
+    category_en: 'Cultural Heritage',
+    thumbnail: '/assets/71d525189b0fc80e4a5deee30dbc34fba5301eed.png',
+    tags_id: ['Keraton', 'Budaya', 'Sejarah', 'Arsitektur'],
+    tags_en: ['Palace', 'Culture', 'History', 'Architecture'],
+    type: 'wisata',
+    urlPath: 'destinasi-wisata',
+    extendedData: {
+      location_id: 'Jl. Rotowijayan, Yogyakarta',
+      location_en: 'Jl. Rotowijayan, Yogyakarta',
+      facilities_id: ['Keraton', 'Budaya', 'Sejarah'],
+      facilities_en: ['Palace', 'Culture', 'History'],
+    }
+  },
+  {
+    id: 'wisata-3',
+    slug: 'panggung-krapyak',
+    title_id: 'Panggung Krapyak',
+    title_en: 'Panggung Krapyak',
+    excerpt_id: 'Situs spiritual di ujung selatan sumbu filosofis Yogyakarta.',
+    excerpt_en: "Spiritual site at southern end of Yogyakarta's philosophical axis.",
+    category_id: 'Titik Sumbu Filosofi',
+    category_en: 'Philosophical Axis Point',
+    thumbnail: '/assets/fb6b8301383254d95eb7e316d7834fa675727178.png',
+    tags_id: ['Sumbu Filosofi', 'Spiritual', 'Sejarah'],
+    tags_en: ['Philosophical Axis', 'Spiritual', 'History'],
+    type: 'wisata',
+    urlPath: 'destinasi-wisata',
+  },
+  {
+    id: 'wisata-4',
+    slug: 'makam-raja-raja-imogiri',
+    title_id: 'Makam Raja-Raja Imogiri',
+    title_en: 'Imogiri Royal Cemetery',
+    excerpt_id: 'Kompleks Makam Raja-Raja Imogiri di perbukitan selatan adalah tempat peristirahatan para Sultan dan keluarga kerajaan.',
+    excerpt_en: 'Royal cemetery complex in southern hills as resting place for Sultans and royal families.',
+    category_id: 'Cagar Budaya',
+    category_en: 'Cultural Heritage',
+    thumbnail: '/assets/4bbe2eea291c6a19141c048bb0edf54b19883a9a.png',
+    tags_id: ['Makam', 'Kerajaan', 'Sejarah'],
+    tags_en: ['Cemetery', 'Royal', 'History'],
+    type: 'wisata',
+    urlPath: 'destinasi-wisata',
+  },
+  {
+    id: 'wisata-5',
+    slug: 'museum-sonobudoyo',
+    title_id: 'Museum Sonobudoyo',
+    title_en: 'Sonobudoyo Museum',
+    excerpt_id: 'Museum budaya Jawa dengan koleksi artefak bersejarah yang lengkap.',
+    excerpt_en: 'Javanese cultural museum with comprehensive historical artifact collection.',
+    category_id: 'Museum',
+    category_en: 'Museum',
+    thumbnail: '/assets/65ea2f8f990e2839c96ae7dcf40b612be8859a9e.png',
+    tags_id: ['Museum', 'Budaya', 'Artefak'],
+    tags_en: ['Museum', 'Culture', 'Artifacts'],
+    type: 'wisata',
+    urlPath: 'destinasi-wisata',
+  },
+];
+
+const umkmItems: BilingualItem[] = [
+  {
+    id: 'umkm-1',
+    slug: 'gudeg-yu-djum',
+    title_id: 'Gudeg Yu Djum',
+    title_en: 'Gudeg Yu Djum',
+    excerpt_id: 'Gudeg legendaris yang wajib dicoba! Resep turun temurun dengan rasa autentik khas Jogja.',
+    excerpt_en: 'Legendary gudeg you must try! Traditional recipe with authentic Jogja taste.',
+    category_id: 'Kuliner Tradisional',
+    category_en: 'Traditional Culinary',
+    thumbnail: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&q=80',
+    tags_id: ['Gudeg', 'Kuliner', 'Tradisional', 'Legendaris'],
+    tags_en: ['Gudeg', 'Culinary', 'Traditional', 'Legendary'],
+    type: 'umkm',
+    urlPath: 'umkm-lokal',
+    extendedData: {
+      location_id: 'Jl. Wijilan, Yogyakarta',
+      location_en: 'Jl. Wijilan, Yogyakarta',
+      products_id: ['Gudeg Kering', 'Gudeg Basah', 'Ayam', 'Telur'],
+      products_en: ['Dry Gudeg', 'Wet Gudeg', 'Chicken', 'Egg'],
+    }
+  },
+  {
+    id: 'umkm-2',
+    slug: 'batik-winotosastro',
+    title_id: 'Batik Winotosastro',
+    title_en: 'Batik Winotosastro',
+    excerpt_id: 'Batik cap dan tulis berkualitas tinggi dengan motif klasik dan modern.',
+    excerpt_en: 'High-quality cap and tulis batik with classic and modern motifs.',
+    category_id: 'Kerajinan Batik',
+    category_en: 'Batik Craft',
+    thumbnail: 'https://images.unsplash.com/photo-1721361467569-f8edbf851f44?w=800&q=80',
+    tags_id: ['Batik', 'Kerajinan', 'Tradisional', 'Handmade'],
+    tags_en: ['Batik', 'Craft', 'Traditional', 'Handmade'],
+    type: 'umkm',
+    urlPath: 'umkm-lokal',
+    extendedData: {
+      location_id: 'Jl. Tirtodipuran, Yogyakarta',
+      location_en: 'Jl. Tirtodipuran, Yogyakarta',
+      products_id: ['Batik Tulis', 'Batik Cap', 'Kain', 'Pakaian'],
+      products_en: ['Hand-drawn Batik', 'Stamped Batik', 'Fabric', 'Clothing'],
+    }
+  },
+  {
+    id: 'umkm-3',
+    slug: 'dagadu-djokdja',
+    title_id: 'Dagadu Djokdja',
+    title_en: 'Dagadu Djokdja',
+    excerpt_id: 'Brand fashion lokal ikonik Jogja dengan design unik dan kualitas premium.',
+    excerpt_en: 'Iconic Jogja local fashion brand with unique design and premium quality.',
+    category_id: 'Fashion Lokal',
+    category_en: 'Local Fashion',
+    thumbnail: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80',
+    tags_id: ['Souvenir', 'Kaos', 'Merchandise', 'Ikonik'],
+    tags_en: ['Souvenir', 'T-shirt', 'Merchandise', 'Iconic'],
+    type: 'umkm',
+    urlPath: 'umkm-lokal',
+    extendedData: {
+      location_id: 'Malioboro, Yogyakarta',
+      location_en: 'Malioboro, Yogyakarta',
+      products_id: ['Kaos', 'Tote Bag', 'Pin', 'Stiker'],
+      products_en: ['T-shirts', 'Tote Bag', 'Pin', 'Sticker'],
+    }
+  },
+  {
+    id: 'umkm-4',
+    slug: 'jogja-scrummy',
+    title_id: 'Jogja Scrummy',
+    title_en: 'Jogja Scrummy',
+    excerpt_id: 'Dessert box dan snack kekinian yang lagi hits di kalangan anak muda!',
+    excerpt_en: 'Trendy dessert box and snacks popular among young people!',
+    category_id: 'Dessert & Snack',
+    category_en: 'Dessert & Snack',
+    thumbnail: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&q=80',
+    tags_id: ['Modern', 'Instagramable', 'Halal', 'Kekinian'],
+    tags_en: ['Modern', 'Instagramable', 'Halal', 'Trendy'],
+    type: 'umkm',
+    urlPath: 'umkm-lokal',
+    extendedData: {
+      location_id: 'Jl. Kaliurang, Yogyakarta',
+      location_en: 'Jl. Kaliurang, Yogyakarta',
+    }
+  },
+  {
+    id: 'umkm-5',
+    slug: 'omah-gerabah',
+    title_id: 'Omah Gerabah',
+    title_en: 'Omah Gerabah',
+    excerpt_id: 'Produk gerabah artistik untuk dekorasi rumah dengan sentuhan modern.',
+    excerpt_en: 'Artistic pottery products for home decoration with modern touch.',
+    category_id: 'Kerajinan Tanah Liat',
+    category_en: 'Pottery Craft',
+    thumbnail: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=800&q=80',
+    tags_id: ['Handmade', 'Eco-Friendly', 'Unique', 'Gerabah'],
+    tags_en: ['Handmade', 'Eco-Friendly', 'Unique', 'Pottery'],
+    type: 'umkm',
+    urlPath: 'umkm-lokal',
+    extendedData: {
+      location_id: 'Kasongan, Bantul, Yogyakarta',
+      location_en: 'Kasongan, Bantul, Yogyakarta',
+    }
+  },
+  {
+    id: 'umkm-6',
+    slug: 'studio-grafis-jogja',
+    title_id: 'Studio Grafis Jogja',
+    title_en: 'Jogja Graphic Studio',
+    excerpt_id: 'Jasa design grafis, ilustrasi, dan branding untuk UMKM dan personal.',
+    excerpt_en: 'Graphic design, illustration, and branding services for SMEs and personal.',
+    category_id: 'Creative Studio',
+    category_en: 'Creative Studio',
+    thumbnail: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80',
+    tags_id: ['Digital Art', 'Custom', 'Professional', 'Kreatif'],
+    tags_en: ['Digital Art', 'Custom', 'Professional', 'Creative'],
+    type: 'umkm',
+    urlPath: 'umkm-lokal',
+    extendedData: {
+      location_id: 'Jl. Gejayan, Yogyakarta',
+      location_en: 'Jl. Gejayan, Yogyakarta',
+    }
+  },
+];
+
+const agendaItems: BilingualItem[] = [
+  {
+    id: 'agenda-1',
+    slug: 'sekaten-festival-2024',
+    title_id: 'Sekaten Festival 2024',
+    title_en: 'Sekaten Festival 2024',
+    excerpt_id: 'Festival tradisional memperingati Maulid Nabi Muhammad SAW dengan gamelan dan pasar malam.',
+    excerpt_en: 'Traditional festival commemorating Prophet Muhammad\'s birthday with gamelan and night market.',
+    category_id: 'Budaya & Upacara',
+    category_en: 'Culture & Ceremony',
+    thumbnail: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80',
+    tags_id: ['Festival', 'Budaya', 'Tradisi', 'Gamelan'],
+    tags_en: ['Festival', 'Culture', 'Tradition', 'Gamelan'],
+    type: 'agenda',
+    urlPath: 'agenda-event',
+    extendedData: {
+      time: '18:00 - 23:00',
+      eventLocation: 'Alun-Alun Utara Keraton, Yogyakarta',
+    }
+  },
+  {
+    id: 'agenda-2',
+    slug: 'jogja-international-music-festival',
+    title_id: 'Jogja International Music Festival',
+    title_en: 'Jogja International Music Festival',
+    excerpt_id: 'Festival musik internasional dengan lineup artis dalam dan luar negeri.',
+    excerpt_en: 'International music festival featuring local and international artists.',
+    category_id: 'Festival & Hiburan',
+    category_en: 'Festivals & Entertainment',
+    thumbnail: 'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?w=800&q=80',
+    tags_id: ['Musik', 'Festival', 'Konser', 'Internasional'],
+    tags_en: ['Music', 'Festival', 'Concert', 'International'],
+    type: 'agenda',
+    urlPath: 'agenda-event',
+    extendedData: {
+      time: '14:00 - 23:00',
+      eventLocation: 'Stadion Mandala Krida, Yogyakarta',
+    }
+  },
+  {
+    id: 'agenda-3',
+    slug: 'workshop-batik-untuk-pemula',
+    title_id: 'Workshop Batik untuk Pemula',
+    title_en: 'Batik Workshop for Beginners',
+    excerpt_id: 'Belajar teknik membatik cap dan tulis dari pengrajin berpengalaman.',
+    excerpt_en: 'Learn batik techniques from experienced craftsmen with easy-to-understand methods.',
+    category_id: 'Komunitas & Workshop',
+    category_en: 'Community & Workshop',
+    thumbnail: 'https://images.unsplash.com/photo-1544928147-79a2dbc1f389?w=800&q=80',
+    tags_id: ['Workshop', 'Batik', 'Kerajinan', 'Edukasi'],
+    tags_en: ['Workshop', 'Batik', 'Craft', 'Education'],
+    type: 'agenda',
+    urlPath: 'agenda-event',
+    extendedData: {
+      time: '09:00 - 15:00',
+      eventLocation: 'Rumah Batik Tirtodipuran, Yogyakarta',
+    }
+  },
+  {
+    id: 'agenda-4',
+    slug: 'jogja-art-fair-2024',
+    title_id: 'Jogja Art Fair 2024',
+    title_en: 'Jogja Art Fair 2024',
+    excerpt_id: 'Pameran seni rupa kontemporer dari seniman lokal dan nasional.',
+    excerpt_en: 'Contemporary art exhibition featuring works of local and national artists.',
+    category_id: 'Pameran Kreatif',
+    category_en: 'Creative Exhibition',
+    thumbnail: 'https://images.unsplash.com/photo-1531243269054-5ebf6f34081e?w=800&q=80',
+    tags_id: ['Seni', 'Pameran', 'Lukisan', 'Kontemporer'],
+    tags_en: ['Art', 'Exhibition', 'Painting', 'Contemporary'],
+    type: 'agenda',
+    urlPath: 'agenda-event',
+    extendedData: {
+      time: '10:00 - 20:00',
+      eventLocation: 'Taman Budaya Yogyakarta',
+    }
+  },
+  {
+    id: 'agenda-5',
+    slug: 'pasar-umkm-kotagede',
+    title_id: 'Pasar UMKM Kotagede',
+    title_en: 'Kotagede MSME Market',
+    excerpt_id: 'Bazar produk UMKM lokal dengan beragam kerajinan dan kuliner khas.',
+    excerpt_en: 'Local MSME product bazaar with various crafts and traditional culinary.',
+    category_id: 'Event UMKM',
+    category_en: 'MSME Events',
+    thumbnail: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80',
+    tags_id: ['UMKM', 'Bazar', 'Kerajinan', 'Kuliner'],
+    tags_en: ['MSME', 'Bazaar', 'Craft', 'Culinary'],
+    type: 'agenda',
+    urlPath: 'agenda-event',
+    extendedData: {
+      time: '10:00 - 21:00',
+      eventLocation: 'Alun-Alun Kotagede, Bantul',
+    }
+  },
+];
+
+// All items combined for search
+const allItems: BilingualItem[] = [
+  ...encyclopediaItems,
+  ...destinasiWisataItems,
+  ...umkmItems,
+  ...agendaItems,
+];
+
 /**
  * Search across all data sources with bilingual support
- * Using hardcoded data that matches our actual pages
+ * Returns consistent results regardless of current locale
  */
 export function searchAllData(
   query: string,
@@ -79,531 +512,74 @@ export function searchAllData(
 
   const results: SearchResult[] = [];
 
-  // Helper to generate slug
-  const generateSlug = (name: string): string => {
-    return name.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
-  };
+  // Search through all items - search in BOTH languages for consistent results
+  allItems.forEach(item => {
+    // Filter by type if specified
+    if (types && !types.includes(item.type)) return;
 
-  // Search Encyclopedia (using sejarah type)
-  if (!types || types.includes('sejarah')) {
-    const encyclopediaData = locale === 'id' ? [
-      { id: '1', title: 'Tugu Yogyakarta', excerpt: 'Monumen ikonik yang menjadi titik awal Sumbu Filosofi di ujung utara. Tugu ini dibangun tahun 1755 oleh Sultan Hamengku Buwono I sebagai simbol persatuan antara Sultan dengan rakyatnya.', category: 'Warisan Budaya Benda', tags: ['Monumen', 'Sumbu Utama', 'Sejarah Jogja'] },
-      { id: '2', title: 'Sekaten', excerpt: 'Upacara tradisional memperingati Maulid Nabi Muhammad SAW yang diselenggarakan di Alun-Alun Utara Keraton. Tradisi ini telah berlangsung sejak zaman Sultan Hamengku Buwono I.', category: 'Warisan Budaya Tak Benda', tags: ['Upacara Adat', 'Keraton', 'Tradisi Islam'] },
-      { id: '3', title: 'Sultan Hamengku Buwono I', excerpt: 'Pendiri Kesultanan Yogyakarta dan perancang Sumbu Filosofi. Beliau menetapkan tata ruang kota berdasarkan kosmologi Jawa yang menghubungkan Tugu, Keraton, dan Panggung Krapyak.', category: 'Tokoh & Sejarah', tags: ['Sultan', 'Pendiri', 'Arsitektur Kota'] },
-      { id: '4', title: 'Manunggaling Kawula Gusti', excerpt: 'Konsep filosofis Jawa tentang kesatuan antara rakyat (kawula) dengan raja (gusti). Filosofi ini tercermin dalam tata ruang Sumbu Filosofi yang menempatkan Keraton di pusat.', category: 'Istilah & Konsep', tags: ['Filosofi Jawa', 'Kosmologi', 'Kepemimpinan'] },
-      { id: '5', title: 'Revitalisasi Taman Sari', excerpt: 'Proyek pemugaran dan revitalisasi kompleks Taman Sari yang sedang menjadi perhatian. Upaya melestarikan warisan budaya sambil membuka akses wisata yang berkelanjutan.', category: 'Sedang Tren', tags: ['Revitalisasi', 'Taman Sari', 'Pelestarian'] },
-      { id: '6', title: 'Menyusuri Sumbu Filosofi: Rute & Tips', excerpt: 'Panduan lengkap menyusuri jalur Sumbu Filosofi dari Tugu hingga Panggung Krapyak. Termasuk rekomendasi waktu kunjungan dan spot foto terbaik.', category: 'Tips Wisata', tags: ['Panduan Wisata', 'Rute', 'Tips Perjalanan'] },
-    ] : [
-      { id: '1', title: 'Tugu Yogyakarta', excerpt: 'Iconic monument marking the northern starting point of the Philosophical Axis. Built in 1755 by Sultan Hamengku Buwono I as a symbol of unity between Sultan and his people.', category: 'Tangible Heritage', tags: ['Monument', 'Main Axis', 'Jogja History'] },
-      { id: '2', title: 'Sekaten', excerpt: 'Traditional ceremony commemorating Prophet Muhammad\'s birthday held at North Square of the Palace.', category: 'Intangible Heritage', tags: ['Traditional Ceremony', 'Palace', 'Islamic Tradition'] },
-      { id: '3', title: 'Sultan Hamengku Buwono I', excerpt: 'Founder of Yogyakarta Sultanate and designer of the Philosophical Axis.', category: 'Figures & History', tags: ['Sultan', 'Founder', 'City Architecture'] },
-      { id: '4', title: 'Manunggaling Kawula Gusti', excerpt: 'Javanese philosophical concept about unity between people (kawula) and ruler (gusti).', category: 'Terms & Concepts', tags: ['Javanese Philosophy', 'Cosmology', 'Leadership'] },
-      { id: '5', title: 'Taman Sari Revitalization', excerpt: 'Major restoration and revitalization project of Taman Sari complex currently underway.', category: 'Trending', tags: ['Revitalization', 'Taman Sari', 'Preservation'] },
-      { id: '6', title: 'Exploring the Philosophical Axis: Routes & Tips', excerpt: 'Complete guide to exploring the Philosophical Axis route from Tugu to Panggung Krapyak.', category: 'Travel Tips', tags: ['Travel Guide', 'Route', 'Travel Tips'] },
-    ];
+    // Search fields include both language versions for consistent results
+    const searchFields = [
+      item.title_id,
+      item.title_en,
+      item.excerpt_id,
+      item.excerpt_en,
+      item.category_id,
+      item.category_en,
+      ...item.tags_id,
+      ...item.tags_en,
+      item.extendedData?.location_id,
+      item.extendedData?.location_en,
+      item.extendedData?.eventLocation,
+    ].filter(Boolean) as string[];
 
-    encyclopediaData.forEach(item => {
-      const searchFields = [item.title, item.excerpt, item.category, ...item.tags];
-      if (matchesQuery(searchFields, normalizedQuery)) {
-        results.push({
-          id: item.id,
-          type: 'sejarah',
-          slug: generateSlug(item.title),
-          title: item.title,
-          excerpt: item.excerpt,
-          category: item.category,
-          url: `/${locale}/encyclopedia/${item.id}`,
-        });
-      }
-    });
-  }
+    if (matchesQuery(searchFields, normalizedQuery)) {
+      // Return localized version based on current locale
+      const result: SearchResult = {
+        id: item.id,
+        type: item.type,
+        slug: item.slug,
+        title: locale === 'id' ? item.title_id : item.title_en,
+        excerpt: locale === 'id' ? item.excerpt_id : item.excerpt_en,
+        category: locale === 'id' ? item.category_id : item.category_en,
+        thumbnail: item.thumbnail,
+        url: `/${locale}/${item.urlPath}/${item.slug}`,
+      };
 
-  // Search Destinasi Wisata & Spot Nongkrong (using wisata type)
-  if (!types || types.includes('wisata')) {
-    // Destinasi Wisata data
-    const destinasiData = locale === 'id' ? [
-      {
-        id: 'keraton-yogyakarta',
-        title: 'Keraton Yogyakarta',
-        excerpt: 'Istana resmi Kesultanan Ngayogyakarta Hadiningrat yang masih berfungsi hingga kini. Kompleks keraton yang luas ini menjadi pusat budaya dan pemerintahan kesultanan.',
-        category: 'Titik Sumbu Filosofi',
-        tags: ['Keraton', 'Budaya', 'Sejarah', 'Arsitektur'],
-        address: 'Jl. Rotowijayan Blok No. 1, Panembahan, Kraton, Yogyakarta'
-      },
-      {
-        id: 'taman-sari',
-        title: 'Taman Sari',
-        excerpt: 'Kompleks taman air bekas pemandian Sultan dengan arsitektur perpaduan Jawa-Eropa yang memukau. Dibangun pada masa Sultan Hamengku Buwono I.',
-        category: 'Kawasan Keraton',
-        tags: ['Taman', 'Air', 'Heritage', 'Arsitektur'],
-        address: 'Jl. Taman, Patehan, Kraton, Yogyakarta'
-      },
-      {
-        id: 'alun-alun-kidul',
-        title: 'Alun-alun Kidul',
-        excerpt: 'Lapangan luas di selatan Keraton yang menjadi pusat aktivitas masyarakat, terkenal dengan pohon beringin kembarnya dan tradisi masangin.',
-        category: 'Kawasan Keraton',
-        tags: ['Alun-alun', 'Tradisi', 'Masangin', 'Kuliner'],
-        address: 'Patehan, Kraton, Yogyakarta'
-      },
-      {
-        id: 'malioboro',
-        title: 'Malioboro',
-        excerpt: 'Jalan legendaris dan ikon Yogyakarta yang ramai dengan pedagang, hotel, dan pusat perbelanjaan. Jalur utama pada Sumbu Filosofi.',
-        category: 'Kawasan Komersial',
-        tags: ['Shopping', 'Kuliner', 'Budaya', 'Ikonik'],
-        address: 'Jl. Malioboro, Sosromenduran, Gedong Tengen, Yogyakarta'
-      },
-      {
-        id: 'benteng-vredeburg',
-        title: 'Benteng Vredeburg',
-        excerpt: 'Museum sejarah dalam benteng peninggalan Belanda yang menampilkan diorama perjuangan kemerdekaan Indonesia. Lokasi strategis di pusat kota.',
-        category: 'Museum',
-        tags: ['Museum', 'Sejarah', 'Benteng', 'Edukasi'],
-        address: 'Jl. Marga Mulya No.6, Ngupasan, Gondomanan, Yogyakarta'
+      // Add extended data based on type
+      if (item.type === 'wisata' && item.extendedData) {
+        result.wisataData = {
+          facilities_id: item.extendedData.facilities_id,
+          facilities_en: item.extendedData.facilities_en,
+        };
       }
-    ] : [
-      {
-        id: 'keraton-yogyakarta',
-        title: 'Yogyakarta Palace',
-        excerpt: 'The official palace of Ngayogyakarta Hadiningrat Sultanate still functioning today. This vast palace complex is the center of culture and sultanate governance.',
-        category: 'Philosophical Axis Point',
-        tags: ['Palace', 'Culture', 'History', 'Architecture'],
-        address: 'Jl. Rotowijayan Blok No. 1, Panembahan, Kraton, Yogyakarta'
-      },
-      {
-        id: 'taman-sari',
-        title: 'Taman Sari Water Castle',
-        excerpt: 'Former Sultan\'s bathing complex with stunning Javanese-European architectural blend. Built during Sultan Hamengku Buwono I\'s reign.',
-        category: 'Palace Area',
-        tags: ['Garden', 'Water', 'Heritage', 'Architecture'],
-        address: 'Jl. Taman, Patehan, Kraton, Yogyakarta'
-      },
-      {
-        id: 'alun-alun-kidul',
-        title: 'South Square',
-        excerpt: 'Wide field south of the Palace serving as community activity center, famous for its twin banyan trees and masangin tradition.',
-        category: 'Palace Area',
-        tags: ['Square', 'Tradition', 'Masangin', 'Culinary'],
-        address: 'Patehan, Kraton, Yogyakarta'
-      },
-      {
-        id: 'malioboro',
-        title: 'Malioboro Street',
-        excerpt: 'Legendary street and icon of Yogyakarta bustling with merchants, hotels, and shopping centers. Main route on the Philosophical Axis.',
-        category: 'Commercial Area',
-        tags: ['Shopping', 'Culinary', 'Culture', 'Iconic'],
-        address: 'Jl. Malioboro, Sosromenduran, Gedong Tengen, Yogyakarta'
-      },
-      {
-        id: 'benteng-vredeburg',
-        title: 'Fort Vredeburg',
-        excerpt: 'Historical museum in Dutch colonial fort displaying dioramas of Indonesian independence struggle. Strategic location in city center.',
-        category: 'Museum',
-        tags: ['Museum', 'History', 'Fort', 'Education'],
-        address: 'Jl. Marga Mulya No.6, Ngupasan, Gondomanan, Yogyakarta'
-      }
-    ];
 
-    destinasiData.forEach(item => {
-      const searchFields = [item.title, item.excerpt, item.category, ...item.tags, item.address];
-      if (matchesQuery(searchFields, normalizedQuery)) {
-        results.push({
-          id: item.id,
-          type: 'wisata',
-          slug: item.id,
-          title: item.title,
-          excerpt: item.excerpt,
-          category: item.category,
-          url: `/${locale}/destinasi-wisata/${item.id}`,
-        });
+      if (item.type === 'umkm' && item.extendedData) {
+        result.umkmData = {
+          products_id: item.extendedData.products_id,
+          products_en: item.extendedData.products_en,
+          location_id: item.extendedData.location_id,
+          location_en: item.extendedData.location_en,
+        };
       }
-    });
 
-    // Spot Nongkrong data
-    const spotData = locale === 'id' ? [
-      {
-        id: 'kopi-klotok-heritage',
-        title: 'Kopi Klotok Heritage',
-        excerpt: 'Kedai kopi legendaris dengan suasana vintage dan kopi racikan tradisional yang kental. Tempat nongkrong favorit sejak 1980an.',
-        category: 'Kafe',
-        tags: ['Kopi', 'Vintage', 'Tradisional', 'Heritage'],
-        address: 'Jl. Adisucipto Km. 6, Sleman, Yogyakarta'
-      },
-      {
-        id: 'the-westlake-resto-cafe',
-        title: 'The Westlake Resto & Cafe',
-        excerpt: 'Restoran dan kafe tepi danau dengan pemandangan sunset yang memukau. Menu western dan indonesian fusion.',
-        category: 'Resto & Kafe',
-        tags: ['Danau', 'Sunset', 'Western', 'Romantis'],
-        address: 'Jl. Kaliurang Km 21.5, Sleman, Yogyakarta'
-      },
-      {
-        id: 'roaster-and-bear',
-        title: 'Roaster & Bear',
-        excerpt: 'Coffee shop modern dengan interior industrial dan specialty coffee berkualitas tinggi. Perfect untuk kerja remote.',
-        category: 'Kafe',
-        tags: ['Specialty Coffee', 'Modern', 'Coworking', 'Industrial'],
-        address: 'Jl. Veteran No. 5, Pandeyan, Umbulharjo, Yogyakarta'
-      },
-      {
-        id: 'warung-bu-ageng',
-        title: 'Warung Bu Ageng',
-        excerpt: 'Warung makan sederhana dengan masakan rumahan yang lezat dan harga terjangkau. Favorit anak kos dan mahasiswa.',
-        category: 'Warung Makan',
-        tags: ['Masakan Rumahan', 'Murah', 'Sederhana', 'Tradisional'],
-        address: 'Jl. Kaliurang Km 5.5, Sleman, Yogyakarta'
-      },
-      {
-        id: 'abhayagiri-restaurant',
-        title: 'Abhayagiri Restaurant',
-        excerpt: 'Restoran dengan view kota Jogja dari atas bukit. Menu fine dining dengan cita rasa Indonesia modern.',
-        category: 'Restoran',
-        tags: ['View', 'Fine Dining', 'Romantis', 'Premium'],
-        address: 'Jl. Hargobinangun, Pakem, Sleman, Yogyakarta'
-      },
-      {
-        id: 'taman-lampion-kaliurang',
-        title: 'Taman Lampion Kaliurang',
-        excerpt: 'Taman rekreasi dengan ribuan lampion warna-warni di malam hari. Tempat wisata keluarga yang Instagramable.',
-        category: 'Tempat Wisata',
-        tags: ['Lampion', 'Keluarga', 'Instagramable', 'Malam'],
-        address: 'Jl. Kaliurang Km 22.5, Hargobinangun, Pakem, Sleman, Yogyakarta'
+      if (item.type === 'agenda' && item.extendedData) {
+        const timeParts = item.extendedData.time?.split(' - ') || [];
+        result.agendaData = {
+          time_start: timeParts[0],
+          time_end: timeParts[1],
+          location: item.extendedData.eventLocation,
+        };
       }
-    ] : [
-      {
-        id: 'kopi-klotok-heritage',
-        title: 'Kopi Klotok Heritage',
-        excerpt: 'Legendary coffee shop with vintage atmosphere and thick traditional brewed coffee. Favorite hangout since 1980s.',
-        category: 'Cafe',
-        tags: ['Coffee', 'Vintage', 'Traditional', 'Heritage'],
-        address: 'Jl. Adisucipto Km. 6, Sleman, Yogyakarta'
-      },
-      {
-        id: 'the-westlake-resto-cafe',
-        title: 'The Westlake Resto & Cafe',
-        excerpt: 'Lakeside restaurant and cafe with stunning sunset views. Western and Indonesian fusion menu.',
-        category: 'Restaurant & Cafe',
-        tags: ['Lake', 'Sunset', 'Western', 'Romantic'],
-        address: 'Jl. Kaliurang Km 21.5, Sleman, Yogyakarta'
-      },
-      {
-        id: 'roaster-and-bear',
-        title: 'Roaster & Bear',
-        excerpt: 'Modern coffee shop with industrial interior and high-quality specialty coffee. Perfect for remote working.',
-        category: 'Cafe',
-        tags: ['Specialty Coffee', 'Modern', 'Coworking', 'Industrial'],
-        address: 'Jl. Veteran No. 5, Pandeyan, Umbulharjo, Yogyakarta'
-      },
-      {
-        id: 'warung-bu-ageng',
-        title: 'Warung Bu Ageng',
-        excerpt: 'Simple eatery with delicious home-cooked food at affordable prices. Favorite of students and boarders.',
-        category: 'Eatery',
-        tags: ['Home Cooking', 'Affordable', 'Simple', 'Traditional'],
-        address: 'Jl. Kaliurang Km 5.5, Sleman, Yogyakarta'
-      },
-      {
-        id: 'abhayagiri-restaurant',
-        title: 'Abhayagiri Restaurant',
-        excerpt: 'Restaurant with Jogja city view from hilltop. Fine dining menu with modern Indonesian taste.',
-        category: 'Restaurant',
-        tags: ['View', 'Fine Dining', 'Romantic', 'Premium'],
-        address: 'Jl. Hargobinangun, Pakem, Sleman, Yogyakarta'
-      },
-      {
-        id: 'taman-lampion-kaliurang',
-        title: 'Taman Lampion Kaliurang',
-        excerpt: 'Recreation park with thousands of colorful lanterns at night. Instagrammable family tourist spot.',
-        category: 'Tourist Spot',
-        tags: ['Lantern', 'Family', 'Instagrammable', 'Night'],
-        address: 'Jl. Kaliurang Km 22.5, Hargobinangun, Pakem, Sleman, Yogyakarta'
-      }
-    ];
 
-    spotData.forEach(item => {
-      const searchFields = [item.title, item.excerpt, item.category, ...item.tags, item.address];
-      if (matchesQuery(searchFields, normalizedQuery)) {
-        results.push({
-          id: item.id,
-          type: 'wisata',
-          slug: item.id,
-          title: item.title,
-          excerpt: item.excerpt,
-          category: item.category,
-          url: `/${locale}/spot-nongkrong/${item.id}`,
-        });
-      }
-    });
-  }
-
-  // Search UMKM Lokal
-  if (!types || types.includes('umkm')) {
-    const umkmData = locale === 'id' ? [
-      {
-        id: 'batik-winotosastro',
-        title: 'Batik Winotosastro',
-        excerpt: 'Pengrajin batik tulis tradisional sejak 1950an dengan motif khas Yogyakarta. Proses pembuatan batik dilakukan dengan teknik turun temurun.',
-        category: 'Kerajinan',
-        tags: ['Batik', 'Kerajinan', 'Tradisional', 'Handmade'],
-        address: 'Jl. Tirtodipuran No. 54, Mantrijeron, Yogyakarta',
-        products: ['Batik Tulis', 'Batik Cap', 'Kain', 'Pakaian']
-      },
-      {
-        id: 'gudeg-yu-djum',
-        title: 'Gudeg Yu Djum',
-        excerpt: 'Warung gudeg legendaris sejak 1950 dengan cita rasa khas Yogyakarta yang manis dan gurih. Salah satu kuliner wajib di Jogja.',
-        category: 'Kuliner',
-        tags: ['Gudeg', 'Kuliner', 'Tradisional', 'Legendaris'],
-        address: 'Jl. Kemetiran Kidul No. 13, Pringgokusuman, Gedongtengen, Yogyakarta',
-        products: ['Gudeg Kering', 'Gudeg Basah', 'Ayam', 'Telur']
-      },
-      {
-        id: 'kerajinan-perak-kotagede',
-        title: 'Kerajinan Perak Kotagede',
-        excerpt: 'Pusat kerajinan perak dengan teknik tradisional yang telah ada sejak zaman Mataram. Menghasilkan perhiasan dan cinderamata berkualitas tinggi.',
-        category: 'Kerajinan',
-        tags: ['Perak', 'Silver', 'Perhiasan', 'Kerajinan'],
-        address: 'Jl. Mondorakan, Kotagede, Bantul, Yogyakarta',
-        products: ['Perhiasan Perak', 'Souvenir', 'Aksesoris', 'Dekorasi']
-      },
-      {
-        id: 'bakpia-pathok-25',
-        title: 'Bakpia Pathok 25',
-        excerpt: 'Produsen bakpia terkenal dengan berbagai varian rasa modern dan tradisional. Oleh-oleh khas Yogyakarta yang wajib dibawa pulang.',
-        category: 'Kuliner',
-        tags: ['Bakpia', 'Oleh-oleh', 'Kue', 'Pathok'],
-        address: 'Jl. Aip KS Tubun No. 46-48, Pathuk, Gondomanan, Yogyakarta',
-        products: ['Bakpia Kacang Hijau', 'Bakpia Keju', 'Bakpia Coklat', 'Bakpia Original']
-      },
-      {
-        id: 'hamzah-batik',
-        title: 'Hamzah Batik',
-        excerpt: 'Galeri batik modern dengan koleksi lengkap dari berbagai daerah di Indonesia. Menyediakan batik fashion dan kain dengan kualitas premium.',
-        category: 'Kerajinan',
-        tags: ['Batik', 'Fashion', 'Modern', 'Premium'],
-        address: 'Jl. Mataram No. 52, Suryodiningratan, Mantrijeron, Yogyakarta',
-        products: ['Batik Fashion', 'Kain Batik', 'Kemeja Batik', 'Dress Batik']
-      },
-      {
-        id: 'dagadu-djokdja',
-        title: 'Dagadu Djokdja',
-        excerpt: 'Merek souvenir ikonik Jogja dengan desain khas dan kreatif. Terkenal dengan kaos dan merchandise bertemakan Yogyakarta.',
-        category: 'Souvenir',
-        tags: ['Souvenir', 'Kaos', 'Merchandise', 'Ikonik'],
-        address: 'Jl. Dagen No. 39, Malioboro, Yogyakarta',
-        products: ['Kaos', 'Tote Bag', 'Pin', 'Stiker']
-      }
-    ] : [
-      {
-        id: 'batik-winotosastro',
-        title: 'Batik Winotosastro',
-        excerpt: 'Traditional hand-drawn batik craftsman since 1950s with distinctive Yogyakarta motifs. Batik making process done with hereditary techniques.',
-        category: 'Craft',
-        tags: ['Batik', 'Craft', 'Traditional', 'Handmade'],
-        address: 'Jl. Tirtodipuran No. 54, Mantrijeron, Yogyakarta',
-        products: ['Hand-drawn Batik', 'Stamped Batik', 'Fabric', 'Clothing']
-      },
-      {
-        id: 'gudeg-yu-djum',
-        title: 'Gudeg Yu Djum',
-        excerpt: 'Legendary gudeg stall since 1950 with distinctive sweet and savory Yogyakarta taste. One of the must-try cuisines in Jogja.',
-        category: 'Culinary',
-        tags: ['Gudeg', 'Culinary', 'Traditional', 'Legendary'],
-        address: 'Jl. Kemetiran Kidul No. 13, Pringgokusuman, Gedongtengen, Yogyakarta',
-        products: ['Dry Gudeg', 'Wet Gudeg', 'Chicken', 'Egg']
-      },
-      {
-        id: 'kerajinan-perak-kotagede',
-        title: 'Kotagede Silver Craft',
-        excerpt: 'Silver craft center with traditional techniques existing since Mataram era. Produces high-quality jewelry and souvenirs.',
-        category: 'Craft',
-        tags: ['Silver', 'Jewelry', 'Craft', 'Traditional'],
-        address: 'Jl. Mondorakan, Kotagede, Bantul, Yogyakarta',
-        products: ['Silver Jewelry', 'Souvenirs', 'Accessories', 'Decoration']
-      },
-      {
-        id: 'bakpia-pathok-25',
-        title: 'Bakpia Pathok 25',
-        excerpt: 'Famous bakpia producer with various modern and traditional flavor variants. Typical Yogyakarta souvenir that must be brought home.',
-        category: 'Culinary',
-        tags: ['Bakpia', 'Souvenir', 'Cake', 'Pathok'],
-        address: 'Jl. Aip KS Tubun No. 46-48, Pathuk, Gondomanan, Yogyakarta',
-        products: ['Green Bean Bakpia', 'Cheese Bakpia', 'Chocolate Bakpia', 'Original Bakpia']
-      },
-      {
-        id: 'hamzah-batik',
-        title: 'Hamzah Batik',
-        excerpt: 'Modern batik gallery with complete collection from various regions in Indonesia. Provides batik fashion and premium quality fabrics.',
-        category: 'Craft',
-        tags: ['Batik', 'Fashion', 'Modern', 'Premium'],
-        address: 'Jl. Mataram No. 52, Suryodiningratan, Mantrijeron, Yogyakarta',
-        products: ['Batik Fashion', 'Batik Fabric', 'Batik Shirt', 'Batik Dress']
-      },
-      {
-        id: 'dagadu-djokdja',
-        title: 'Dagadu Djokdja',
-        excerpt: 'Iconic Jogja souvenir brand with distinctive and creative designs. Famous for t-shirts and merchandise with Yogyakarta theme.',
-        category: 'Souvenir',
-        tags: ['Souvenir', 'T-shirt', 'Merchandise', 'Iconic'],
-        address: 'Jl. Dagen No. 39, Malioboro, Yogyakarta',
-        products: ['T-shirts', 'Tote Bag', 'Pin', 'Sticker']
-      }
-    ];
-
-    umkmData.forEach(item => {
-      const searchFields = [item.title, item.excerpt, item.category, ...item.tags, item.address, ...item.products];
-      if (matchesQuery(searchFields, normalizedQuery)) {
-        results.push({
-          id: item.id,
-          type: 'umkm',
-          slug: item.id,
-          title: item.title,
-          excerpt: item.excerpt,
-          category: item.category,
-          url: `/${locale}/umkm-lokal/${item.id}`,
-        });
-      }
-    });
-  }
-
-
-  // Search Agenda Event
-  if (!types || types.includes('agenda')) {
-    const agendaData = locale === 'id' ? [
-      {
-        id: 'sekaten-festival-2024',
-        title: 'Sekaten Festival 2024',
-        excerpt: 'Festival budaya tahunan yang menampilkan gamelan, pasar malam tradisional, dan berbagai pertunjukan seni. Merayakan tradisi Keraton Yogyakarta.',
-        category: 'Budaya & Upacara',
-        tags: ['Festival', 'Budaya', 'Tradisi', 'Gamelan'],
-        date: '25 November 2024',
-        time: '18:00 - 23:00',
-        location: 'Alun-Alun Utara Keraton, Yogyakarta'
-      },
-      {
-        id: 'jogja-international-music-festival',
-        title: 'Jogja International Music Festival',
-        excerpt: 'Festival musik internasional yang menghadirkan artis lokal dan mancanegara. Berbagai genre musik dari rock, pop, hingga EDM.',
-        category: 'Festival & Hiburan',
-        tags: ['Musik', 'Festival', 'Konser', 'Internasional'],
-        date: '15 Desember 2024',
-        time: '14:00 - 23:00',
-        location: 'Stadion Mandala Krida, Yogyakarta'
-      },
-      {
-        id: 'workshop-batik-untuk-pemula',
-        title: 'Workshop Batik untuk Pemula',
-        excerpt: 'Belajar teknik membatik dari ahli dengan metode yang mudah dipahami pemula. Termasuk materi dan alat batik.',
-        category: 'Komunitas & Workshop',
-        tags: ['Workshop', 'Batik', 'Kerajinan', 'Edukasi'],
-        date: '28 November 2024',
-        time: '09:00 - 15:00',
-        location: 'Rumah Batik Tirtodipuran, Yogyakarta'
-      },
-      {
-        id: 'jogja-art-fair-2024',
-        title: 'Jogja Art Fair 2024',
-        excerpt: 'Pameran seni rupa kontemporer menampilkan karya seniman lokal dan nasional. Berbagai medium dari lukisan, patung, hingga instalasi.',
-        category: 'Pameran Kreatif',
-        tags: ['Seni', 'Pameran', 'Lukisan', 'Kontemporer'],
-        date: '5-10 Desember 2024',
-        time: '10:00 - 20:00',
-        location: 'Taman Budaya Yogyakarta'
-      },
-      {
-        id: 'pasar-umkm-kotagede',
-        title: 'Pasar UMKM Kotagede',
-        excerpt: 'Bazar produk UMKM lokal dari Kotagede dan sekitarnya. Kerajinan perak, batik, kuliner tradisional, dan berbagai produk kreatif.',
-        category: 'Event UMKM',
-        tags: ['UMKM', 'Bazar', 'Kerajinan', 'Kuliner'],
-        date: '1-3 Desember 2024',
-        time: '10:00 - 21:00',
-        location: 'Alun-Alun Kotagede, Bantul'
-      }
-    ] : [
-      {
-        id: 'sekaten-festival-2024',
-        title: 'Sekaten Festival 2024',
-        excerpt: 'Annual cultural festival featuring gamelan, traditional night market, and various art performances. Celebrating Yogyakarta Palace tradition.',
-        category: 'Culture & Ceremony',
-        tags: ['Festival', 'Culture', 'Tradition', 'Gamelan'],
-        date: 'November 25, 2024',
-        time: '18:00 - 23:00',
-        location: 'North Square Keraton, Yogyakarta'
-      },
-      {
-        id: 'jogja-international-music-festival',
-        title: 'Jogja International Music Festival',
-        excerpt: 'International music festival featuring local and international artists. Various music genres from rock, pop, to EDM.',
-        category: 'Festivals & Entertainment',
-        tags: ['Music', 'Festival', 'Concert', 'International'],
-        date: 'December 15, 2024',
-        time: '14:00 - 23:00',
-        location: 'Mandala Krida Stadium, Yogyakarta'
-      },
-      {
-        id: 'workshop-batik-untuk-pemula',
-        title: 'Batik Workshop for Beginners',
-        excerpt: 'Learn batik techniques from experts with easy-to-understand methods for beginners. Includes batik materials and tools.',
-        category: 'Community & Workshop',
-        tags: ['Workshop', 'Batik', 'Craft', 'Education'],
-        date: 'November 28, 2024',
-        time: '09:00 - 15:00',
-        location: 'Batik House Tirtodipuran, Yogyakarta'
-      },
-      {
-        id: 'jogja-art-fair-2024',
-        title: 'Jogja Art Fair 2024',
-        excerpt: 'Contemporary art exhibition featuring works of local and national artists. Various mediums from painting, sculpture, to installation.',
-        category: 'Creative Exhibition',
-        tags: ['Art', 'Exhibition', 'Painting', 'Contemporary'],
-        date: 'December 5-10, 2024',
-        time: '10:00 - 20:00',
-        location: 'Taman Budaya Yogyakarta'
-      },
-      {
-        id: 'pasar-umkm-kotagede',
-        title: 'Kotagede MSME Market',
-        excerpt: 'Local MSME product bazaar from Kotagede and surroundings. Silver craft, batik, traditional culinary, and various creative products.',
-        category: 'MSME Events',
-        tags: ['MSME', 'Bazaar', 'Craft', 'Culinary'],
-        date: 'December 1-3, 2024',
-        time: '10:00 - 21:00',
-        location: 'Kotagede Square, Bantul'
-      }
-    ];
-
-    agendaData.forEach(item => {
-      const searchFields = [item.title, item.excerpt, item.category, ...item.tags, item.location, item.date];
-      if (matchesQuery(searchFields, normalizedQuery)) {
-        results.push({
-          id: item.id,
-          type: 'agenda',
-          slug: item.id,
-          title: item.title,
-          excerpt: item.excerpt,
-          category: item.category,
-          url: `/${locale}/agenda-event/${item.id}`,
-        });
-      }
-    });
-  }
-
-  // Note: Galeri and Lokasi search removed as we're focusing on main pages
-  // (Encyclopedia, Spot Nongkrong, UMKM Lokal, Destinasi Wisata, Agenda Event)
+      results.push(result);
+    }
+  });
 
   return results.slice(0, limit);
 }
 
 /**
  * Get search suggestions based on query
- * Only returns data from pages we're actually using:
- * - Encyclopedia (from sejarah/encyclopedia entries)
- * - Spot Nongkrong (hardcoded data from spot-nongkrong page)
- * - UMKM Lokal (hardcoded data from umkm-lokal page)
- * - Destinasi Wisata (hardcoded data from destinasi-wisata page)
- * - Agenda Event (hardcoded data from agenda-event page)
  */
 export function getSearchSuggestions(
   query: string,
@@ -615,114 +591,10 @@ export function getSearchSuggestions(
 
   const suggestions = new Set<string>();
 
-  // Encyclopedia entries (matching encyclopedia page data)
-  const encyclopediaEntries = locale === 'id' ? [
-    'Tugu Yogyakarta',
-    'Sekaten',
-    'Sultan Hamengku Buwono I',
-    'Manunggaling Kawula Gusti',
-    'Revitalisasi Taman Sari',
-    'Menyusuri Sumbu Filosofi: Rute & Tips',
-  ] : [
-    'Tugu Yogyakarta',
-    'Sekaten',
-    'Sultan Hamengku Buwono I',
-    'Manunggaling Kawula Gusti',
-    'Taman Sari Revitalization',
-    'Exploring the Philosophical Axis: Routes & Tips',
-  ];
-
-  encyclopediaEntries.forEach(title => {
+  allItems.forEach(item => {
+    const title = locale === 'id' ? item.title_id : item.title_en;
     if (title.toLowerCase().includes(normalizedQuery)) {
       suggestions.add(title);
-    }
-  });
-
-  // Spot Nongkrong data (from spot-nongkrong page)
-  const spotData = locale === 'id' ? [
-    'Kopi Klotok Heritage',
-    'The Westlake Resto & Cafe',
-    'Roaster & Bear',
-    'Warung Bu Ageng',
-    'Abhayagiri Restaurant',
-    'Taman Lampion Kaliurang',
-  ] : [
-    'Kopi Klotok Heritage',
-    'The Westlake Resto & Cafe',
-    'Roaster & Bear',
-    'Warung Bu Ageng',
-    'Abhayagiri Restaurant',
-    'Taman Lampion Kaliurang',
-  ];
-
-  spotData.forEach(name => {
-    if (name.toLowerCase().includes(normalizedQuery)) {
-      suggestions.add(name);
-    }
-  });
-
-  // UMKM Lokal data (from umkm-lokal page)
-  const umkmData = locale === 'id' ? [
-    'Batik Winotosastro',
-    'Gudeg Yu Djum',
-    'Kerajinan Perak Kotagede',
-    'Bakpia Pathok 25',
-    'Hamzah Batik',
-    'Dagadu Djokdja',
-  ] : [
-    'Batik Winotosastro',
-    'Gudeg Yu Djum',
-    'Kotagede Silver Craft',
-    'Bakpia Pathok 25',
-    'Hamzah Batik',
-    'Dagadu Djokdja',
-  ];
-
-  umkmData.forEach(name => {
-    if (name.toLowerCase().includes(normalizedQuery)) {
-      suggestions.add(name);
-    }
-  });
-
-  // Destinasi Wisata data (from destinasi-wisata page)
-  const destinasiData = locale === 'id' ? [
-    'Keraton Yogyakarta',
-    'Taman Sari',
-    'Alun-alun Kidul',
-    'Malioboro',
-    'Benteng Vredeburg',
-  ] : [
-    'Yogyakarta Palace',
-    'Taman Sari Water Castle',
-    'South Square',
-    'Malioboro Street',
-    'Fort Vredeburg',
-  ];
-
-  destinasiData.forEach(name => {
-    if (name.toLowerCase().includes(normalizedQuery)) {
-      suggestions.add(name);
-    }
-  });
-
-  // Agenda Event data (from agenda-event page)
-  const agendaData = locale === 'id' ? [
-    'Sekaten Festival 2024',
-    'Jogja International Music Festival',
-    'Workshop Batik untuk Pemula',
-    'Jogja Art Fair 2024',
-    'Pasar UMKM Kotagede',
-  ] : [
-    'Sekaten Festival 2024',
-    'Jogja International Music Festival',
-    'Batik Workshop for Beginners',
-    'Jogja Art Fair 2024',
-    'Kotagede MSME Market',
-  ];
-
-  agendaData.forEach(name => {
-    if (name.toLowerCase().includes(normalizedQuery)) {
-      suggestions.add(name);
     }
   });
 
@@ -759,17 +631,6 @@ export function getAllSearchTypes(): SearchResultType[] {
 /**
  * Helper function to check if any field matches the query
  */
-function matchesQuery(fields: (string | undefined)[], query: string): boolean {
-  return fields.some((field) =>
-    field?.toLowerCase().includes(query)
-  );
-}
-
-/**
- * Helper function to truncate text
- */
-function truncateText(text: string, maxLength: number): string {
-  if (!text) return '';
-  if (text.length <= maxLength) return text;
-  return text.slice(0, maxLength).trim() + '...';
+function matchesQuery(fields: string[], query: string): boolean {
+  return fields.some(field => field.toLowerCase().includes(query));
 }
