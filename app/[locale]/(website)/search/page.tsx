@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
-import { Search, Filter, Image as ImageIcon, MapPin, Book, Store, Calendar, Camera, ExternalLink, Navigation } from 'lucide-react';
+import { Search, Filter, Image as ImageIcon, MapPin, Book, Store, Calendar, Camera, ExternalLink, Navigation, Coffee } from 'lucide-react';
 import { FadeInSection } from '@/components/shared/FadeInSection';
 import { searchAllData, getAllSearchTypes, getSearchCategoryLabel } from '@/lib/search';
 import type { SearchResult, SearchResultType } from '@/lib/search';
@@ -193,6 +193,44 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
     );
   }
 
+  // Nongkrong Card Style
+  if (result.type === 'nongkrong') {
+    const location = result.umkmData ? (locale === 'id' ? result.umkmData.location_id : result.umkmData.location_en) : undefined;
+
+    return (
+      <Link href={result.url} className="bg-card rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group block h-full flex flex-col">
+        <div className="relative aspect-video overflow-hidden bg-muted">
+          {hasValidThumbnail(result.thumbnail) ? (
+            <img src={result.thumbnail} alt={result.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-500/20 to-amber-600/20">
+              <Coffee className="w-12 h-12 text-orange-500/40" />
+            </div>
+          )}
+          {/* Category Badge - Top Right - Nongkrong Orange */}
+          <div className="absolute top-4 right-4 z-10">
+            <span className="inline-flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-orange-500 to-amber-500 text-white rounded-full text-xs font-medium shadow-lg">
+              <Coffee className="w-4 h-4" />
+              {result.category}
+            </span>
+          </div>
+          {/* Type indicator line */}
+          <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-500 to-amber-500"></div>
+        </div>
+        <div className="p-4 flex-1 flex flex-col">
+          <h3 className="font-serif text-lg font-semibold text-stone-800 dark:text-white mb-2 line-clamp-2 group-hover:text-amber-500 transition-colors">{result.title}</h3>
+          <p className="text-sm text-stone-600 dark:text-slate-400 line-clamp-2 mb-3 flex-1">{result.excerpt}</p>
+          {location && (
+            <div className="flex items-center gap-2 text-sm text-stone-500 dark:text-slate-500">
+              <MapPin className="w-4 h-4 text-orange-500" />
+              <span className="line-clamp-1">{location}</span>
+            </div>
+          )}
+        </div>
+      </Link>
+    );
+  }
+
   // Galeri Card Style
   if (result.type === 'galeri') {
     return (
@@ -233,6 +271,7 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
     umkm: 'from-amber-500/20 to-orange-600/20',
     agenda: 'from-rose-500/20 to-pink-600/20',
     galeri: 'from-violet-500/20 to-purple-600/20',
+    nongkrong: 'from-orange-500/20 to-amber-600/20',
   };
 
   const typeBadgeColors: Record<SearchResultType, string> = {
@@ -243,6 +282,7 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
     umkm: 'bg-amber-600 dark:bg-amber-700/80',
     agenda: 'bg-rose-600 dark:bg-rose-700/80',
     galeri: 'bg-violet-600 dark:bg-violet-700/80',
+    nongkrong: 'bg-orange-500 dark:bg-orange-600/80',
   };
 
   const typeLineColors: Record<SearchResultType, string> = {
@@ -253,6 +293,7 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
     umkm: 'bg-amber-600 dark:bg-amber-700/60',
     agenda: 'bg-rose-600 dark:bg-rose-700/60',
     galeri: 'bg-violet-600 dark:bg-violet-700/60',
+    nongkrong: 'bg-orange-500 dark:bg-orange-600/60',
   };
 
   return (
@@ -345,6 +386,7 @@ function SearchPageContent() {
       agenda: <Calendar className="w-4 h-4" />,
       galeri: <Camera className="w-4 h-4" />,
       lokasi: <MapPin className="w-4 h-4" />,
+      nongkrong: <Coffee className="w-4 h-4" />,
     };
     return icons[type];
   };
@@ -420,6 +462,7 @@ function SearchPageContent() {
                     galeri: 'from-violet-500 to-purple-600',
                     kawasan: 'from-cyan-500 to-blue-600',
                     lokasi: 'from-green-500 to-emerald-600',
+                    nongkrong: 'from-orange-500 to-amber-600',
                   };
 
                   return (

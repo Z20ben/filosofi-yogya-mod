@@ -7,7 +7,8 @@ export type SearchResultType =
   | 'sejarah'
   | 'agenda'
   | 'galeri'
-  | 'lokasi';
+  | 'lokasi'
+  | 'nongkrong';
 
 // Extended data for specific types
 export interface WisataExtendedData {
@@ -278,7 +279,6 @@ const umkmItems: BilingualItem[] = [
     excerpt_en: 'Legendary gudeg you must try! Traditional recipe with authentic Jogja taste.',
     category_id: 'Kuliner Tradisional',
     category_en: 'Traditional Culinary',
-    thumbnail: 'https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&q=80',
     tags_id: ['Gudeg', 'Kuliner', 'Tradisional', 'Legendaris'],
     tags_en: ['Gudeg', 'Culinary', 'Traditional', 'Legendary'],
     type: 'umkm',
@@ -299,7 +299,6 @@ const umkmItems: BilingualItem[] = [
     excerpt_en: 'High-quality cap and tulis batik with classic and modern motifs.',
     category_id: 'Kerajinan Batik',
     category_en: 'Batik Craft',
-    thumbnail: 'https://images.unsplash.com/photo-1721361467569-f8edbf851f44?w=800&q=80',
     tags_id: ['Batik', 'Kerajinan', 'Tradisional', 'Handmade'],
     tags_en: ['Batik', 'Craft', 'Traditional', 'Handmade'],
     type: 'umkm',
@@ -320,7 +319,6 @@ const umkmItems: BilingualItem[] = [
     excerpt_en: 'Iconic Jogja local fashion brand with unique design and premium quality.',
     category_id: 'Fashion Lokal',
     category_en: 'Local Fashion',
-    thumbnail: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=80',
     tags_id: ['Souvenir', 'Kaos', 'Merchandise', 'Ikonik'],
     tags_en: ['Souvenir', 'T-shirt', 'Merchandise', 'Iconic'],
     type: 'umkm',
@@ -341,7 +339,6 @@ const umkmItems: BilingualItem[] = [
     excerpt_en: 'Trendy dessert box and snacks popular among young people!',
     category_id: 'Dessert & Snack',
     category_en: 'Dessert & Snack',
-    thumbnail: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&q=80',
     tags_id: ['Modern', 'Instagramable', 'Halal', 'Kekinian'],
     tags_en: ['Modern', 'Instagramable', 'Halal', 'Trendy'],
     type: 'umkm',
@@ -360,7 +357,6 @@ const umkmItems: BilingualItem[] = [
     excerpt_en: 'Artistic pottery products for home decoration with modern touch.',
     category_id: 'Kerajinan Tanah Liat',
     category_en: 'Pottery Craft',
-    thumbnail: 'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=800&q=80',
     tags_id: ['Handmade', 'Eco-Friendly', 'Unique', 'Gerabah'],
     tags_en: ['Handmade', 'Eco-Friendly', 'Unique', 'Pottery'],
     type: 'umkm',
@@ -379,7 +375,6 @@ const umkmItems: BilingualItem[] = [
     excerpt_en: 'Graphic design, illustration, and branding services for SMEs and personal.',
     category_id: 'Creative Studio',
     category_en: 'Creative Studio',
-    thumbnail: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800&q=80',
     tags_id: ['Digital Art', 'Custom', 'Professional', 'Kreatif'],
     tags_en: ['Digital Art', 'Custom', 'Professional', 'Creative'],
     type: 'umkm',
@@ -387,6 +382,123 @@ const umkmItems: BilingualItem[] = [
     extendedData: {
       location_id: 'Jl. Gejayan, Yogyakarta',
       location_en: 'Jl. Gejayan, Yogyakarta',
+    }
+  },
+];
+
+const spotNongkrongItems: BilingualItem[] = [
+  {
+    id: 'spot-1',
+    slug: 'kopi-klotok-heritage',
+    title_id: 'Kopi Klotok Heritage',
+    title_en: 'Kopi Klotok Heritage',
+    excerpt_id: 'Cafe di alam terbuka dengan view pegunungan yang epic! Perfect buat foto-foto aesthetic.',
+    excerpt_en: 'Open-air cafe with epic mountain views! Perfect for aesthetic photoshoots.',
+    category_id: 'Cafe',
+    category_en: 'Cafe',
+    thumbnail: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&q=80',
+    tags_id: ['Instagramable', 'Budget Friendly', 'View Gunung', 'Kopi'],
+    tags_en: ['Instagramable', 'Budget Friendly', 'Mountain View', 'Coffee'],
+    type: 'nongkrong',
+    urlPath: 'spot-nongkrong',
+    extendedData: {
+      location_id: 'Pakem, Sleman',
+      location_en: 'Pakem, Sleman',
+    }
+  },
+  {
+    id: 'spot-2',
+    slug: 'the-westlake-resto--cafe',
+    title_id: 'The Westlake Resto & Cafe',
+    title_en: 'The Westlake Resto & Cafe',
+    excerpt_id: 'Cafe tepi danau dengan sunset view yang bikin feed IG kamu makin kece!',
+    excerpt_en: 'Lakeside cafe with sunset views that will level up your IG feed!',
+    category_id: 'Cafe & Restaurant',
+    category_en: 'Cafe & Restaurant',
+    thumbnail: 'https://images.unsplash.com/photo-1559339352-11d035aa65de?w=800&q=80',
+    tags_id: ['Sunset View', 'Date Spot', 'Instagramable', 'Romantis'],
+    tags_en: ['Sunset View', 'Date Spot', 'Instagramable', 'Romantic'],
+    type: 'nongkrong',
+    urlPath: 'spot-nongkrong',
+    extendedData: {
+      location_id: 'Sleman',
+      location_en: 'Sleman',
+    }
+  },
+  {
+    id: 'spot-3',
+    slug: 'roaster--bear',
+    title_id: 'Roaster & Bear',
+    title_en: 'Roaster & Bear',
+    excerpt_id: 'Hidden gem dengan vibe industrial aesthetic. Sering ada live music weekend!',
+    excerpt_en: 'Hidden gem with industrial aesthetic vibes. Live music on weekends!',
+    category_id: 'Coffee Shop',
+    category_en: 'Coffee Shop',
+    thumbnail: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=800&q=80',
+    tags_id: ['Live Music', 'Cozy Vibes', 'Industrial', 'Coffee'],
+    tags_en: ['Live Music', 'Cozy Vibes', 'Industrial', 'Coffee'],
+    type: 'nongkrong',
+    urlPath: 'spot-nongkrong',
+    extendedData: {
+      location_id: 'Jl. Prawirotaman, Yogyakarta',
+      location_en: 'Jl. Prawirotaman, Yogyakarta',
+    }
+  },
+  {
+    id: 'spot-4',
+    slug: 'warung-bu-ageng',
+    title_id: 'Warung Bu Ageng',
+    title_en: 'Warung Bu Ageng',
+    excerpt_id: 'Makan tradisional enak dengan harga mahasiswa banget. Recommended untuk makan bareng!',
+    excerpt_en: 'Delicious traditional food at student prices. Recommended for group dining!',
+    category_id: 'Traditional Food',
+    category_en: 'Traditional Food',
+    thumbnail: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80',
+    tags_id: ['Super Murah', 'Authentic', 'Tradisional', 'Makanan'],
+    tags_en: ['Super Cheap', 'Authentic', 'Traditional', 'Food'],
+    type: 'nongkrong',
+    urlPath: 'spot-nongkrong',
+    extendedData: {
+      location_id: 'Tugu Station Area, Yogyakarta',
+      location_en: 'Tugu Station Area, Yogyakarta',
+    }
+  },
+  {
+    id: 'spot-5',
+    slug: 'abhayagiri-restaurant',
+    title_id: 'Abhayagiri Restaurant',
+    title_en: 'Abhayagiri Restaurant',
+    excerpt_id: 'Rooftop venue dengan city view keren! Cocok buat nongkrong rame-rame.',
+    excerpt_en: 'Rooftop venue with cool city views! Perfect for hanging out with friends.',
+    category_id: 'Resto & Lounge',
+    category_en: 'Resto & Lounge',
+    thumbnail: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&q=80',
+    tags_id: ['Rooftop', 'Party Vibes', 'City View', 'Premium'],
+    tags_en: ['Rooftop', 'Party Vibes', 'City View', 'Premium'],
+    type: 'nongkrong',
+    urlPath: 'spot-nongkrong',
+    extendedData: {
+      location_id: 'Jl. Gejayan, Yogyakarta',
+      location_en: 'Jl. Gejayan, Yogyakarta',
+    }
+  },
+  {
+    id: 'spot-6',
+    slug: 'taman-lampion-kaliurang',
+    title_id: 'Taman Lampion Kaliurang',
+    title_en: 'Taman Lampion Kaliurang',
+    excerpt_id: 'Taman dengan ribuan lampion warna-warni! Viral di TikTok dan super instagramable.',
+    excerpt_en: 'Park with thousands of colorful lanterns! Viral on TikTok and super instagramable.',
+    category_id: 'Outdoor',
+    category_en: 'Outdoor',
+    thumbnail: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80',
+    tags_id: ['Night Spot', 'TikTok Viral', 'Instagramable', 'Outdoor'],
+    tags_en: ['Night Spot', 'TikTok Viral', 'Instagramable', 'Outdoor'],
+    type: 'nongkrong',
+    urlPath: 'spot-nongkrong',
+    extendedData: {
+      location_id: 'Kaliurang, Sleman',
+      location_en: 'Kaliurang, Sleman',
     }
   },
 ];
@@ -494,6 +606,7 @@ const allItems: BilingualItem[] = [
   ...encyclopediaItems,
   ...destinasiWisataItems,
   ...umkmItems,
+  ...spotNongkrongItems,
   ...agendaItems,
 ];
 
@@ -616,6 +729,7 @@ export function getSearchCategoryLabel(
     agenda: { id: 'Agenda', en: 'Events' },
     galeri: { id: 'Galeri', en: 'Gallery' },
     lokasi: { id: 'Lokasi', en: 'Location' },
+    nongkrong: { id: 'Nongkrong', en: 'Hangout' },
   };
 
   return labels[type][locale];
@@ -625,7 +739,7 @@ export function getSearchCategoryLabel(
  * Get all available types
  */
 export function getAllSearchTypes(): SearchResultType[] {
-  return ['kawasan', 'wisata', 'umkm', 'sejarah', 'agenda', 'galeri', 'lokasi'];
+  return ['kawasan', 'wisata', 'umkm', 'sejarah', 'agenda', 'galeri', 'lokasi', 'nongkrong'];
 }
 
 /**
