@@ -50,3 +50,6 @@ k8s/**/secrets.yaml
 
 # Cloudflare tunnel credentials
 cloudflare-tunnel.yaml
+
+# bv (beads viewer) local config and caches
+.bv/
