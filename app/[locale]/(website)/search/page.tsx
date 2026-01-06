@@ -116,14 +116,14 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
           <div className="absolute bottom-0 left-0 right-0 h-1 bg-emerald-500 dark:bg-emerald-700/60"></div>
         </div>
         <div className="p-4 flex-1 flex flex-col">
-          <h3 className="font-serif text-lg font-semibold text-stone-800 mb-2 line-clamp-2 group-hover:text-amber-500 transition-colors">{result.title}</h3>
-          <p className="text-sm text-stone-800/70 line-clamp-2 mb-3 flex-1">{result.excerpt}</p>
+          <h3 className="font-serif text-lg font-semibold text-stone-800 dark:text-white mb-2 line-clamp-2 group-hover:text-amber-500 transition-colors">{result.title}</h3>
+          <p className="text-sm text-stone-600 dark:text-slate-400 line-clamp-2 mb-3 flex-1">{result.excerpt}</p>
           {facilities && facilities.length > 0 && (
             <div className="flex flex-wrap gap-1 mb-3">
               {facilities.slice(0, 4).map((facility, idx) => (
-                <span key={idx} className="text-xs px-2 py-1 bg-amber-500/10 text-stone-800 rounded">{facility}</span>
+                <span key={idx} className="text-xs px-2 py-1 bg-amber-500/10 dark:bg-amber-500/20 text-stone-700 dark:text-amber-200 rounded">{facility}</span>
               ))}
-              {facilities.length > 4 && <span className="text-xs px-2 py-1 text-stone-800/50">+{facilities.length - 4}</span>}
+              {facilities.length > 4 && <span className="text-xs px-2 py-1 text-stone-500 dark:text-slate-500">+{facilities.length - 4}</span>}
             </div>
           )}
 
