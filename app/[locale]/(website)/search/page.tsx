@@ -96,7 +96,7 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
     const facilities = result.wisataData ? (locale === 'id' ? result.wisataData.facilities_id : result.wisataData.facilities_en) : undefined;
 
     return (
-      <div className="bg-card rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group block h-full flex flex-col">
+      <Link href={result.url} className="bg-card rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group block h-full flex flex-col">
         <div className="relative aspect-video overflow-hidden bg-muted">
           {hasValidThumbnail(result.thumbnail) ? (
             <img src={result.thumbnail} alt={result.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
@@ -127,25 +127,19 @@ function SearchResultCard({ result, locale, getTypeIcon }: {
             </div>
           )}
 
-          {/* Action Buttons */}
-          <div className="flex gap-2 mt-auto">
-            <a
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(result.title + ' Yogyakarta')}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-amber-500 text-[#4A2C2A] rounded-lg hover:opacity-90 transition-all text-sm"
-            >
-              <Navigation className="w-4 h-4" />
-            </a>
-            <Link
-              href={result.url}
-              className="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 bg-gradient-to-r from-stone-700 to-orange-600 text-white rounded-lg hover:opacity-90 transition-all text-sm"
-            >
-              <ExternalLink className="w-4 h-4" />
-            </Link>
-          </div>
+          {/* Maps Direction Button */}
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(result.title + ' Yogyakarta')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={(e) => e.stopPropagation()}
+            className="mt-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-amber-500 text-[#4A2C2A] rounded-lg hover:bg-amber-400 transition-all text-sm font-medium"
+          >
+            <Navigation className="w-4 h-4" />
+            {locale === 'id' ? 'Petunjuk Arah' : 'Directions'}
+          </a>
         </div>
-      </div>
+      </Link>
     );
   }
 

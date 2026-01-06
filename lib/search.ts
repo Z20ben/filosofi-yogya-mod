@@ -725,7 +725,7 @@ export function getSearchCategoryLabel(
     kawasan: { id: 'Kawasan', en: 'Region' },
     wisata: { id: 'Wisata', en: 'Tourism' },
     umkm: { id: 'UMKM', en: 'SME' },
-    sejarah: { id: 'Sejarah', en: 'History' },
+    sejarah: { id: 'Ensiklopedia', en: 'Encyclopedia' },
     agenda: { id: 'Agenda', en: 'Events' },
     galeri: { id: 'Galeri', en: 'Gallery' },
     lokasi: { id: 'Lokasi', en: 'Location' },
