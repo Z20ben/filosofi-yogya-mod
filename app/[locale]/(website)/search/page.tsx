@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslations, useLocale } from 'next-intl';
-import { Search, Filter, Image as ImageIcon, MapPin, Book, Store, Calendar, Camera, ExternalLink, Navigation, Coffee } from 'lucide-react';
+import { Search, MapPin, Book, Store, Calendar, Camera, ExternalLink, Navigation, Coffee } from 'lucide-react';
 import { FadeInSection } from '@/components/shared/FadeInSection';
 import { searchAllData, getAllSearchTypes, getSearchCategoryLabel } from '@/lib/search';
 import type { SearchResult, SearchResultType } from '@/lib/search';
@@ -392,95 +392,66 @@ function SearchPageContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50/50 to-rose-50/30 dark:from-slate-950 dark:via-stone-950/50 dark:to-amber-950/30 pt-20">
-      {/* Decorative Background Pattern */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
-        <div className="absolute top-20 -left-20 w-72 h-72 bg-amber-400/15 rounded-full blur-[100px]" />
-        <div className="absolute top-1/3 -right-20 w-96 h-96 bg-orange-400/15 rounded-full blur-[120px]" />
-        <div className="absolute bottom-20 left-1/4 w-80 h-80 bg-amber-300/15 rounded-full blur-[100px]" />
+    <div className="min-h-screen bg-stone-50 dark:bg-slate-950 pt-20">
+      {/* Simple Header */}
+      <div className="border-b border-stone-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              {query ? (
+                <>
+                  <h1 className="font-serif text-2xl md:text-3xl text-stone-800 dark:text-white">
+                    {t('subtitle')} <span className="text-amber-600 dark:text-amber-500">&quot;{query}&quot;</span>
+                  </h1>
+                  <p className="text-stone-500 dark:text-slate-400 mt-1">
+                    {filteredResults.length} {t('results')}
+                  </p>
+                </>
+              ) : (
+                <h1 className="font-serif text-2xl md:text-3xl text-stone-800 dark:text-white">
+                  {t('title')}
+                </h1>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Header */}
-      <section className="relative bg-gradient-to-r from-stone-800 via-orange-700 to-stone-800 text-white py-16">
-        {/* Batik Pattern Overlay */}
-        <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cpath d=\'M30 0L60 30L30 60L0 30L30 0z\' fill=\'%23ffffff\' fill-opacity=\'0.4\'/%3E%3C/svg%3E")', backgroundSize: '30px 30px' }} />
-
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-amber-500/30 backdrop-blur-sm rounded-full mb-6 border border-amber-400/50 shadow-lg">
-            <Search className="w-5 h-5 text-amber-300" />
-            <span className="text-amber-200 font-medium">{t('title')}</span>
-          </div>
-
-          {query && (
-            <h1 className="font-serif text-3xl md:text-5xl font-bold mb-4 drop-shadow-lg">
-              {t('subtitle')} <span className="text-amber-400">&quot;{query}&quot;</span>
-            </h1>
-          )}
-
-          <p className="text-amber-100 text-lg">
-            <span className="font-semibold text-amber-300">{filteredResults.length}</span> {t('results')}
-          </p>
-        </div>
-      </section>
-
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Filters */}
         {results.length > 0 && (
-          <div className="mb-10">
-            <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-2xl shadow-lg border border-amber-200 dark:border-amber-800/30 p-6">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-md">
-                  <Filter className="w-5 h-5 text-white" />
-                </div>
-                <h3 className="font-semibold text-stone-800 dark:text-white text-lg">
-                  {locale === 'id' ? 'Filter Hasil' : 'Filter Results'}
-                </h3>
-              </div>
+          <div className="mb-8">
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setSelectedType('all')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  selectedType === 'all'
+                    ? 'bg-stone-800 dark:bg-white text-white dark:text-stone-900'
+                    : 'bg-white dark:bg-slate-800 text-stone-600 dark:text-slate-300 hover:bg-stone-100 dark:hover:bg-slate-700 border border-stone-200 dark:border-slate-700'
+                }`}
+              >
+                {t('filterAll')} ({results.length})
+              </button>
 
-              <div className="flex flex-wrap gap-3">
-                <button
-                  onClick={() => setSelectedType('all')}
-                  className={`px-5 py-2.5 rounded-xl transition-all font-medium shadow-sm ${
-                    selectedType === 'all'
-                      ? 'bg-gradient-to-r from-stone-700 to-stone-800 text-white shadow-lg ring-2 ring-amber-400'
-                      : 'bg-white dark:bg-slate-800 text-stone-700 dark:text-slate-200 hover:bg-amber-50 dark:hover:bg-slate-700 border border-stone-300 dark:border-slate-600'
-                  }`}
-                >
-                  {t('filterAll')} <span className="ml-1 opacity-70">({results.length})</span>
-                </button>
+              {allTypes.map((type) => {
+                const count = getTypeCount(type);
+                if (count === 0) return null;
 
-                {allTypes.map((type) => {
-                  const count = getTypeCount(type);
-                  if (count === 0) return null;
-
-                  // Type-specific colors
-                  const typeColors: Record<SearchResultType, string> = {
-                    sejarah: 'from-indigo-500 to-purple-600',
-                    wisata: 'from-emerald-500 to-teal-600',
-                    umkm: 'from-amber-500 to-orange-600',
-                    agenda: 'from-rose-500 to-pink-600',
-                    galeri: 'from-violet-500 to-purple-600',
-                    kawasan: 'from-cyan-500 to-blue-600',
-                    lokasi: 'from-green-500 to-emerald-600',
-                    nongkrong: 'from-orange-500 to-amber-600',
-                  };
-
-                  return (
-                    <button
-                      key={type}
-                      onClick={() => setSelectedType(type)}
-                      className={`px-5 py-2.5 rounded-xl transition-all font-medium flex items-center gap-2 shadow-sm ${
-                        selectedType === type
-                          ? `bg-gradient-to-r ${typeColors[type]} text-white shadow-lg ring-2 ring-white/50`
-                          : 'bg-white dark:bg-slate-800 text-stone-700 dark:text-slate-200 hover:bg-amber-50 dark:hover:bg-slate-700 border border-stone-300 dark:border-slate-600'
-                      }`}
-                    >
-                      {getTypeIcon(type)}
-                      {getSearchCategoryLabel(type, locale)} <span className="opacity-70">({count})</span>
-                    </button>
-                  );
-                })}
-              </div>
+                return (
+                  <button
+                    key={type}
+                    onClick={() => setSelectedType(type)}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
+                      selectedType === type
+                        ? 'bg-stone-800 dark:bg-white text-white dark:text-stone-900'
+                        : 'bg-white dark:bg-slate-800 text-stone-600 dark:text-slate-300 hover:bg-stone-100 dark:hover:bg-slate-700 border border-stone-200 dark:border-slate-700'
+                    }`}
+                  >
+                    {getTypeIcon(type)}
+                    {getSearchCategoryLabel(type, locale)} ({count})
+                  </button>
+                );
+              })}
             </div>
           </div>
         )}
@@ -498,15 +469,15 @@ function SearchPageContent() {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="mt-12 flex justify-center">
-                <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-2xl shadow-lg border border-amber-200 dark:border-slate-700 p-2 flex gap-2">
+              <div className="mt-10 flex justify-center">
+                <div className="flex items-center gap-1">
                   <button
                     onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
                     disabled={currentPage === 1}
-                    className={`px-5 py-2.5 rounded-xl transition-all font-medium ${
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                       currentPage === 1
-                        ? 'opacity-40 cursor-not-allowed text-slate-400'
-                        : 'text-stone-700 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-slate-700'
+                        ? 'opacity-40 cursor-not-allowed text-stone-400'
+                        : 'text-stone-600 dark:text-slate-300 hover:bg-stone-100 dark:hover:bg-slate-800'
                     }`}
                   >
                     {tPagination('previous')}
@@ -516,10 +487,10 @@ function SearchPageContent() {
                     <button
                       key={page}
                       onClick={() => setCurrentPage(page)}
-                      className={`w-11 h-11 rounded-xl transition-all font-medium ${
+                      className={`w-10 h-10 rounded-lg text-sm font-medium transition-colors ${
                         currentPage === page
-                          ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white shadow-lg'
-                          : 'text-stone-700 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-slate-700'
+                          ? 'bg-stone-800 dark:bg-white text-white dark:text-stone-900'
+                          : 'text-stone-600 dark:text-slate-300 hover:bg-stone-100 dark:hover:bg-slate-800'
                       }`}
                     >
                       {page}
@@ -529,10 +500,10 @@ function SearchPageContent() {
                   <button
                     onClick={() => setCurrentPage(Math.min(totalPages, currentPage + 1))}
                     disabled={currentPage === totalPages}
-                    className={`px-5 py-2.5 rounded-xl transition-all font-medium ${
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                       currentPage === totalPages
-                        ? 'opacity-40 cursor-not-allowed text-slate-400'
-                        : 'text-stone-700 dark:text-slate-200 hover:bg-amber-100 dark:hover:bg-slate-700'
+                        ? 'opacity-40 cursor-not-allowed text-stone-400'
+                        : 'text-stone-600 dark:text-slate-300 hover:bg-stone-100 dark:hover:bg-slate-800'
                     }`}
                   >
                     {tPagination('next')}
@@ -543,35 +514,27 @@ function SearchPageContent() {
           </>
         ) : query ? (
           /* No Results */
-          <div className="text-center py-20">
-            <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-3xl shadow-xl border border-amber-200 dark:border-slate-700 p-12 max-w-md mx-auto">
-              <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/30 dark:to-orange-900/30 flex items-center justify-center">
-                <Search className="w-10 h-10 text-orange-500" />
-              </div>
-              <h2 className="font-serif text-2xl text-stone-800 dark:text-white mb-3">
-                {t('noResults')}
-              </h2>
-              <p className="text-stone-600 dark:text-slate-400">
-                {t('noResultsDesc')}
-              </p>
-            </div>
+          <div className="text-center py-16">
+            <Search className="w-12 h-12 text-stone-300 dark:text-slate-600 mx-auto mb-4" />
+            <h2 className="font-serif text-xl text-stone-800 dark:text-white mb-2">
+              {t('noResults')}
+            </h2>
+            <p className="text-stone-500 dark:text-slate-400 text-sm">
+              {t('noResultsDesc')}
+            </p>
           </div>
         ) : (
           /* Empty State */
-          <div className="text-center py-20">
-            <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-sm rounded-3xl shadow-xl border border-amber-200 dark:border-slate-700 p-12 max-w-lg mx-auto">
-              <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-amber-200 to-orange-200 dark:from-amber-900/40 dark:to-orange-900/40 flex items-center justify-center">
-                <Search className="w-12 h-12 text-amber-600 dark:text-amber-400" />
-              </div>
-              <h2 className="font-serif text-2xl text-stone-800 dark:text-white mb-3">
-                {t('placeholder')}
-              </h2>
-              <p className="text-stone-600 dark:text-slate-400">
-                {locale === 'id'
-                  ? 'Gunakan kolom pencarian di atas untuk menemukan destinasi, UMKM, artikel, dan agenda menarik di Yogyakarta'
-                  : 'Use the search bar above to find destinations, local businesses, articles, and events in Yogyakarta'}
-              </p>
-            </div>
+          <div className="text-center py-16">
+            <Search className="w-12 h-12 text-stone-300 dark:text-slate-600 mx-auto mb-4" />
+            <h2 className="font-serif text-xl text-stone-800 dark:text-white mb-2">
+              {t('placeholder')}
+            </h2>
+            <p className="text-stone-500 dark:text-slate-400 text-sm max-w-md mx-auto">
+              {locale === 'id'
+                ? 'Gunakan kolom pencarian untuk menemukan destinasi, UMKM, artikel, dan agenda di Yogyakarta'
+                : 'Use the search bar to find destinations, local businesses, articles, and events in Yogyakarta'}
+            </p>
           </div>
         )}
       </div>
