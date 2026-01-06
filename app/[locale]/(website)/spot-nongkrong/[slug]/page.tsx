@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 // Helper function to generate slug
 function generateSlug(name: string): string {
@@ -40,6 +40,7 @@ interface Spot {
 export default function SpotNongkrongDetailPage() {
   const t = useTranslations('spotNongkrong');
   const locale = useLocale();
+  const router = useRouter();
   const params = useParams();
   const slug = params.slug as string;
 
@@ -440,12 +441,13 @@ export default function SpotNongkrongDetailPage() {
                     </div>
 
                     {spot.coordinates && (
-                      <Link href={`/${locale}/map?lat=${spot.coordinates.lat}&lng=${spot.coordinates.lng}&location=${encodeURIComponent(slug)}`}>
-                        <Button className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white">
-                          <Navigation className="w-4 h-4 mr-2" />
-                          {locale === 'id' ? 'Lihat di Peta' : 'View on Map'}
-                        </Button>
-                      </Link>
+                      <Button
+                        className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700"
+                        onClick={() => router.push(`/${locale}/map?lat=${spot.coordinates!.lat}&lng=${spot.coordinates!.lng}&location=${encodeURIComponent(slug)}`)}
+                      >
+                        <Navigation className="w-4 h-4 mr-2" />
+                        {locale === 'id' ? 'Lihat di Peta' : 'View on Map'}
+                      </Button>
                     )}
                   </CardContent>
                 </Card>
